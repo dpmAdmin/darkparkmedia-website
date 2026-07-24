@@ -188,7 +188,12 @@
   var beatWords = beatSection ? beatSection.querySelectorAll(".beat-word") : [];
   if (beatSection && beatWords.length && !reducedMotion) {
     var BEAT_STAGGER = 0.25;
-    // Derived so the last word's window always ends exactly at progress 1,
+    // The reveal finishes by this fraction of the section's time on screen,
+    // not at progress 1 — otherwise the last word only reaches full opacity
+    // the instant the section exits the viewport, so it's never actually
+    // readable. Leaves a dwell period where the full line sits visible.
+    var BEAT_REVEAL_COMPLETE = 0.6;
+    // Derived so the last word's window always ends exactly at that point,
     // regardless of word count.
     var BEAT_WINDOW = 1 - (beatWords.length - 1) * BEAT_STAGGER;
     var BEAT_MAX_BLUR = 10;
@@ -221,9 +226,10 @@
 
     (function beatLoop() {
       var overall = beatProgress();
+      var revealProgress = Math.min(1, overall / BEAT_REVEAL_COMPLETE);
       beatWords.forEach(function (w, i) {
         var start = i * BEAT_STAGGER;
-        var p = Math.min(1, Math.max(0, (overall - start) / BEAT_WINDOW));
+        var p = Math.min(1, Math.max(0, (revealProgress - start) / BEAT_WINDOW));
         w.style.opacity = p;
         w.style.filter = "blur(" + ((1 - p) * BEAT_MAX_BLUR) + "px)";
       });
@@ -301,31 +307,57 @@
   }
 
   /* ------------------------------------------------------------------
-     Ambient background video (people section): plays a muted loop when
-     visible, pauses off-screen. Skipped entirely under reduced motion —
-     it holds its first frame.
+     "The people" background — scroll-linked like the hero/beat/gateway
+     clips: scrubs forward/back with scroll direction, and fades + scales
+     in as a reveal rather than autoplaying on a loop.
      ------------------------------------------------------------------ */
-  var ambient = document.querySelectorAll("video[data-ambient]");
-  ambient.forEach(function (v) {
-    v.muted = true;
-    if (reducedMotion) { v.pause(); v.removeAttribute("autoplay"); return; }
-    if ("IntersectionObserver" in window) {
-      var vio = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var p = v.play();
-            if (p && p.catch) p.catch(function () { /* autoplay blocked; frame holds */ });
-          } else {
-            v.pause();
-          }
-        });
-      }, { threshold: 0.1 });
-      vio.observe(v);
-    } else {
-      var p = v.play();
-      if (p && p.catch) p.catch(function () {});
+  var peopleSection = document.querySelector(".people");
+  var peopleVideo = peopleSection ? peopleSection.querySelector(".people-media video") : null;
+  if (peopleSection && peopleVideo && !reducedMotion) {
+    var PEOPLE_MAX_OPACITY = 0.5;
+    var PEOPLE_START_SCALE = 0.85;
+    var PEOPLE_REVEAL_COMPLETE = 0.5; // fully scaled/opaque by the halfway point of its time on screen
+
+    var peopleDuration = 0;
+    var peopleTargetTime = 0;
+    var peopleRenderedTime = -1;
+
+    peopleVideo.addEventListener("loadedmetadata", function () {
+      peopleDuration = peopleVideo.duration || 0;
+      primeScrubVideo(peopleVideo);
+    });
+    if (peopleVideo.readyState >= 1) peopleDuration = peopleVideo.duration || 0;
+    primeScrubVideo(peopleVideo);
+
+    // Same full-visibility progress mapping as the other scroll-scrubbed
+    // sections: 0 as the section appears at the bottom of the viewport,
+    // 1 as it exits at the top.
+    function peopleProgress() {
+      var rect = peopleSection.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var span = vh + rect.height;
+      if (span <= 0) return 0;
+      return Math.min(1, Math.max(0, (vh - rect.top) / span));
     }
-  });
+
+    (function peopleLoop() {
+      var overall = peopleProgress();
+      var reveal = Math.min(1, overall / PEOPLE_REVEAL_COMPLETE);
+      peopleVideo.style.opacity = reveal * PEOPLE_MAX_OPACITY;
+      peopleVideo.style.transform = "scale(" + (PEOPLE_START_SCALE + (1 - PEOPLE_START_SCALE) * reveal) + ")";
+      if (peopleDuration > 0) {
+        peopleTargetTime = overall * Math.max(0, peopleDuration - 0.05);
+        var next = peopleRenderedTime < 0 ? peopleTargetTime : peopleRenderedTime + (peopleTargetTime - peopleRenderedTime) * 0.22;
+        if (Math.abs(next - peopleRenderedTime) > 0.001) {
+          peopleRenderedTime = next;
+          try { peopleVideo.currentTime = peopleRenderedTime; } catch (e) { /* not seekable yet */ }
+        }
+      }
+      tick(peopleLoop);
+    })();
+  } else if (peopleVideo) {
+    peopleVideo.pause();
+  }
 
   /* ------------------------------------------------------------------
      Portfolio modal: click tile to expand into fullscreen video player
