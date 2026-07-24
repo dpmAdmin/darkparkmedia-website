@@ -1,0 +1,355 @@
+/* DARK PARK MEDIA — interaction layer */
+(function () {
+  "use strict";
+
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) document.body.classList.add("reduced-motion");
+
+  // rAF when the tab is visible; timer fallback when hidden/throttled so
+  // scroll-driven state stays correct (e.g. embedded/preview contexts).
+  function tick(fn) {
+    if (document.hidden) { setTimeout(fn, 66); }
+    else { requestAnimationFrame(fn); }
+  }
+
+  /* ------------------------------------------------------------------
+     Mobile navigation
+     ------------------------------------------------------------------ */
+  var toggle = document.querySelector(".nav-toggle");
+  var links = document.querySelector(".nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", function () {
+      var open = links.classList.toggle("is-open");
+      document.body.classList.toggle("nav-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    links.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") {
+        links.classList.remove("is-open");
+        document.body.classList.remove("nav-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Aperture cursor (pointer: fine only, skipped under reduced motion)
+     ------------------------------------------------------------------ */
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (finePointer && !reducedMotion) {
+    document.body.classList.add("has-cursor");
+    var ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    var trail = document.createElement("div");
+    trail.className = "cursor-trail";
+    document.body.appendChild(trail);
+    document.body.appendChild(ring);
+
+    var mx = -100, my = -100, tx = -100, ty = -100;
+    document.addEventListener("mousemove", function (e) {
+      mx = e.clientX;
+      my = e.clientY;
+      ring.style.transform = "translate(" + (mx - 0) + "px," + (my - 0) + "px) translate(-50%,-50%)";
+    });
+
+    (function trailLoop() {
+      tx += (mx - tx) * 0.16;
+      ty += (my - ty) * 0.16;
+      trail.style.transform = "translate(" + tx + "px," + ty + "px) translate(-50%,-50%)";
+      tick(trailLoop);
+    })();
+
+    var INTERACTIVE = "a, button, summary, input, textarea, select, [role='button']";
+    document.addEventListener("mouseover", function (e) {
+      if (e.target.closest(INTERACTIVE)) {
+        ring.classList.add("is-tight");
+        trail.classList.add("is-tight");
+      }
+    });
+    document.addEventListener("mouseout", function (e) {
+      if (e.target.closest(INTERACTIVE)) {
+        ring.classList.remove("is-tight");
+        trail.classList.remove("is-tight");
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Reveal on scroll
+     ------------------------------------------------------------------ */
+  var revealEls = document.querySelectorAll(".reveal");
+  if (revealEls.length && "IntersectionObserver" in window && !reducedMotion) {
+    var ioFired = false;
+    var io = new IntersectionObserver(function (entries) {
+      ioFired = true;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+    // Safety net: if the observer never delivers its initial callback
+    // (throttled/hidden/embedded rendering), show everything.
+    setTimeout(function () {
+      if (!ioFired) revealEls.forEach(function (el) { el.classList.add("is-in"); });
+    }, 1500);
+  } else {
+    revealEls.forEach(function (el) { el.classList.add("is-in"); });
+  }
+
+  /* ------------------------------------------------------------------
+     Hero scroll-scrub
+     Scrubs video.currentTime against scroll progress of .hero-scrub.
+     Under reduced motion the section is one viewport tall and the video
+     simply holds a frame (poster-like); no scrubbing occurs.
+     ------------------------------------------------------------------ */
+  var scrubSection = document.querySelector(".hero-scrub");
+  var scrubVideo = document.querySelector(".hero-media video");
+  var heroTag = document.querySelector(".hero-tag");
+  var scrollHint = document.querySelector(".hero-scroll-hint");
+
+  if (scrubSection && scrubVideo && !reducedMotion) {
+    var duration = 0;
+    var targetTime = 0;
+    var renderedTime = -1;
+
+    scrubVideo.addEventListener("loadedmetadata", function () {
+      duration = scrubVideo.duration || 0;
+      scrubVideo.pause();
+      update();
+    });
+    // In case metadata is already available (cache)
+    if (scrubVideo.readyState >= 1) {
+      duration = scrubVideo.duration || 0;
+      scrubVideo.pause();
+    }
+
+    function progress() {
+      var rect = scrubSection.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) return 0;
+      return Math.min(1, Math.max(0, -rect.top / total));
+    }
+
+    function update() {
+      var p = progress();
+      if (duration > 0) {
+        // Leave a hair off the end to avoid the 'ended' frame flash
+        targetTime = p * Math.max(0, duration - 0.05);
+      }
+      if (heroTag) heroTag.classList.toggle("is-visible", p > 0.55);
+      if (scrollHint) scrollHint.classList.toggle("is-hidden", p > 0.05);
+    }
+
+    // Poll progress + smooth the seek in one rAF loop so wheel steps
+    // don't stutter and scrubbing works even if scroll events are missed.
+    (function scrubLoop() {
+      update();
+      if (duration > 0) {
+        var next = renderedTime < 0 ? targetTime : renderedTime + (targetTime - renderedTime) * 0.22;
+        if (Math.abs(next - renderedTime) > 0.001) {
+          renderedTime = next;
+          try { scrubVideo.currentTime = renderedTime; } catch (e) { /* not seekable yet */ }
+        }
+      }
+      tick(scrubLoop);
+    })();
+  } else if (heroTag) {
+    // Reduced motion: show the positioning line immediately.
+    heroTag.classList.add("is-visible");
+    if (scrollHint) scrollHint.classList.add("is-hidden");
+    if (scrubVideo) scrubVideo.pause();
+  }
+
+  /* ------------------------------------------------------------------
+     Manifesto beat — CAPTURE. CREATE. DELIVER.
+     Each word reveals via opacity + blur as it scrolls into place, staggered
+     so they settle one after another rather than all at once. Continuous
+     and reversible (like the hero scrub), not a one-shot reveal.
+     ------------------------------------------------------------------ */
+  var beatSection = document.querySelector(".manifesto-beat");
+  var beatMedia = beatSection ? beatSection.querySelector(".manifesto-beat-media") : null;
+  var beatVideo = beatMedia ? beatMedia.querySelector("video") : null;
+  var beatWords = beatSection ? beatSection.querySelectorAll(".beat-word") : [];
+  if (beatSection && beatWords.length && !reducedMotion) {
+    var BEAT_STAGGER = 0.25;
+    // Derived so the last word's window always ends exactly at progress 1,
+    // regardless of word count.
+    var BEAT_WINDOW = 1 - (beatWords.length - 1) * BEAT_STAGGER;
+    var BEAT_MAX_BLUR = 10;
+
+    var beatDuration = 0;
+    var beatTargetTime = 0;
+    var beatRenderedTime = -1;
+
+    if (beatVideo) {
+      beatVideo.addEventListener("loadedmetadata", function () {
+        beatDuration = beatVideo.duration || 0;
+        beatVideo.pause();
+      });
+      if (beatVideo.readyState >= 1) beatDuration = beatVideo.duration || 0;
+      beatVideo.pause();
+    }
+
+    // Progress spans the section's entire time on screen: 0 the instant its
+    // top edge appears at the bottom of the viewport, 1 the instant its
+    // bottom edge exits at the top — so it's always scrubbing for as long as
+    // any part of it is visible, never idling mid-scroll. No pinning — the
+    // section just scrolls by like everything else, just slower if it's short.
+    function beatProgress() {
+      var rect = beatSection.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var span = vh + rect.height;
+      if (span <= 0) return 0;
+      return Math.min(1, Math.max(0, (vh - rect.top) / span));
+    }
+
+    (function beatLoop() {
+      var overall = beatProgress();
+      beatWords.forEach(function (w, i) {
+        var start = i * BEAT_STAGGER;
+        var p = Math.min(1, Math.max(0, (overall - start) / BEAT_WINDOW));
+        w.style.opacity = p;
+        w.style.filter = "blur(" + ((1 - p) * BEAT_MAX_BLUR) + "px)";
+      });
+      // Side-scroll the drone footage across its horizontal overflow.
+      if (beatMedia) {
+        var panPx = beatMedia.offsetWidth - beatSection.offsetWidth;
+        if (panPx > 0) beatMedia.style.transform = "translateX(" + (-panPx * overall) + "px)";
+      }
+      // Scrub the clip itself against the same progress — forward on the way
+      // down, backward on the way up — same mechanism as the hero.
+      if (beatDuration > 0) {
+        beatTargetTime = overall * Math.max(0, beatDuration - 0.05);
+        var next = beatRenderedTime < 0 ? beatTargetTime : beatRenderedTime + (beatTargetTime - beatRenderedTime) * 0.22;
+        if (Math.abs(next - beatRenderedTime) > 0.001) {
+          beatRenderedTime = next;
+          try { beatVideo.currentTime = beatRenderedTime; } catch (e) { /* not seekable yet */ }
+        }
+      }
+      tick(beatLoop);
+    })();
+  } else if (beatVideo) {
+    beatVideo.pause();
+  }
+
+  /* ------------------------------------------------------------------
+     "What we do" background — scroll-linked like the hero/beat clips:
+     scrubs forward/back with scroll direction, and scales + fades in as
+     a reveal rather than sitting there autoplaying and static.
+     ------------------------------------------------------------------ */
+  var gatewaySection = document.querySelector(".gateway");
+  var gatewayVideo = gatewaySection ? gatewaySection.querySelector(".gateway-media video") : null;
+  if (gatewaySection && gatewayVideo && !reducedMotion) {
+    var GATEWAY_MAX_OPACITY = 0.22;
+    var GATEWAY_START_SCALE = 0.85;
+    var GATEWAY_REVEAL_COMPLETE = 0.5; // fully scaled/opaque by the halfway point of its time on screen
+
+    var gatewayDuration = 0;
+    var gatewayTargetTime = 0;
+    var gatewayRenderedTime = -1;
+
+    gatewayVideo.addEventListener("loadedmetadata", function () {
+      gatewayDuration = gatewayVideo.duration || 0;
+      gatewayVideo.pause();
+    });
+    if (gatewayVideo.readyState >= 1) gatewayDuration = gatewayVideo.duration || 0;
+    gatewayVideo.pause();
+
+    // Same full-visibility progress mapping as the beat: 0 as the section
+    // appears at the bottom of the viewport, 1 as it exits at the top.
+    function gatewayProgress() {
+      var rect = gatewaySection.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var span = vh + rect.height;
+      if (span <= 0) return 0;
+      return Math.min(1, Math.max(0, (vh - rect.top) / span));
+    }
+
+    (function gatewayLoop() {
+      var overall = gatewayProgress();
+      var reveal = Math.min(1, overall / GATEWAY_REVEAL_COMPLETE);
+      gatewayVideo.style.opacity = reveal * GATEWAY_MAX_OPACITY;
+      gatewayVideo.style.transform = "scale(" + (GATEWAY_START_SCALE + (1 - GATEWAY_START_SCALE) * reveal) + ")";
+      if (gatewayDuration > 0) {
+        gatewayTargetTime = overall * Math.max(0, gatewayDuration - 0.05);
+        var next = gatewayRenderedTime < 0 ? gatewayTargetTime : gatewayRenderedTime + (gatewayTargetTime - gatewayRenderedTime) * 0.22;
+        if (Math.abs(next - gatewayRenderedTime) > 0.001) {
+          gatewayRenderedTime = next;
+          try { gatewayVideo.currentTime = gatewayRenderedTime; } catch (e) { /* not seekable yet */ }
+        }
+      }
+      tick(gatewayLoop);
+    })();
+  } else if (gatewayVideo) {
+    gatewayVideo.pause();
+  }
+
+  /* ------------------------------------------------------------------
+     Ambient background video (people section): plays a muted loop when
+     visible, pauses off-screen. Skipped entirely under reduced motion —
+     it holds its first frame.
+     ------------------------------------------------------------------ */
+  var ambient = document.querySelectorAll("video[data-ambient]");
+  ambient.forEach(function (v) {
+    v.muted = true;
+    if (reducedMotion) { v.pause(); v.removeAttribute("autoplay"); return; }
+    if ("IntersectionObserver" in window) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function () { /* autoplay blocked; frame holds */ });
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.1 });
+      vio.observe(v);
+    } else {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     Portfolio modal: click tile to expand into fullscreen video player
+     ------------------------------------------------------------------ */
+  var portfolioTiles = document.querySelectorAll(".portfolio-tile");
+  var portfolioModal = document.getElementById("portfolio-modal");
+  var portfolioModalVideo = document.querySelector(".portfolio-modal-video");
+  var portfolioModalClose = document.querySelector(".portfolio-modal-close");
+  var portfolioModalBackdrop = document.querySelector(".portfolio-modal-backdrop");
+
+  function closePortfolioModal() {
+    portfolioModal.classList.remove("open");
+    portfolioModalVideo.pause();
+    portfolioModalVideo.removeAttribute("src");
+    setTimeout(function () {
+      portfolioModal.setAttribute("aria-hidden", "true");
+    }, 400);
+  }
+
+  portfolioTiles.forEach(function (tile) {
+    tile.addEventListener("click", function (e) {
+      var videoSrc = tile.getAttribute("data-video");
+      if (!videoSrc) return;
+
+      portfolioModal.setAttribute("aria-hidden", "false");
+      portfolioModalVideo.setAttribute("src", videoSrc);
+      portfolioModal.classList.add("open");
+      portfolioModalVideo.play().catch(function () {});
+    });
+  });
+
+  portfolioModalClose.addEventListener("click", closePortfolioModal);
+  portfolioModalBackdrop.addEventListener("click", closePortfolioModal);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && portfolioModal.classList.contains("open")) {
+      closePortfolioModal();
+    }
+  });
+})();

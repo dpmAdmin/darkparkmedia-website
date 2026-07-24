@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+.env
+*.log
+
+# Video assets are hosted on a CDN, not tracked in git
+assets/video/
