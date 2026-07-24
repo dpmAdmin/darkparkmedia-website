@@ -5,3 +5,9 @@ node_modules/
 
 # Video assets are hosted on a CDN, not tracked in git
 assets/video/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
