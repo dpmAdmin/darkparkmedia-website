@@ -5,6 +5,19 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion) document.body.classList.add("reduced-motion");
 
+  // iOS Safari won't decode/render any frame of a video until play() has
+  // actually fired at least once — setting currentTime alone (as the scroll
+  // scrub loops do) shows nothing. Kick playback then immediately pause so
+  // the decoder initializes and the first frame paints.
+  function primeScrubVideo(video) {
+    var p = video.play();
+    if (p && p.catch) {
+      p.then(function () { video.pause(); }).catch(function () {});
+    } else {
+      video.pause();
+    }
+  }
+
   // rAF when the tab is visible; timer fallback when hidden/throttled so
   // scroll-driven state stays correct (e.g. embedded/preview contexts).
   function tick(fn) {
@@ -117,13 +130,13 @@
 
     scrubVideo.addEventListener("loadedmetadata", function () {
       duration = scrubVideo.duration || 0;
-      scrubVideo.pause();
+      primeScrubVideo(scrubVideo);
       update();
     });
     // In case metadata is already available (cache)
     if (scrubVideo.readyState >= 1) {
       duration = scrubVideo.duration || 0;
-      scrubVideo.pause();
+      primeScrubVideo(scrubVideo);
     }
 
     function progress() {
@@ -187,10 +200,10 @@
     if (beatVideo) {
       beatVideo.addEventListener("loadedmetadata", function () {
         beatDuration = beatVideo.duration || 0;
-        beatVideo.pause();
+        primeScrubVideo(beatVideo);
       });
       if (beatVideo.readyState >= 1) beatDuration = beatVideo.duration || 0;
-      beatVideo.pause();
+      primeScrubVideo(beatVideo);
     }
 
     // Progress spans the section's entire time on screen: 0 the instant its
@@ -253,10 +266,10 @@
 
     gatewayVideo.addEventListener("loadedmetadata", function () {
       gatewayDuration = gatewayVideo.duration || 0;
-      gatewayVideo.pause();
+      primeScrubVideo(gatewayVideo);
     });
     if (gatewayVideo.readyState >= 1) gatewayDuration = gatewayVideo.duration || 0;
-    gatewayVideo.pause();
+    primeScrubVideo(gatewayVideo);
 
     // Same full-visibility progress mapping as the beat: 0 as the section
     // appears at the bottom of the viewport, 1 as it exits at the top.
