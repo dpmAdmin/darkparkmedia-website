@@ -3,8 +3,12 @@ node_modules/
 .env
 *.log
 
-# Video assets are hosted on a CDN, not tracked in git
-assets/video/
+# Portfolio project videos are hosted on the R2 CDN, not tracked in git
+assets/video/Examples of Work/
+
+# Unused legacy videos from the old three-divisions site structure
+assets/video/hero.mp4
+assets/video/divisions.mp4
 
 # Local-only Claude Code config
 .claude/settings.local.json
