@@ -363,11 +363,11 @@
      Fog hero (Four One Five Visuals) — perspective choreography: as you
      scroll, the mark zooms toward the viewer and fades away as it
      "passes" the camera, then the tagline flies in from behind and does
-     the same. Nothing ever holds still — the background clip plays
-     continuously (looped, never scrubbed/paused), the cloud layers keep
-     their CSS drift, and every scroll increment moves whatever is on
-     stage. Fully reversible: scroll back up and the flight runs in
-     reverse.
+     the same. The background clip is scroll-scrubbed exactly like the
+     homepage hero — its timeline is the scroll, forward on the way down
+     and backward on the way up — while the cloud layers keep their CSS
+     drift. Fully reversible: scroll back up and the whole flight runs
+     in reverse.
      ------------------------------------------------------------------ */
   var fogHero = document.querySelector(".fog-hero");
   var fogVideo = fogHero ? fogHero.querySelector(".fog-media video") : null;
@@ -378,31 +378,20 @@
     var fogHint = fogHero.querySelector(".hero-scroll-hint");
     var fogMedia = fogHero.querySelector(".fog-media");
 
-    // Continuous playback — the clip loops forever and is never tied to
-    // scroll, so the frame behind the fog is always in motion.
+    // Scroll-scrubbed background — the same interaction as the homepage
+    // hero: the clip's timeline is the scroll itself, running forward on
+    // the way down and backward on the way up, eased with the same lerp.
+    // Top of the page is the first frame by construction.
+    var fogDuration = 0;
+    var fogTargetTime = 0;
+    var fogRenderedTime = -1;
     if (fogVideo) {
-      fogVideo.loop = true;
-      fogVideo.muted = true;
-      var fogPlay = fogVideo.play();
-      if (fogPlay && fogPlay.catch) fogPlay.catch(function () {});
-      // If autoplay was blocked, the first interaction starts it.
-      var fogVideoKick = function () {
-        var pr = fogVideo.play();
-        if (pr && pr.catch) pr.catch(function () {});
-        window.removeEventListener("scroll", fogVideoKick);
-        window.removeEventListener("pointerdown", fogVideoKick);
-      };
-      window.addEventListener("scroll", fogVideoKick, { passive: true });
-      window.addEventListener("pointerdown", fogVideoKick);
-      // Browsers pause muted video in hidden tabs — resume the moment the
-      // page is visible again (if the pane is still on screen) so the
-      // frame is never parked.
-      document.addEventListener("visibilitychange", function () {
-        if (!document.hidden && fogHero.getBoundingClientRect().bottom > 0) {
-          var pv = fogVideo.play();
-          if (pv && pv.catch) pv.catch(function () {});
-        }
+      fogVideo.addEventListener("loadedmetadata", function () {
+        fogDuration = fogVideo.duration || 0;
+        primeScrubVideo(fogVideo);
       });
+      if (fogVideo.readyState >= 1) fogDuration = fogVideo.duration || 0;
+      primeScrubVideo(fogVideo);
     }
 
     // 0 while the stage first pins, 1 when the track has fully scrolled
@@ -418,36 +407,8 @@
       return Math.min(1, Math.max(0, (p - from) / (to - from)));
     }
 
-    var fogLastPlayAttempt = 0;
-    var fogWasScrolled = false;
     (function fogLoop() {
       var p = fogProgress();
-      // Top of the page means the beginning of the story: the clip free-
-      // runs (never scrubbed), but returning all the way up restarts it
-      // from its first frame — still playing, never parked.
-      if (p > 0.001) {
-        fogWasScrolled = true;
-      } else if (fogWasScrolled) {
-        fogWasScrolled = false;
-        if (fogVideo) {
-          try { fogVideo.currentTime = 0; } catch (e) { /* not seekable yet */ }
-        }
-      }
-      // The clip must be in motion at every moment any part of the pane
-      // is on screen — browsers quietly pause muted video they consider
-      // idle or offscreen (that's the freeze at the end of the scroll),
-      // so any time it's found paused while the pane is still visible,
-      // start it again. Throttled so a genuinely blocked autoplay isn't
-      // hammered every frame.
-      if (fogVideo && fogVideo.paused && !document.hidden &&
-          fogHero.getBoundingClientRect().bottom > 0) {
-        var fogNow = Date.now();
-        if (fogNow - fogLastPlayAttempt > 400) {
-          fogLastPlayAttempt = fogNow;
-          var fogResume = fogVideo.play();
-          if (fogResume && fogResume.catch) fogResume.catch(function () {});
-        }
-      }
       // The mark zooms toward the viewer from the first scrolled pixel —
       // scale grows continuously (eased), opacity holds through the early
       // flight, then it fades as it passes the camera.
@@ -473,6 +434,16 @@
       // into view — down to 30% of its resting strength by mid-scroll.
       if (fogMedia) fogMedia.style.setProperty("--veil", 1 - fogPhase(p, 0.05, 0.5) * 0.7);
       if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
+      // Scrub the clip against the same progress — forward on the way
+      // down, backward on the way up, same lerp as the homepage hero.
+      if (fogDuration > 0) {
+        fogTargetTime = p * Math.max(0, fogDuration - 0.05);
+        var fogNext = fogRenderedTime < 0 ? fogTargetTime : fogRenderedTime + (fogTargetTime - fogRenderedTime) * 0.22;
+        if (Math.abs(fogNext - fogRenderedTime) > 0.001) {
+          fogRenderedTime = fogNext;
+          try { fogVideo.currentTime = fogRenderedTime; } catch (e) { /* not seekable yet */ }
+        }
+      }
       tick(fogLoop);
     })();
   } else if (fogHero) {
