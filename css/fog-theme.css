@@ -83,12 +83,12 @@ body.theme-fog .nav-parent:hover .pw-rest {
   opacity: 1;
   transform: translateY(0);
 }
-/* Build: wait for the mark to finish enlarging, then break the words
+/* Build: let the mark get most of its growth in, then break the words
    out one after another */
-body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(1) { transition-delay: 0.3s; }
-body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(2) { transition-delay: 0.4s; }
-body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(3) { transition-delay: 0.5s; }
-body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(4) { transition-delay: 0.6s; }
+body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(1) { transition-delay: 0.15s; }
+body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(2) { transition-delay: 0.25s; }
+body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(3) { transition-delay: 0.35s; }
+body.theme-fog .nav-parent:hover .pw-rest:nth-of-type(4) { transition-delay: 0.45s; }
 body.theme-fog .nav-caret {
   font-family: var(--display);
   font-weight: 700;
@@ -126,7 +126,7 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
    Ambient cloud drift is pure CSS; the choreography (and the future
    background-clip scrub) lives in the fogLoop block in js/main.js.
    -------------------------------------------------------------------------- */
-.fog-hero { position: relative; height: 380vh; }
+.fog-hero { position: relative; height: 260vh; }
 .fog-stage {
   position: sticky;
   top: 0;

@@ -419,8 +419,20 @@
     }
 
     var fogLastPlayAttempt = 0;
+    var fogWasScrolled = false;
     (function fogLoop() {
       var p = fogProgress();
+      // Top of the page means the beginning of the story: the clip free-
+      // runs (never scrubbed), but returning all the way up restarts it
+      // from its first frame — still playing, never parked.
+      if (p > 0.001) {
+        fogWasScrolled = true;
+      } else if (fogWasScrolled) {
+        fogWasScrolled = false;
+        if (fogVideo) {
+          try { fogVideo.currentTime = 0; } catch (e) { /* not seekable yet */ }
+        }
+      }
       // The clip must be in motion at every moment any part of the pane
       // is on screen — browsers quietly pause muted video they consider
       // idle or offscreen (that's the freeze at the end of the scroll),
@@ -447,12 +459,14 @@
       }
       // The tagline starts deep in the scene (small), flies toward the
       // viewer through its readable size — still growing the whole way,
-      // never parked — and fades out as it closes in.
+      // never parked — and fades out well before it can loom: capped
+      // around 1.7x, gone by ~78% of the track so the page breaks free
+      // and the clip pane passes the viewer while still in motion.
       if (fogTag) {
-        var tagT = fogPhase(p, 0.28, 0.88);
-        var tagScale = 0.55 + 2.65 * Math.pow(tagT, 1.7);
+        var tagT = fogPhase(p, 0.3, 0.78);
+        var tagScale = 0.55 + 1.15 * Math.pow(tagT, 1.5);
         fogTag.style.transform = "translateY(-128px) scale(" + tagScale + ")";
-        fogTag.style.opacity = fogPhase(tagT, 0, 0.3) * (1 - fogPhase(tagT, 0.62, 0.95));
+        fogTag.style.opacity = fogPhase(tagT, 0, 0.3) * (1 - fogPhase(tagT, 0.5, 0.8));
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
       // Thin the white veil as the mark flies off, bringing the footage
