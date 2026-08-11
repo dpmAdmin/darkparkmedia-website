@@ -1,0 +1,216 @@
+/* ==========================================================================
+   FOUR ONE FIVE VISUALS — fog theme
+   Inverted "sky / cloud / fog" skin scoped to body.theme-fog: near-white
+   atmosphere, graphite type, steel-blue accent, liquid-glass graphite tiles.
+   Loads AFTER style.css, only on pages that opt in via the body class —
+   most of the inversion happens by redefining the palette variables.
+   ========================================================================== */
+
+body.theme-fog {
+  --black: #eef1f5;      /* page base — was near-black */
+  --ink: #e4e9ef;        /* deeper section wash — now a shade of mist */
+  --panel: rgba(255, 255, 255, 0.72);
+  --fog-dark: #a7b0ba;   /* borders / dividers */
+  --fog: #5a646f;        /* secondary text */
+  --fog-light: #39424c;  /* body text */
+  --paper: #1c2127;      /* headings — graphite */
+  --amber: #5e87ab;      /* accent — steel blue */
+  --amber-bright: #4a749a;
+  --amber-dim: rgba(94, 135, 171, 0.16);
+  background: var(--black);
+  color: var(--fog-light);
+}
+body.theme-fog ::selection { background: #5e87ab; color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Nav — frosted white glass
+   -------------------------------------------------------------------------- */
+body.theme-fog .nav {
+  background: linear-gradient(to bottom, rgba(244, 247, 250, 0.92), rgba(244, 247, 250, 0.72));
+  border-bottom: 1px solid rgba(90, 100, 111, 0.14);
+}
+body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
+@media (max-width: 860px) {
+  body.theme-fog .nav-links {
+    background: rgba(244, 247, 250, 0.98);
+    border-bottom: 1px solid rgba(90, 100, 111, 0.15);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Fog hero — centered mark over drifting white cloud layers. The ambient
+   drift is pure CSS; js/main.js adds scroll parallax on .fog-sky/.fog-logo.
+   -------------------------------------------------------------------------- */
+.fog-hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
+}
+.fog-sky { position: absolute; inset: -22%; will-change: transform; }
+.fog-layer {
+  position: absolute;
+  inset: 0;
+  filter: blur(55px);
+  will-change: transform;
+}
+.fog-a {
+  background:
+    radial-gradient(42% 30% at 22% 38%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(35% 26% at 75% 30%, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: fog-drift-a 52s ease-in-out infinite alternate;
+}
+.fog-b {
+  background:
+    radial-gradient(48% 34% at 68% 62%, rgba(211, 224, 238, 0.9) 0%, rgba(211, 224, 238, 0) 72%),
+    radial-gradient(30% 22% at 30% 70%, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: fog-drift-b 74s ease-in-out infinite alternate;
+}
+.fog-c {
+  background:
+    radial-gradient(60% 40% at 50% 85%, rgba(233, 238, 244, 0.96) 0%, rgba(233, 238, 244, 0) 75%),
+    radial-gradient(26% 20% at 12% 20%, rgba(196, 212, 228, 0.65) 0%, rgba(196, 212, 228, 0) 70%);
+  animation: fog-drift-c 96s ease-in-out infinite alternate;
+}
+@keyframes fog-drift-a { from { transform: translate3d(-4%, -2%, 0) scale(1); } to { transform: translate3d(5%, 3%, 0) scale(1.08); } }
+@keyframes fog-drift-b { from { transform: translate3d(3%, 2%, 0) scale(1.05); } to { transform: translate3d(-5%, -3%, 0) scale(1); } }
+@keyframes fog-drift-c { from { transform: translate3d(-2%, 3%, 0) scale(1.02); } to { transform: translate3d(4%, -2%, 0) scale(1.1); } }
+body.reduced-motion .fog-layer { animation: none; }
+
+.fog-logo {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.5rem;
+  will-change: transform, opacity;
+}
+.fog-logo img {
+  width: min(70vw, 520px);
+  height: auto;
+  filter: drop-shadow(0 18px 45px rgba(51, 64, 80, 0.28));
+}
+.fog-mark {
+  display: block;
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.92;
+  font-size: clamp(3.2rem, 10vw, 8.5rem);
+  color: var(--paper);
+  letter-spacing: 0.01em;
+  text-shadow: 0 18px 45px rgba(51, 64, 80, 0.18);
+}
+.fog-mark-sub {
+  display: block;
+  margin-top: 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.58em;
+  text-indent: 0.58em;
+  font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+  color: var(--amber);
+}
+.fog-tag {
+  margin-top: 1.4rem;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--fog);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+.fog-hero .hero-scroll-hint { color: var(--fog); }
+
+/* --------------------------------------------------------------------------
+   Liquid-glass graphite tiles — service cards keep their dark identity as
+   smoked glass floating on the fog. No overflow:hidden here: the expandable
+   carousel hangs below the tile's box (see .svc-carousel in style.css).
+   -------------------------------------------------------------------------- */
+body.theme-fog .svc {
+  /* Near-opaque graphite reads as smoked glass on its own; backdrop-filter
+     is deliberately absent — it makes these tiles paint blank in Chrome's
+     compositor (verified live), and at this opacity blur adds nothing. */
+  background: linear-gradient(150deg, rgba(44, 49, 57, 0.9), rgba(26, 30, 36, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  box-shadow:
+    0 24px 55px rgba(45, 58, 72, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  position: relative;
+}
+body.theme-fog .svc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 28%, rgba(255, 255, 255, 0) 55%);
+  pointer-events: none;
+}
+body.theme-fog .svc h3 { color: #f4f6f9; }
+body.theme-fog .svc p { color: #b8c0c9; }
+body.theme-fog .svc:hover { border-color: rgba(122, 166, 201, 0.6); }
+body.theme-fog .svc--expandable.svc-is-expanded {
+  border-color: rgba(122, 166, 201, 0.65);
+  box-shadow:
+    0 30px 70px rgba(45, 58, 72, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+body.theme-fog .svc-card {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 0 12px, transparent 12px 24px);
+}
+body.theme-fog .svc-card .ph-label { color: #c9d2db; }
+body.theme-fog .svc-card .ph-sub { color: #8b95a0; }
+body.theme-fog .svc-carousel-arrow {
+  background: rgba(28, 32, 38, 0.8);
+  border-color: rgba(122, 166, 201, 0.55);
+  color: #e8edf2;
+}
+
+/* --------------------------------------------------------------------------
+   Portfolio tiles — thumbnails in polished glass frames, labels as graphite
+   glass chips.
+   -------------------------------------------------------------------------- */
+body.theme-fog .portfolio-tile {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 45px rgba(45, 58, 72, 0.2);
+}
+body.theme-fog .tile-label {
+  right: auto;
+  padding: 0.42rem 0.75rem;
+  background: rgba(24, 28, 33, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  color: #f4f6f9;
+}
+
+/* Modal — foggy white backdrop, player stays dark */
+body.theme-fog .portfolio-modal-backdrop { background: rgba(238, 241, 245, 0.92); }
+body.theme-fog .portfolio-modal-container {
+  background: #101215;
+  box-shadow: 0 30px 80px rgba(45, 58, 72, 0.4);
+}
+body.theme-fog .portfolio-modal-video { background: #101215; }
+body.theme-fog .portfolio-modal-close {
+  background: rgba(28, 32, 38, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #f4f6f9;
+}
+
+/* --------------------------------------------------------------------------
+   Process steps — light glass over the fog
+   -------------------------------------------------------------------------- */
+body.theme-fog .process-step {
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 14px 34px rgba(45, 58, 72, 0.12);
+}
+
+/* Buttons — steel accent needs white text when filled */
+body.theme-fog .btn-primary { color: #fff; }
+body.theme-fog .btn-primary:hover,
+body.theme-fog .btn-primary:focus-visible { color: #fff; }

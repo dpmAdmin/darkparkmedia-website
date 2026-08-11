@@ -360,6 +360,28 @@
   }
 
   /* ------------------------------------------------------------------
+     Fog hero (Four One Five Visuals): the cloud layers drift on their
+     own via CSS keyframes; this adds scroll depth — the sky sinks at a
+     slower rate than the page while the centered mark lifts and fades.
+     ------------------------------------------------------------------ */
+  var fogHero = document.querySelector(".fog-hero");
+  if (fogHero && !reducedMotion) {
+    var fogSky = fogHero.querySelector(".fog-sky");
+    var fogLogo = fogHero.querySelector(".fog-logo");
+    (function fogLoop() {
+      var rect = fogHero.getBoundingClientRect();
+      var scrolled = Math.min(Math.max(-rect.top, 0), rect.height);
+      var p = rect.height > 0 ? scrolled / rect.height : 0;
+      if (fogSky) fogSky.style.transform = "translateY(" + scrolled * 0.35 + "px)";
+      if (fogLogo) {
+        fogLogo.style.transform = "translateY(" + scrolled * 0.5 + "px)";
+        fogLogo.style.opacity = Math.max(0, 1 - p * 1.4);
+      }
+      tick(fogLoop);
+    })();
+  }
+
+  /* ------------------------------------------------------------------
      Portfolio modal: click tile to expand into fullscreen video player
      ------------------------------------------------------------------ */
   var portfolioTiles = document.querySelectorAll(".portfolio-tile");
@@ -367,6 +389,8 @@
   var portfolioModalVideo = document.querySelector(".portfolio-modal-video");
   var portfolioModalClose = document.querySelector(".portfolio-modal-close");
   var portfolioModalBackdrop = document.querySelector(".portfolio-modal-backdrop");
+
+  if (!portfolioModal) return;
 
   function closePortfolioModal() {
     portfolioModal.classList.remove("open");

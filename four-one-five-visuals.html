@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <script>document.documentElement.classList.add("js")</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Four One Five Visuals — Production from the Bay Area | Dark Park Media</title>
-  <meta name="description" content="Four One Five Visuals is Dark Park Media's Bay Area production crew: real estate and architectural films, commercials, branded spots, photography, and social content.">
+  <title>Four One Five Visuals — Real Estate &amp; Architectural Film from the Bay Area | Dark Park Media</title>
+  <meta name="description" content="Four One Five Visuals is Dark Park Media's Bay Area real estate production crew: cinematic listing films, architectural films, and photography for properties and spaces.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,400;10..72,600;10..72,700;10..72,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fog-theme.css">
 </head>
-<body>
+<body class="theme-fog">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="nav">
@@ -30,11 +31,23 @@
 
   <main id="main">
 
-    <section class="subhero">
-      <div class="wrap">
-        <h1>Four One Five<br>Visuals</h1>
-        <p class="lede">Production from the Bay Area. A ground crew for real estate and architectural films, commercials, branded spots, photography, and social content — shot with intent and finished in-house.</p>
+    <!-- HERO: centered 415 mark over drifting white fog. The cloud drift is
+         pure CSS (fog-theme.css); scroll adds parallax lift + fade via the
+         fogLoop block in js/main.js. -->
+    <section class="fog-hero" aria-label="Four One Five Visuals">
+      <div class="fog-sky" aria-hidden="true">
+        <div class="fog-layer fog-a"></div>
+        <div class="fog-layer fog-b"></div>
+        <div class="fog-layer fog-c"></div>
       </div>
+      <div class="fog-logo">
+        <!-- LOGO SLOT: when the real mark lands in assets/img/, replace the
+             <h1> below with:
+             <h1><img src="assets/img/415-logo.png" alt="Four One Five Visuals"></h1> -->
+        <h1><span class="fog-mark">Four One Five</span> <span class="fog-mark-sub">Visuals</span></h1>
+        <p class="fog-tag">Real estate &amp; architectural film from the Bay Area.</p>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
     </section>
 
     <section class="section" aria-label="Services">
@@ -43,43 +56,13 @@
         <h2 class="section-title reveal">What we shoot</h2>
         <div class="svc-grid svc-grid--expand">
           <div class="svc reveal svc--expandable" tabindex="0" role="button" aria-expanded="false">
-            <h3>Social, Commercials &amp; Spots</h3>
-            <p>Short-form work from concept through delivery — vertical and horizontal cuts designed for the platforms they'll live on, shot natively or derived from primary coverage, and finished to broadcast and web specs.</p>
-            <div class="svc-carousel" aria-hidden="true">
-              <div class="svc-carousel-track">
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — reel to be added</span></div>
-                <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — spot to be added</span></div>
-                <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — reel to be added</span></div>
-              </div>
-              <button class="svc-carousel-arrow prev" aria-label="Previous preview" tabindex="-1">‹</button>
-              <button class="svc-carousel-arrow next" aria-label="Next preview" tabindex="-1">›</button>
-            </div>
-          </div>
-          <div class="svc reveal svc--expandable" tabindex="0" role="button" aria-expanded="false">
-            <h3>Television &amp; Series</h3>
-            <p>Episodic storytelling and long-form narrative work — scripted series, seasons, and serialized content built on cinematic production values and character-driven narratives.</p>
-            <div class="svc-carousel" aria-hidden="true">
-              <div class="svc-carousel-track">
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — episode to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — series reel to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — episode to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — trailer to be added</span></div>
-              </div>
-              <button class="svc-carousel-arrow prev" aria-label="Previous preview" tabindex="-1">‹</button>
-              <button class="svc-carousel-arrow next" aria-label="Next preview" tabindex="-1">›</button>
-            </div>
-          </div>
-          <div class="svc reveal svc--expandable" tabindex="0" role="button" aria-expanded="false">
-            <h3>Real Estate &amp; Architecture</h3>
-            <p>Photography and film for properties and spaces — luxury real estate listings with cinematic walkthrough cinematography and lifestyle framing, plus composition-led architectural work that respects the space and the light it was designed for.</p>
+            <h3>Real Estate</h3>
+            <p>Luxury listing films and photography — cinematic walkthroughs, lifestyle framing, twilight exteriors, and vertical cuts for social, delivered at the pace a listing demands.</p>
             <div class="svc-carousel" aria-hidden="true">
               <div class="svc-carousel-track">
                 <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — listing film to be added</span></div>
                 <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — architectural film to be added</span></div>
-                <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
+                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — listing film to be added</span></div>
                 <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — gallery to be added</span></div>
               </div>
               <button class="svc-carousel-arrow prev" aria-label="Previous preview" tabindex="-1">‹</button>
@@ -87,15 +70,14 @@
             </div>
           </div>
           <div class="svc reveal svc--expandable" tabindex="0" role="button" aria-expanded="false">
-            <h3>Branded Content</h3>
-            <p>We build stories around what your brand actually does. Shoot real people, real spaces, real moments — the kind of narrative that gets talked about, not just scrolled past.</p>
+            <h3>Architecture</h3>
+            <p>Composition-led films and photography for architects, builders, and designers — work that respects the space and the light it was designed for, from documentation to portfolio pieces.</p>
             <div class="svc-carousel" aria-hidden="true">
               <div class="svc-carousel-track">
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — brand film to be added</span></div>
+                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — architectural film to be added</span></div>
+                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — gallery to be added</span></div>
                 <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — campaign piece to be added</span></div>
-                <div class="svc-card ratio-9-16"><span class="ph-label">Preview slot</span><span class="ph-sub">9:16 — clip to be added</span></div>
-                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — brand film to be added</span></div>
+                <div class="svc-card ratio-16-9"><span class="ph-label">Preview slot</span><span class="ph-sub">16:9 — portfolio piece to be added</span></div>
               </div>
               <button class="svc-carousel-arrow prev" aria-label="Previous preview" tabindex="-1">‹</button>
               <button class="svc-carousel-arrow next" aria-label="Next preview" tabindex="-1">›</button>
@@ -109,16 +91,17 @@
       <div class="wrap">
         <p class="eyebrow reveal">Selected work</p>
         <h2 class="section-title reveal">Portfolio</h2>
-        <p class="lede reveal">Recent films and photography.</p>
+        <p class="lede reveal">Recent property films — tap a tile to watch.</p>
         <div class="portfolio-grid">
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Real estate film — project to be added</span></div>
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Architectural film — project to be added</span></div>
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Commercial spot — project to be added</span></div>
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Branded content — project to be added</span></div>
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Photography — gallery to be added</span></div>
-          <div class="ph-tile reveal"><span class="ph-label">Portfolio slot</span><span class="ph-sub">Social video — reel to be added</span></div>
+          <button class="portfolio-tile reveal" data-video="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr - Final.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr Thumbnail.png')" aria-label="Play: 88 Lucas Park Dr">
+            <span class="tile-label">88 Lucas Park Dr</span>
+            <span class="tile-play-icon"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
+          </button>
+          <button class="portfolio-tile reveal" data-video="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 7 Francisco Vista Court - CC - 051826/7 Francisco Vista Court - CC - 051826.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 7 Francisco Vista Court - CC - 051826/7 Francisco Vista Court Thumbnail.png')" aria-label="Play: 7 Francisco Vista Court">
+            <span class="tile-label">7 Francisco Vista Court</span>
+            <span class="tile-play-icon"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
+          </button>
         </div>
-        <p class="placeholder-note">Placeholders shown until real project films and galleries are supplied.</p>
       </div>
     </section>
 
@@ -166,6 +149,20 @@
         </div>
       </div>
     </section>
+
+    <!-- PORTFOLIO MODAL: expanded pop-up for portfolio videos -->
+    <div class="portfolio-modal" id="portfolio-modal" aria-hidden="true">
+      <div class="portfolio-modal-backdrop"></div>
+      <div class="portfolio-modal-container">
+        <button class="portfolio-modal-close" aria-label="Close portfolio">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <video class="portfolio-modal-video" muted playsinline controls preload="metadata"></video>
+      </div>
+    </div>
 
   </main>
 
