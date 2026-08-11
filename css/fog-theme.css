@@ -30,6 +30,12 @@ body.theme-fog .nav {
   border-bottom: 1px solid rgba(90, 100, 111, 0.14);
 }
 body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
+
+/* Custom cursor — graphite-black ring and dot instead of the amber set
+   (the trail's orange was hardcoded in style.css, not var-driven). */
+body.theme-fog .cursor-ring { border-color: #1c2127; }
+body.theme-fog .cursor-ring::after { background: #1c2127; }
+body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
 @media (max-width: 860px) {
   body.theme-fog .nav-links {
     background: rgba(244, 247, 250, 0.98);
@@ -117,23 +123,21 @@ body.reduced-motion .fog-layer { animation: none; }
   filter: drop-shadow(0 18px 45px rgba(51, 64, 80, 0.28));
 }
 .fog-tag {
-  margin-top: 1.4rem;
+  /* Out of flow so the mark alone sits dead-center in the stage; the
+     line anchors just below it and the fogLoop lifts it from there. */
+  position: absolute;
+  top: calc(100% + 1.4rem);
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin-inline: auto;
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(1.35rem, 3.2vw, 2rem);
   text-transform: capitalize;
-  /* Graphite glass plate — same recipe as the service tiles (no
-     backdrop-filter; see the tile note) — with the line flipped to
-     mist-white so it stays crisp over any frame of the footage. */
-  display: inline-block;
-  padding: 0.5em 1.15em;
+  /* Mist-white with a dark drop shadow to carry it over the footage. */
   color: #eef1f5;
-  background: linear-gradient(150deg, rgba(44, 49, 57, 0.82), rgba(26, 30, 36, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  box-shadow:
-    0 18px 40px rgba(45, 58, 72, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  text-shadow: 0 2px 14px rgba(16, 19, 23, 0.85), 0 1px 4px rgba(16, 19, 23, 0.9);
   /* Hidden at rest — the fogLoop drives opacity/transform against scroll. */
   opacity: 0;
   transform: translateY(44px);
