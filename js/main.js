@@ -439,16 +439,18 @@
         fogLogo.style.transform = "scale(" + logoScale + ")";
         fogLogo.style.opacity = 1 - fogPhase(logoT, 0.45, 0.95);
       }
-      // The tagline starts deep in the scene (small), flies toward the
-      // viewer through its readable size — still growing the whole way,
-      // never parked — and fades out well before it can loom: capped
-      // around 1.7x, gone by ~78% of the track so the page breaks free
-      // and the clip pane passes the viewer while still in motion.
+      // The tagline starts deep in the scene, fades on while growing, and
+      // keeps growing the whole way — it never parks at a final size. It
+      // also physically rises, travelling far enough to outrun the pane
+      // lifting beneath it, so the line reads as moving independently of
+      // the footage rather than pinned to it. The fade clears just as it
+      // reaches the nav banner, so it dissolves rather than sliding under.
       if (fogTag) {
-        var tagT = fogPhase(p, 0.3, 0.78);
-        var tagScale = 0.55 + 1.15 * Math.pow(tagT, 1.5);
-        fogTag.style.transform = "translateY(-128px) scale(" + tagScale + ")";
-        fogTag.style.opacity = fogPhase(tagT, 0, 0.3) * (1 - fogPhase(tagT, 0.5, 0.8));
+        var tagT = fogPhase(p, 0.26, 0.95);
+        var tagScale = 0.5 + 1.75 * Math.pow(tagT, 1.3);
+        var tagRise = -110 - tagT * window.innerHeight * 0.42;
+        fogTag.style.transform = "translateY(" + tagRise + "px) scale(" + tagScale + ")";
+        fogTag.style.opacity = fogPhase(tagT, 0, 0.28) * (1 - fogPhase(tagT, 0.62, 0.92));
       }
       // The pane starts drifting upward the moment the tagline hits full
       // opacity (p 0.444) — just before its ramp-down — so the exit is
