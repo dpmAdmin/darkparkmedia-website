@@ -409,12 +409,13 @@
         fogLogo.style.transform = "translateY(" + (-logoOut * 90) + "px)";
         fogLogo.style.opacity = 1 - logoOut;
       }
-      // The tagline follows the mark up: rises in behind it, holds,
+      // The tagline follows the mark up: rises in behind it, settles a
+      // little below true center (clear of the footage's subject), holds,
       // then fades out well before the stage unpins.
       if (fogTag) {
         var tagIn = fogPhase(p, 0.3, 0.52);
         var tagOut = fogPhase(p, 0.72, 0.9);
-        fogTag.style.transform = "translateY(" + ((1 - tagIn) * 44 - tagOut * 60) + "px)";
+        fogTag.style.transform = "translateY(" + (44 - tagIn * 124 - tagOut * 60) + "px)";
         fogTag.style.opacity = tagIn * (1 - tagOut);
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
