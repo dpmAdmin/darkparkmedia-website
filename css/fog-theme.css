@@ -122,9 +122,7 @@ body.reduced-motion .fog-layer { animation: none; }
   font-style: italic;
   color: var(--fog-light);
   font-size: clamp(1.35rem, 3.2vw, 2rem);
-  /* Soft white halo keeps the graphite legible once the veil thins and
-     the dark footage shows through behind it. */
-  text-shadow: 0 0 22px rgba(238, 241, 245, 0.95), 0 0 8px rgba(238, 241, 245, 0.8);
+  text-transform: capitalize;
   /* Hidden at rest — the fogLoop drives opacity/transform against scroll. */
   opacity: 0;
   transform: translateY(44px);
