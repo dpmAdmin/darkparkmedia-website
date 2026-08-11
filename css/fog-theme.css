@@ -134,6 +134,8 @@ body.reduced-motion .fog-layer { animation: none; }
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(1.35rem, 3.2vw, 2rem);
+  /* Tighter than the body's 1.65 — the two lines read as one mark. */
+  line-height: 1.18;
   text-transform: capitalize;
   /* Mist-white with a dark drop shadow to carry it over the footage. */
   color: #eef1f5;

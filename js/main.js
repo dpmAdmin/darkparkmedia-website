@@ -415,7 +415,7 @@
       if (fogTag) {
         var tagIn = fogPhase(p, 0.3, 0.52);
         var tagOut = fogPhase(p, 0.72, 0.9);
-        fogTag.style.transform = "translateY(" + (44 - tagIn * 172 - tagOut * 60) + "px)";
+        fogTag.style.transform = "translateY(" + (44 - tagIn * 162 - tagOut * 60) + "px)";
         fogTag.style.opacity = tagIn * (1 - tagOut);
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
