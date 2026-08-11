@@ -41,7 +41,7 @@ body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
    -------------------------------------------------------------------------- */
 body.theme-fog .nav-brandline {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.55em;
   white-space: nowrap;
 }
@@ -53,9 +53,11 @@ body.theme-fog .nav-parent {
   letter-spacing: 0.08em;
   color: var(--paper);
   opacity: 0.5;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, font-size 0.32s ease;
 }
-body.theme-fog .nav-parent:hover { opacity: 1; }
+/* Hover swaps the hierarchy: the parent mark grows to the 415 wordmark's
+   size while the 415 wordmark shrinks to the parent's resting size. */
+body.theme-fog .nav-parent:hover { opacity: 1; font-size: 1.3rem; }
 body.theme-fog .pw-rest {
   display: inline-block;
   max-width: 0;
@@ -83,8 +85,8 @@ body.theme-fog .nav-caret {
   color: var(--fog);
   opacity: 0.55;
 }
-body.theme-fog .nav-logo { transition: opacity 0.25s ease; }
-body.theme-fog .nav-parent:hover ~ .nav-logo { opacity: 0.5; }
+body.theme-fog .nav-logo { transition: opacity 0.25s ease, font-size 0.32s ease; }
+body.theme-fog .nav-parent:hover ~ .nav-logo { opacity: 0.5; font-size: 0.65rem; }
 
 /* Custom cursor — graphite-black ring and dot instead of the amber set
    (the trail's orange was hardcoded in style.css, not var-driven). */
