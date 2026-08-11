@@ -63,6 +63,14 @@ body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
    it against scroll automatically once a video exists here. */
 .fog-media { position: absolute; inset: 0; }
 .fog-media video { width: 100%; height: 100%; object-fit: cover; }
+/* Misty white veil over the (dark) footage so the inverted sky/fog theme
+   and the graphite copy keep their contrast. */
+.fog-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(217,227,238,0.72) 0%, rgba(233,238,244,0.5) 45%, rgba(238,241,245,0.72) 100%);
+}
 .fog-sky { position: absolute; inset: -22%; will-change: transform; }
 .fog-layer {
   position: absolute;

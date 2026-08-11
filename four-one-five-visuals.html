@@ -38,11 +38,12 @@
          choreography lives in the fogLoop block in js/main.js. -->
     <section class="fog-hero" aria-label="Four One Five Visuals">
       <div class="fog-stage">
-        <!-- BACKGROUND CLIP SLOT: when the hero video lands, add inside
-             .fog-media below — js/main.js scrubs it against scroll
-             automatically, same mechanism as the homepage hero:
-             <video src="assets/video/FourOneFiveHero.mp4" muted playsinline preload="auto"></video> -->
-        <div class="fog-media" aria-hidden="true"></div>
+        <!-- Background clip (shared with the homepage hero for now — swap the
+             src when 415 gets its own footage). Scroll-scrubbed by the
+             fogLoop in js/main.js, fog layers drift over it. -->
+        <div class="fog-media" aria-hidden="true">
+          <video src="assets/video/ZoomHeroTemp.mp4" muted playsinline preload="auto"></video>
+        </div>
         <div class="fog-sky" aria-hidden="true">
           <div class="fog-layer fog-a"></div>
           <div class="fog-layer fog-b"></div>
