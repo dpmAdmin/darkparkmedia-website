@@ -395,9 +395,10 @@
       window.addEventListener("scroll", fogVideoKick, { passive: true });
       window.addEventListener("pointerdown", fogVideoKick);
       // Browsers pause muted video in hidden tabs — resume the moment the
-      // page is visible again so the frame is never parked.
+      // page is visible again (if the pane is still on screen) so the
+      // frame is never parked.
       document.addEventListener("visibilitychange", function () {
-        if (!document.hidden) {
+        if (!document.hidden && fogHero.getBoundingClientRect().bottom > 0) {
           var pv = fogVideo.play();
           if (pv && pv.catch) pv.catch(function () {});
         }
@@ -417,8 +418,24 @@
       return Math.min(1, Math.max(0, (p - from) / (to - from)));
     }
 
+    var fogLastPlayAttempt = 0;
     (function fogLoop() {
       var p = fogProgress();
+      // The clip must be in motion at every moment any part of the pane
+      // is on screen — browsers quietly pause muted video they consider
+      // idle or offscreen (that's the freeze at the end of the scroll),
+      // so any time it's found paused while the pane is still visible,
+      // start it again. Throttled so a genuinely blocked autoplay isn't
+      // hammered every frame.
+      if (fogVideo && fogVideo.paused && !document.hidden &&
+          fogHero.getBoundingClientRect().bottom > 0) {
+        var fogNow = Date.now();
+        if (fogNow - fogLastPlayAttempt > 400) {
+          fogLastPlayAttempt = fogNow;
+          var fogResume = fogVideo.play();
+          if (fogResume && fogResume.catch) fogResume.catch(function () {});
+        }
+      }
       // The mark zooms toward the viewer from the first scrolled pixel —
       // scale grows continuously (eased), opacity holds through the early
       // flight, then it fades as it passes the camera.
