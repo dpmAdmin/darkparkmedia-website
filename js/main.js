@@ -388,6 +388,7 @@
     var fogTag = fogHero.querySelector(".fog-tag");
     var fogHint = fogHero.querySelector(".hero-scroll-hint");
     var fogMedia = fogHero.querySelector(".fog-media");
+    var fogStage = fogHero.querySelector(".fog-stage");
 
     // Scroll-scrubbed background — the same interaction as the homepage
     // hero: the clip's timeline is the scroll itself, running forward on
@@ -448,6 +449,14 @@
         var tagScale = 0.55 + 1.15 * Math.pow(tagT, 1.5);
         fogTag.style.transform = "translateY(-128px) scale(" + tagScale + ")";
         fogTag.style.opacity = fogPhase(tagT, 0, 0.3) * (1 - fogPhase(tagT, 0.5, 0.8));
+      }
+      // The pane starts drifting upward the moment the tagline hits full
+      // opacity (p 0.444) — just before its ramp-down — so the exit is
+      // already under way by the time the sticky pin releases and hands
+      // off to the glide.
+      if (fogStage) {
+        var lift = fogPhase(p, 0.444, 1) * window.innerHeight * 0.22;
+        fogStage.style.transform = lift > 0 ? "translateY(" + (-lift) + "px)" : "";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
       // Thin the white veil as the mark flies off, bringing the footage

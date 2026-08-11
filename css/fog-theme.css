@@ -126,7 +126,13 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
    Ambient cloud drift is pure CSS; the choreography (and the future
    background-clip scrub) lives in the fogLoop block in js/main.js.
    -------------------------------------------------------------------------- */
-.fog-hero { position: relative; height: 260vh; }
+/* The track carries the same sky gradient as the stage, so when the
+   stage lifts away early the fog behind it is continuous — no seam. */
+.fog-hero {
+  position: relative;
+  height: 260vh;
+  background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
+}
 .fog-stage {
   position: sticky;
   top: 0;
