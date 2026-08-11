@@ -374,6 +374,7 @@
     var fogLogo = fogHero.querySelector(".fog-logo");
     var fogTag = fogHero.querySelector(".fog-tag");
     var fogHint = fogHero.querySelector(".hero-scroll-hint");
+    var fogMedia = fogHero.querySelector(".fog-media");
 
     var fogDuration = 0;
     var fogTargetTime = 0;
@@ -417,6 +418,9 @@
         fogTag.style.opacity = tagIn * (1 - tagOut);
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
+      // Thin the white veil as the mark lifts, bringing the footage into
+      // view — down to 30% of its resting strength by mid-scroll.
+      if (fogMedia) fogMedia.style.setProperty("--veil", 1 - fogPhase(p, 0.05, 0.5) * 0.7);
       if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
       // Future background clip: scrub forward/back with scroll, same
       // easing lerp as the homepage hero.
