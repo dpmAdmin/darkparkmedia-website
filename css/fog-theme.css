@@ -38,11 +38,17 @@ body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
 }
 
 /* --------------------------------------------------------------------------
-   Fog hero — centered mark over drifting white cloud layers. The ambient
-   drift is pure CSS; js/main.js adds scroll parallax on .fog-sky/.fog-logo.
+   Fog hero — pinned scroll stage, same skeleton as the homepage hero: a
+   tall scroll track with a sticky viewport-height stage. The mark holds
+   alone over the drifting clouds, lifts and fades on scroll while the
+   tagline follows it up, reveals, then fades out before the next panel.
+   Ambient cloud drift is pure CSS; the choreography (and the future
+   background-clip scrub) lives in the fogLoop block in js/main.js.
    -------------------------------------------------------------------------- */
-.fog-hero {
-  position: relative;
+.fog-hero { position: relative; height: 380vh; }
+.fog-stage {
+  position: sticky;
+  top: 0;
   height: 100vh;
   height: 100svh;
   min-height: 560px;
@@ -52,6 +58,11 @@ body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
   justify-content: center;
   background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
 }
+/* Background clip slot — sits under the cloud layers so the fog drifts
+   over the footage. Empty until the hero video lands; js/main.js scrubs
+   it against scroll automatically once a video exists here. */
+.fog-media { position: absolute; inset: 0; }
+.fog-media video { width: 100%; height: 100%; object-fit: cover; }
 .fog-sky { position: absolute; inset: -22%; will-change: transform; }
 .fog-layer {
   position: absolute;
@@ -82,48 +93,34 @@ body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
 @keyframes fog-drift-c { from { transform: translate3d(-2%, 3%, 0) scale(1.02); } to { transform: translate3d(4%, -2%, 0) scale(1.1); } }
 body.reduced-motion .fog-layer { animation: none; }
 
-.fog-logo {
+.fog-copy {
   position: relative;
   z-index: 1;
   text-align: center;
   padding: 0 1.5rem;
-  will-change: transform, opacity;
 }
+.fog-logo { will-change: transform, opacity; }
 .fog-logo img {
   width: min(70vw, 520px);
   height: auto;
   filter: drop-shadow(0 18px 45px rgba(51, 64, 80, 0.28));
-}
-.fog-mark {
-  display: block;
-  font-family: var(--display);
-  font-weight: 800;
-  text-transform: uppercase;
-  line-height: 0.92;
-  font-size: clamp(3.2rem, 10vw, 8.5rem);
-  color: var(--paper);
-  letter-spacing: 0.01em;
-  text-shadow: 0 18px 45px rgba(51, 64, 80, 0.18);
-}
-.fog-mark-sub {
-  display: block;
-  margin-top: 0.9rem;
-  font-family: var(--display);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.58em;
-  text-indent: 0.58em;
-  font-size: clamp(0.95rem, 2.4vw, 1.5rem);
-  color: var(--amber);
 }
 .fog-tag {
   margin-top: 1.4rem;
   font-family: var(--serif);
   font-style: italic;
   color: var(--fog);
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  /* Hidden at rest — the fogLoop drives opacity/transform against scroll. */
+  opacity: 0;
+  transform: translateY(44px);
+  will-change: transform, opacity;
 }
 .fog-hero .hero-scroll-hint { color: var(--fog); }
+
+/* Reduced motion: no pin, no choreography — one calm viewport, all resting. */
+body.reduced-motion .fog-hero { height: 100vh; height: 100svh; }
+body.reduced-motion .fog-tag { opacity: 1; transform: none; }
 
 /* --------------------------------------------------------------------------
    Liquid-glass graphite tiles — service cards keep their dark identity as

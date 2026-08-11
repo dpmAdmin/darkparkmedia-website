@@ -31,20 +31,29 @@
 
   <main id="main">
 
-    <!-- HERO: centered 415 mark over drifting white fog. The cloud drift is
-         pure CSS (fog-theme.css); scroll adds parallax lift + fade via the
-         fogLoop block in js/main.js. -->
+    <!-- HERO: pinned scroll stage, same pattern as the homepage hero. The
+         415 mark holds alone over the fog, lifts and fades on scroll while
+         the tagline follows it up, reveals, and fades back out before the
+         services panel arrives. Cloud drift is CSS (fog-theme.css); the
+         choreography lives in the fogLoop block in js/main.js. -->
     <section class="fog-hero" aria-label="Four One Five Visuals">
-      <div class="fog-sky" aria-hidden="true">
-        <div class="fog-layer fog-a"></div>
-        <div class="fog-layer fog-b"></div>
-        <div class="fog-layer fog-c"></div>
+      <div class="fog-stage">
+        <!-- BACKGROUND CLIP SLOT: when the hero video lands, add inside
+             .fog-media below — js/main.js scrubs it against scroll
+             automatically, same mechanism as the homepage hero:
+             <video src="assets/video/FourOneFiveHero.mp4" muted playsinline preload="auto"></video> -->
+        <div class="fog-media" aria-hidden="true"></div>
+        <div class="fog-sky" aria-hidden="true">
+          <div class="fog-layer fog-a"></div>
+          <div class="fog-layer fog-b"></div>
+          <div class="fog-layer fog-c"></div>
+        </div>
+        <div class="fog-copy">
+          <h1 class="fog-logo"><img src="assets/logos/box-fofv-transparent.png" alt="Four One Five Visuals"></h1>
+          <p class="fog-tag">Real estate &amp; architectural film from the Bay Area.</p>
+        </div>
+        <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
       </div>
-      <div class="fog-logo">
-        <h1><img src="assets/logos/box-fofv-transparent.png" alt="Four One Five Visuals"></h1>
-        <p class="fog-tag">Real estate &amp; architectural film from the Bay Area.</p>
-      </div>
-      <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
     </section>
 
     <section class="section" aria-label="Services">

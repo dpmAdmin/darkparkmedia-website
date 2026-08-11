@@ -360,25 +360,80 @@
   }
 
   /* ------------------------------------------------------------------
-     Fog hero (Four One Five Visuals): the cloud layers drift on their
-     own via CSS keyframes; this adds scroll depth — the sky sinks at a
-     slower rate than the page while the centered mark lifts and fades.
+     Fog hero (Four One Five Visuals) — pinned scroll choreography on the
+     same skeleton as the homepage hero: the stage holds while the mark
+     lifts and fades, the tagline follows it up, reveals, then fades back
+     out before the services panel arrives. Cloud layers keep their CSS
+     drift; scroll adds a slow sink for depth. If a clip exists in
+     .fog-media it scrubs against the same progress automatically.
      ------------------------------------------------------------------ */
   var fogHero = document.querySelector(".fog-hero");
+  var fogVideo = fogHero ? fogHero.querySelector(".fog-media video") : null;
   if (fogHero && !reducedMotion) {
     var fogSky = fogHero.querySelector(".fog-sky");
     var fogLogo = fogHero.querySelector(".fog-logo");
-    (function fogLoop() {
+    var fogTag = fogHero.querySelector(".fog-tag");
+    var fogHint = fogHero.querySelector(".hero-scroll-hint");
+
+    var fogDuration = 0;
+    var fogTargetTime = 0;
+    var fogRenderedTime = -1;
+    if (fogVideo) {
+      fogVideo.addEventListener("loadedmetadata", function () {
+        fogDuration = fogVideo.duration || 0;
+        primeScrubVideo(fogVideo);
+      });
+      if (fogVideo.readyState >= 1) fogDuration = fogVideo.duration || 0;
+      primeScrubVideo(fogVideo);
+    }
+
+    // 0 while the stage first pins, 1 when the track has fully scrolled
+    // through — same mapping as the homepage hero scrub.
+    function fogProgress() {
       var rect = fogHero.getBoundingClientRect();
-      var scrolled = Math.min(Math.max(-rect.top, 0), rect.height);
-      var p = rect.height > 0 ? scrolled / rect.height : 0;
-      if (fogSky) fogSky.style.transform = "translateY(" + scrolled * 0.35 + "px)";
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) return 0;
+      return Math.min(1, Math.max(0, -rect.top / total));
+    }
+    // Normalize a sub-window [from, to] of overall progress to 0..1.
+    function fogPhase(p, from, to) {
+      return Math.min(1, Math.max(0, (p - from) / (to - from)));
+    }
+
+    (function fogLoop() {
+      var p = fogProgress();
+      // The mark holds alone, then slowly lifts away and fades.
+      var logoOut = fogPhase(p, 0.08, 0.42);
       if (fogLogo) {
-        fogLogo.style.transform = "translateY(" + scrolled * 0.5 + "px)";
-        fogLogo.style.opacity = Math.max(0, 1 - p * 1.4);
+        fogLogo.style.transform = "translateY(" + (-logoOut * 90) + "px)";
+        fogLogo.style.opacity = 1 - logoOut;
+      }
+      // The tagline follows the mark up: rises in behind it, holds,
+      // then fades out well before the stage unpins.
+      if (fogTag) {
+        var tagIn = fogPhase(p, 0.3, 0.52);
+        var tagOut = fogPhase(p, 0.72, 0.9);
+        fogTag.style.transform = "translateY(" + ((1 - tagIn) * 44 - tagOut * 60) + "px)";
+        fogTag.style.opacity = tagIn * (1 - tagOut);
+      }
+      if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
+      if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
+      // Future background clip: scrub forward/back with scroll, same
+      // easing lerp as the homepage hero.
+      if (fogDuration > 0) {
+        fogTargetTime = p * Math.max(0, fogDuration - 0.05);
+        var next = fogRenderedTime < 0 ? fogTargetTime : fogRenderedTime + (fogTargetTime - fogRenderedTime) * 0.22;
+        if (Math.abs(next - fogRenderedTime) > 0.001) {
+          fogRenderedTime = next;
+          try { fogVideo.currentTime = fogRenderedTime; } catch (e) { /* not seekable yet */ }
+        }
       }
       tick(fogLoop);
     })();
+  } else if (fogHero) {
+    // Reduced motion: everything rests visible (CSS handles the tag);
+    // any future clip just holds its first frame.
+    if (fogVideo) fogVideo.pause();
   }
 
   /* ------------------------------------------------------------------
