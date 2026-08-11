@@ -139,6 +139,8 @@
       primeScrubVideo(scrubVideo);
     }
 
+    // Copy choreography runs over the pinned span — 1 the instant the
+    // stage unpins and starts gliding away.
     function progress() {
       var rect = scrubSection.getBoundingClientRect();
       var total = rect.height - window.innerHeight;
@@ -146,11 +148,20 @@
       return Math.min(1, Math.max(0, -rect.top / total));
     }
 
+    // The clip keeps scrubbing past the unpin, through the glide, landing
+    // on its last frame as the section's bottom edge clears the top of
+    // the viewport — exactly when the next pane arrives.
+    function clipProgress() {
+      var rect = scrubSection.getBoundingClientRect();
+      if (rect.height <= 0) return 0;
+      return Math.min(1, Math.max(0, -rect.top / rect.height));
+    }
+
     function update() {
       var p = progress();
       if (duration > 0) {
         // Leave a hair off the end to avoid the 'ended' frame flash
-        targetTime = p * Math.max(0, duration - 0.05);
+        targetTime = clipProgress() * Math.max(0, duration - 0.05);
       }
       if (heroTag) heroTag.classList.toggle("is-visible", p > 0.55);
       if (scrollHint) scrollHint.classList.toggle("is-hidden", p > 0.05);
@@ -394,13 +405,22 @@
       primeScrubVideo(fogVideo);
     }
 
-    // 0 while the stage first pins, 1 when the track has fully scrolled
-    // through — same mapping as the homepage hero scrub.
+    // Flight choreography runs over the pinned span — 1 the instant the
+    // stage unpins and starts gliding away.
     function fogProgress() {
       var rect = fogHero.getBoundingClientRect();
       var total = rect.height - window.innerHeight;
       if (total <= 0) return 0;
       return Math.min(1, Math.max(0, -rect.top / total));
+    }
+
+    // The clip keeps scrubbing past the unpin, through the glide, landing
+    // on its last frame as the pane's bottom edge clears the top of the
+    // viewport — same treatment as the homepage hero.
+    function fogClipProgress() {
+      var rect = fogHero.getBoundingClientRect();
+      if (rect.height <= 0) return 0;
+      return Math.min(1, Math.max(0, -rect.top / rect.height));
     }
     // Normalize a sub-window [from, to] of overall progress to 0..1.
     function fogPhase(p, from, to) {
@@ -434,10 +454,10 @@
       // into view — down to 30% of its resting strength by mid-scroll.
       if (fogMedia) fogMedia.style.setProperty("--veil", 1 - fogPhase(p, 0.05, 0.5) * 0.7);
       if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
-      // Scrub the clip against the same progress — forward on the way
-      // down, backward on the way up, same lerp as the homepage hero.
+      // Scrub the clip — forward on the way down, backward on the way up,
+      // same lerp as the homepage hero, and still running through the glide.
       if (fogDuration > 0) {
-        fogTargetTime = p * Math.max(0, fogDuration - 0.05);
+        fogTargetTime = fogClipProgress() * Math.max(0, fogDuration - 0.05);
         var fogNext = fogRenderedTime < 0 ? fogTargetTime : fogRenderedTime + (fogTargetTime - fogRenderedTime) * 0.22;
         if (Math.abs(fogNext - fogRenderedTime) > 0.001) {
           fogRenderedTime = fogNext;
