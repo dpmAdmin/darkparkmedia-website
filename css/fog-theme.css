@@ -140,9 +140,10 @@ body.reduced-motion .fog-layer { animation: none; }
   /* Mist-white with a dark drop shadow to carry it over the footage. */
   color: #eef1f5;
   text-shadow: 0 2px 14px rgba(16, 19, 23, 0.85), 0 1px 4px rgba(16, 19, 23, 0.9);
-  /* Hidden at rest — the fogLoop drives opacity/transform against scroll. */
+  /* Hidden at rest, parked deep in the scene — the fogLoop flies it
+     toward the viewer (scale + fade) against scroll. */
   opacity: 0;
-  transform: translateY(44px);
+  transform: translateY(-128px) scale(0.55);
   will-change: transform, opacity;
 }
 .fog-hero .hero-scroll-hint { color: var(--fog); }

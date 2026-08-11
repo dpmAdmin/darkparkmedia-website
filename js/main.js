@@ -360,12 +360,14 @@
   }
 
   /* ------------------------------------------------------------------
-     Fog hero (Four One Five Visuals) — pinned scroll choreography on the
-     same skeleton as the homepage hero: the stage holds while the mark
-     lifts and fades, the tagline follows it up, reveals, then fades back
-     out before the services panel arrives. Cloud layers keep their CSS
-     drift; scroll adds a slow sink for depth. If a clip exists in
-     .fog-media it scrubs against the same progress automatically.
+     Fog hero (Four One Five Visuals) — perspective choreography: as you
+     scroll, the mark zooms toward the viewer and fades away as it
+     "passes" the camera, then the tagline flies in from behind and does
+     the same. Nothing ever holds still — the background clip plays
+     continuously (looped, never scrubbed/paused), the cloud layers keep
+     their CSS drift, and every scroll increment moves whatever is on
+     stage. Fully reversible: scroll back up and the flight runs in
+     reverse.
      ------------------------------------------------------------------ */
   var fogHero = document.querySelector(".fog-hero");
   var fogVideo = fogHero ? fogHero.querySelector(".fog-media video") : null;
@@ -376,16 +378,30 @@
     var fogHint = fogHero.querySelector(".hero-scroll-hint");
     var fogMedia = fogHero.querySelector(".fog-media");
 
-    var fogDuration = 0;
-    var fogTargetTime = 0;
-    var fogRenderedTime = -1;
+    // Continuous playback — the clip loops forever and is never tied to
+    // scroll, so the frame behind the fog is always in motion.
     if (fogVideo) {
-      fogVideo.addEventListener("loadedmetadata", function () {
-        fogDuration = fogVideo.duration || 0;
-        primeScrubVideo(fogVideo);
+      fogVideo.loop = true;
+      fogVideo.muted = true;
+      var fogPlay = fogVideo.play();
+      if (fogPlay && fogPlay.catch) fogPlay.catch(function () {});
+      // If autoplay was blocked, the first interaction starts it.
+      var fogVideoKick = function () {
+        var pr = fogVideo.play();
+        if (pr && pr.catch) pr.catch(function () {});
+        window.removeEventListener("scroll", fogVideoKick);
+        window.removeEventListener("pointerdown", fogVideoKick);
+      };
+      window.addEventListener("scroll", fogVideoKick, { passive: true });
+      window.addEventListener("pointerdown", fogVideoKick);
+      // Browsers pause muted video in hidden tabs — resume the moment the
+      // page is visible again so the frame is never parked.
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) {
+          var pv = fogVideo.play();
+          if (pv && pv.catch) pv.catch(function () {});
+        }
       });
-      if (fogVideo.readyState >= 1) fogDuration = fogVideo.duration || 0;
-      primeScrubVideo(fogVideo);
     }
 
     // 0 while the stage first pins, 1 when the track has fully scrolled
@@ -403,41 +419,34 @@
 
     (function fogLoop() {
       var p = fogProgress();
-      // The mark holds alone, then slowly lifts away and fades.
-      var logoOut = fogPhase(p, 0.08, 0.42);
+      // The mark zooms toward the viewer from the first scrolled pixel —
+      // scale grows continuously (eased), opacity holds through the early
+      // flight, then it fades as it passes the camera.
       if (fogLogo) {
-        fogLogo.style.transform = "translateY(" + (-logoOut * 90) + "px)";
-        fogLogo.style.opacity = 1 - logoOut;
+        var logoT = fogPhase(p, 0, 0.42);
+        var logoScale = 1 + 2.4 * Math.pow(logoT, 1.5);
+        fogLogo.style.transform = "scale(" + logoScale + ")";
+        fogLogo.style.opacity = 1 - fogPhase(logoT, 0.45, 0.95);
       }
-      // The tagline follows the mark up: rises in behind it, settles a
-      // little below true center (clear of the footage's subject), holds,
-      // then fades out well before the stage unpins.
+      // The tagline starts deep in the scene (small), flies toward the
+      // viewer through its readable size — still growing the whole way,
+      // never parked — and fades out as it closes in.
       if (fogTag) {
-        var tagIn = fogPhase(p, 0.3, 0.52);
-        var tagOut = fogPhase(p, 0.72, 0.9);
-        fogTag.style.transform = "translateY(" + (44 - tagIn * 162 - tagOut * 60) + "px)";
-        fogTag.style.opacity = tagIn * (1 - tagOut);
+        var tagT = fogPhase(p, 0.28, 0.88);
+        var tagScale = 0.55 + 2.65 * Math.pow(tagT, 1.7);
+        fogTag.style.transform = "translateY(-128px) scale(" + tagScale + ")";
+        fogTag.style.opacity = fogPhase(tagT, 0, 0.3) * (1 - fogPhase(tagT, 0.62, 0.95));
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
-      // Thin the white veil as the mark lifts, bringing the footage into
-      // view — down to 30% of its resting strength by mid-scroll.
+      // Thin the white veil as the mark flies off, bringing the footage
+      // into view — down to 30% of its resting strength by mid-scroll.
       if (fogMedia) fogMedia.style.setProperty("--veil", 1 - fogPhase(p, 0.05, 0.5) * 0.7);
       if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
-      // Future background clip: scrub forward/back with scroll, same
-      // easing lerp as the homepage hero.
-      if (fogDuration > 0) {
-        fogTargetTime = p * Math.max(0, fogDuration - 0.05);
-        var next = fogRenderedTime < 0 ? fogTargetTime : fogRenderedTime + (fogTargetTime - fogRenderedTime) * 0.22;
-        if (Math.abs(next - fogRenderedTime) > 0.001) {
-          fogRenderedTime = next;
-          try { fogVideo.currentTime = fogRenderedTime; } catch (e) { /* not seekable yet */ }
-        }
-      }
       tick(fogLoop);
     })();
   } else if (fogHero) {
     // Reduced motion: everything rests visible (CSS handles the tag);
-    // any future clip just holds its first frame.
+    // the clip holds its first frame.
     if (fogVideo) fogVideo.pause();
   }
 
