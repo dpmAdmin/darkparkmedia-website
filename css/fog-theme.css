@@ -417,7 +417,7 @@ body.theme-fog .svc-scene { position: relative; height: 300vh; }
    meet and converge rather than a hard card edge crossing a still-lit
    frame. */
 body.theme-fog .svc-scene + .svc-scene {
-  margin-top: -180px;
+  margin-top: -280px;
   z-index: 1;
 }
 body.theme-fog .svc-scene + .svc-scene::before {
@@ -467,6 +467,18 @@ body.theme-fog .svc-scene-cutout {
   height: auto;
   transform-origin: 50% 100%;
   will-change: transform, opacity;
+}
+/* Scenes after the first sit their cutout higher in the stage — closer
+   to the stage's own top rather than its bottom — so less of the stage
+   has to scroll into view before the cutout's own top edge clears the
+   fold. (Moving it toward the bottom, the intuitive-sounding fix, is
+   backwards: the two edges are rigidly linked, so a cutout anchored
+   nearer the bottom needs the stage to travel further before its top
+   is reachable.) Capped at 26% to stay inside the ground layer's 29%
+   band — any higher and the building floats above the ground instead
+   of standing on it. */
+body.theme-fog .svc-scene + .svc-scene .svc-scene-cutout {
+  bottom: 26%;
 }
 /* Twilight frame, wiped across by clip-path. Its layers mirror the day
    scene's geometry exactly and sit at the day scene's *finished*
