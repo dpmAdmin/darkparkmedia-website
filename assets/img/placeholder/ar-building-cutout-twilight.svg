@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-label="Placeholder commercial building cutout, twilight">
+  <!-- PLACEHOLDER twilight counterpart of ar-building-cutout.svg. Geometry is
+       byte-identical to the day version — only the palette changes — so the
+       wipe reads as dusk falling rather than the building shifting. -->
+  <defs>
+    <linearGradient id="cmassT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#262e3a"/>
+      <stop offset="1" stop-color="#141922"/>
+    </linearGradient>
+    <linearGradient id="cglassT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd7a4" stop-opacity="0.94"/>
+      <stop offset="1" stop-color="#ffc27f" stop-opacity="0.88"/>
+    </linearGradient>
+  </defs>
+
+  <!-- podium -->
+  <path d="M96 344 H812 V462 H96 Z" fill="url(#cmassT)"/>
+  <!-- tower -->
+  <path d="M286 54 H640 V344 H286 Z" fill="url(#cmassT)"/>
+  <!-- parapet caps -->
+  <path d="M274 42 H652 V58 H274 Z" fill="#2f3846"/>
+  <path d="M84 332 H824 V348 H84 Z" fill="#2f3846"/>
+  <!-- roof plant -->
+  <path d="M520 12 H590 V42 H520 Z" fill="#1d2430"/>
+
+  <!-- tower curtain wall: 4 columns x 7 bands -->
+  <g fill="url(#cglassT)">
+    <rect x="306" y="78"  width="70" height="30"/><rect x="390" y="78"  width="70" height="30"/>
+    <rect x="474" y="78"  width="70" height="30"/><rect x="558" y="78"  width="62" height="30"/>
+    <rect x="306" y="122" width="70" height="30"/><rect x="390" y="122" width="70" height="30"/>
+    <rect x="474" y="122" width="70" height="30"/><rect x="558" y="122" width="62" height="30"/>
+    <rect x="306" y="166" width="70" height="30"/><rect x="390" y="166" width="70" height="30"/>
+    <rect x="474" y="166" width="70" height="30"/><rect x="558" y="166" width="62" height="30"/>
+    <rect x="306" y="210" width="70" height="30"/><rect x="390" y="210" width="70" height="30"/>
+    <rect x="474" y="210" width="70" height="30"/><rect x="558" y="210" width="62" height="30"/>
+    <rect x="306" y="254" width="70" height="30"/><rect x="390" y="254" width="70" height="30"/>
+    <rect x="474" y="254" width="70" height="30"/><rect x="558" y="254" width="62" height="30"/>
+    <rect x="306" y="298" width="70" height="26"/><rect x="390" y="298" width="70" height="26"/>
+    <rect x="474" y="298" width="70" height="26"/><rect x="558" y="298" width="62" height="26"/>
+  </g>
+
+  <!-- podium glazing: continuous ground-floor storefront -->
+  <g fill="url(#cglassT)">
+    <rect x="124" y="372" width="150" height="66"/>
+    <rect x="292" y="372" width="150" height="66"/>
+    <rect x="460" y="372" width="150" height="66"/>
+    <rect x="628" y="372" width="156" height="66"/>
+  </g>
+  <g stroke="#141922" stroke-width="5" opacity="0.5">
+    <line x1="199" y1="372" x2="199" y2="438"/>
+    <line x1="367" y1="372" x2="367" y2="438"/>
+    <line x1="535" y1="372" x2="535" y2="438"/>
+    <line x1="706" y1="372" x2="706" y2="438"/>
+  </g>
+
+  <!-- entrance canopy -->
+  <path d="M392 438 H556 V452 H392 Z" fill="#1d2430"/>
+  <!-- plaza -->
+  <path d="M70 462 H850 V478 H70 Z" fill="#1a202a"/>
+</svg>

@@ -331,6 +331,33 @@ body.theme-fog .btn-primary:focus-visible { color: #fff; }
    can move independently — that separation is the whole effect, and it
    is why the real assets must arrive unflattened too.
    -------------------------------------------------------------------------- */
+/* Wrapper for the whole run of scenes, so the section label can pin
+   across all of them. */
+body.theme-fog .svc-scenes {
+  position: relative;
+  background: var(--black);
+  padding-top: clamp(4rem, 12vh, 9rem);
+}
+/* Rides up the white pane, meets the nav, and stays pinned over the
+   scenes for their whole run. Graphite by default (it sits over white
+   and over the day sky); flips to paper once a twilight wipe has taken
+   the top of the frame — the sceneLoop toggles .on-dark. */
+body.theme-fog .svc-scenes-label {
+  position: sticky;
+  top: calc(var(--nav-h) + 0.75rem);
+  z-index: 3;
+  text-align: center;
+  font-size: clamp(1.6rem, 4.4vw, 3rem);
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  color: var(--paper);
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+body.theme-fog .svc-scenes-label.on-dark {
+  color: #f4f7fa;
+  text-shadow: 0 2px 18px rgba(10, 14, 22, 0.6);
+}
+
 body.theme-fog .svc-scene { position: relative; height: 300vh; }
 body.theme-fog .svc-scene-stage {
   position: sticky;
@@ -341,6 +368,8 @@ body.theme-fog .svc-scene-stage {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* The pane starts as clean white — the sky and ground arrive later. */
+  background: var(--black);
 }
 body.theme-fog .svc-scene-art { position: absolute; inset: 0; }
 body.theme-fog .svc-scene-art > * { position: absolute; }
@@ -351,11 +380,12 @@ body.theme-fog .svc-scene-sky {
   background: linear-gradient(to bottom, #b9cfe4 0%, #d7e4ef 46%, #eaf0f5 100%);
   will-change: transform;
 }
-/* Ground the house stands on */
+/* Ground the building stands on — scrolls up into place after it lands */
 body.theme-fog .svc-scene-ground {
   left: 0; right: 0; bottom: 0;
   height: 29%;
   background: linear-gradient(to bottom, #cdd7de 0%, #b9c4cd 100%);
+  will-change: transform;
 }
 /* The isolated building, dragged in on scroll */
 body.theme-fog .svc-scene-cutout {
@@ -391,15 +421,6 @@ body.theme-fog .svc-scene-copy {
   text-align: center;
   padding: 0 1.5rem;
   will-change: transform, opacity;
-}
-body.theme-fog .svc-scene-eyebrow {
-  font-family: var(--display);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 0.72rem;
-  color: var(--amber);
-  margin-bottom: 0.6rem;
 }
 body.theme-fog .svc-scene-title {
   font-size: clamp(2.6rem, 8vw, 6.5rem);

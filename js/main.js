@@ -503,9 +503,22 @@
      only its own markup and art — no new code.
      ------------------------------------------------------------------ */
   var scenes = document.querySelectorAll(".svc-scene");
+  var scenesLabel = document.querySelector(".svc-scenes-label");
   if (scenes.length && !reducedMotion) {
+    function phase(p, from, to) {
+      return Math.min(1, Math.max(0, (p - from) / (to - from)));
+    }
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    // Overshoots slightly then settles — gives the building the feel of
+    // being flicked into place rather than slid.
+    function easeOutBack(t) {
+      var c1 = 1.70158, c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    }
+
     scenes.forEach(function (scene) {
       var sky = scene.querySelector(".svc-scene-sky");
+      var ground = scene.querySelector(".svc-scene-ground");
       var cutout = scene.querySelector(".svc-scene-cutout");
       var twilight = scene.querySelector(".svc-scene-twilight");
       var copy = scene.querySelector(".svc-scene-copy");
@@ -516,38 +529,46 @@
         if (total <= 0) return 0;
         return Math.min(1, Math.max(0, -rect.top / total));
       }
-      function phase(p, from, to) {
-        return Math.min(1, Math.max(0, (p - from) / (to - from)));
-      }
-      // Ease so each move settles instead of arriving at full speed.
-      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
       (function sceneLoop() {
         var p = sceneProgress();
 
-        // 1. The building is dragged in from the right and set down.
+        // 1. The building is flicked up from beneath the fold and lands.
         if (cutout) {
-          var inT = easeOut(phase(p, 0, 0.3));
+          var inT = easeOutBack(phase(p, 0, 0.2));
           cutout.style.transform =
-            "translateX(" + (-50 + (1 - inT) * 78) + "%) scale(" + (0.9 + inT * 0.1) + ")";
-          cutout.style.opacity = phase(p, 0, 0.12);
+            "translateX(-50%) translateY(" + ((1 - inT) * 118) + "%) rotate(" + ((1 - inT) * -7) + "deg)";
+          cutout.style.opacity = phase(p, 0, 0.06);
         }
-        // 2. The sky drops in behind it to complete the frame.
+        // 2. Only once it has landed does the ground scroll up under it,
+        // 3. and then the sky comes down to close the frame.
+        if (ground) {
+          var groundT = easeOut(phase(p, 0.22, 0.4));
+          ground.style.transform = "translateY(" + ((1 - groundT) * 100) + "%)";
+        }
         if (sky) {
-          var skyT = easeOut(phase(p, 0.16, 0.5));
+          var skyT = easeOut(phase(p, 0.38, 0.58));
           sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
         }
-        // 3. The twilight frame wipes across the finished picture.
+        // 4. A beat holds here (0.58 - 0.66) with the day frame complete.
+        // 5. Then twilight is swiped up from the bottom edge.
+        var wipe = phase(p, 0.66, 0.9);
         if (twilight) {
-          var wipe = phase(p, 0.42, 0.88) * 100;
-          twilight.style.clipPath = "inset(0 0 0 " + (100 - wipe) + "%)";
+          twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
         }
-        // 4. The title rises through the middle of the wipe.
+        // 6. …and hangs from 0.9 to the end of the track.
+
+        // The title rises with the completed day frame and stays.
         if (copy) {
-          var titleIn = easeOut(phase(p, 0.46, 0.68));
-          var titleOut = phase(p, 0.9, 1);
-          copy.style.opacity = titleIn * (1 - titleOut);
-          copy.style.transform = "translateY(" + ((1 - titleIn) * 46 - titleOut * 30) + "px)";
+          var titleIn = easeOut(phase(p, 0.44, 0.62));
+          copy.style.opacity = titleIn;
+          copy.style.transform = "translateY(" + ((1 - titleIn) * 46) + "px)";
+        }
+
+        // The pinned label sits at the top of the frame, so it only needs
+        // to flip once the upward wipe has reached that far.
+        if (scenesLabel && scene.getBoundingClientRect().top < window.innerHeight * 0.5) {
+          scenesLabel.classList.toggle("on-dark", wipe > 0.82);
         }
         tick(sceneLoop);
       })();
