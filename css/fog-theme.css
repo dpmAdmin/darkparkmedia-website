@@ -336,7 +336,9 @@ body.theme-fog .btn-primary:focus-visible { color: #fff; }
 body.theme-fog .svc-scenes {
   position: relative;
   background: var(--black);
-  padding-top: clamp(4rem, 12vh, 9rem);
+  /* Only enough lead-in to clear the fixed nav — the label rides in at the
+     top of the white pane rather than waiting in a tall gap above it. */
+  padding-top: calc(var(--nav-h) + 1.25rem);
 }
 /* Rides up the white pane, meets the nav, and stays pinned over the
    scenes for their whole run. Graphite by default (it sits over white
@@ -351,6 +353,9 @@ body.theme-fog .svc-scenes-label {
   letter-spacing: 0.26em;
   text-indent: 0.26em;
   color: var(--paper);
+  /* Scale/opacity are driven per-frame by the sceneLoop as the first scene
+     pulls up, so they are deliberately not transitioned here. */
+  transform-origin: 50% 0;
   transition: color 0.35s ease, text-shadow 0.35s ease;
 }
 body.theme-fog .svc-scenes-label.on-dark {

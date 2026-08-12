@@ -516,7 +516,7 @@
       return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
     }
 
-    scenes.forEach(function (scene) {
+    scenes.forEach(function (scene, sceneIndex) {
       var sky = scene.querySelector(".svc-scene-sky");
       var ground = scene.querySelector(".svc-scene-ground");
       var cutout = scene.querySelector(".svc-scene-cutout");
@@ -534,33 +534,41 @@
         var p = sceneProgress();
 
         // 1. The building is flicked up from beneath the fold and lands.
+        //    The section label grows into place on the same pull, so the
+        //    two arrive together rather than one waiting on the other.
         if (cutout) {
-          var inT = easeOutBack(phase(p, 0, 0.2));
+          var inT = easeOutBack(phase(p, 0, 0.14));
           cutout.style.transform =
             "translateX(-50%) translateY(" + ((1 - inT) * 118) + "%) rotate(" + ((1 - inT) * -7) + "deg)";
-          cutout.style.opacity = phase(p, 0, 0.06);
+          cutout.style.opacity = phase(p, 0, 0.05);
         }
-        // 2. Only once it has landed does the ground scroll up under it,
-        // 3. and then the sky comes down to close the frame.
+        if (scenesLabel && sceneIndex === 0) {
+          var labelT = easeOut(phase(p, 0, 0.16));
+          scenesLabel.style.transform = "scale(" + (0.62 + labelT * 0.38) + ")";
+          scenesLabel.style.opacity = 0.22 + labelT * 0.78;
+        }
+        // 2. The ground scrolls up under it, overlapping the landing
+        // 3. slightly, then the sky closes the frame — both tightened.
         if (ground) {
-          var groundT = easeOut(phase(p, 0.22, 0.4));
+          var groundT = easeOut(phase(p, 0.13, 0.26));
           ground.style.transform = "translateY(" + ((1 - groundT) * 100) + "%)";
         }
         if (sky) {
-          var skyT = easeOut(phase(p, 0.38, 0.58));
+          var skyT = easeOut(phase(p, 0.24, 0.38));
           sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
         }
-        // 4. A beat holds here (0.58 - 0.66) with the day frame complete.
+        // 4. A long beat (0.44 - 0.62) lets the finished day frame and its
+        //    title sit before dusk arrives.
         // 5. Then twilight is swiped up from the bottom edge.
-        var wipe = phase(p, 0.66, 0.9);
+        var wipe = phase(p, 0.62, 0.86);
         if (twilight) {
           twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
         }
-        // 6. …and hangs from 0.9 to the end of the track.
+        // 6. …and hangs from 0.86 to the end of the track.
 
         // The title rises with the completed day frame and stays.
         if (copy) {
-          var titleIn = easeOut(phase(p, 0.44, 0.62));
+          var titleIn = easeOut(phase(p, 0.3, 0.44));
           copy.style.opacity = titleIn;
           copy.style.transform = "translateY(" + ((1 - titleIn) * 46) + "px)";
         }
