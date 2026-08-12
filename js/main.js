@@ -447,8 +447,18 @@
       // reaches the nav banner, so it dissolves rather than sliding under.
       if (fogTag) {
         var tagT = fogPhase(p, 0.26, 0.95);
-        var tagScale = 0.5 + 1.75 * Math.pow(tagT, 1.3);
-        var tagRise = -110 - tagT * window.innerHeight * 0.42;
+        var tagScale = 0.6 + 0.9 * Math.pow(tagT, 1.3);
+        // Cap the growth so the single line never outgrows the viewport
+        // and gets clipped — offsetWidth is the unscaled layout width.
+        var tagBaseW = fogTag.offsetWidth;
+        if (tagBaseW > 0) {
+          tagScale = Math.min(tagScale, (window.innerWidth - 32) / tagBaseW);
+        }
+        // Rises only within the lower band of the frame — it drifts up
+        // through the rooflines rather than climbing into the sky and off
+        // the top, so the hillside stays the subject the whole way. Still
+        // outpaces the pane lifting beneath it, keeping the parallax.
+        var tagRise = -tagT * 150;
         fogTag.style.transform = "translateY(" + tagRise + "px) scale(" + tagScale + ")";
         fogTag.style.opacity = fogPhase(tagT, 0, 0.28) * (1 - fogPhase(tagT, 0.62, 0.92));
       }

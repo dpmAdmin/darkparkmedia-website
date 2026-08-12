@@ -214,10 +214,10 @@ body.reduced-motion .fog-layer { animation: none; }
   margin-inline: auto;
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.35rem, 3.2vw, 2rem);
-  /* Tighter than the body's 1.65 — the two lines read as one mark. */
+  /* Sized so the single line still fits across at full flight scale. */
+  font-size: clamp(0.95rem, 2.1vw, 1.35rem);
   line-height: 1.18;
-  text-transform: capitalize;
+  white-space: nowrap;
   /* Mist-white with a dark drop shadow to carry it over the footage. */
   color: #eef1f5;
   text-shadow: 0 2px 14px rgba(16, 19, 23, 0.85), 0 1px 4px rgba(16, 19, 23, 0.9);
