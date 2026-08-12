@@ -512,6 +512,39 @@
       return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
     }
 
+    /* The label grows as it rides up rather than after it parks, so it is
+       already at full size by the time it reaches the bar — and the first
+       building starts arriving partway through that climb, which is what
+       makes the two read as one move instead of two stages. It then fades
+       out under the twilight, clearing the frame before Architecture
+       begins building. */
+    if (scenesLabel && scenes.length) {
+      var firstScene = scenes[0];
+      var LABEL_PIN_TOP = 84; // nav height + its 0.75rem offset
+      (function labelLoop() {
+        var vh = window.innerHeight;
+        var lr = scenesLabel.getBoundingClientRect();
+        // 0 as it enters at the bottom, 1 once it has reached the bar.
+        var rise = Math.min(1, Math.max(0, (vh - lr.top) / (vh - LABEL_PIN_TOP)));
+        // Fades on around the halfway point of its climb and is at full
+        // size shortly before the building becomes visible, so the two
+        // hand off without a gap.
+        var grow = easeOut(phase(rise, 0.45, 0.80));
+
+        var fade = 1;
+        var fr = firstScene.getBoundingClientRect();
+        var fspan = fr.height - vh;
+        if (fspan > 0) {
+          var fp = Math.min(1, Math.max(0, -fr.top / fspan));
+          fade = 1 - phase(fp, 0.66, 0.84);
+          scenesLabel.classList.toggle("on-dark", fp > 0.7 && fade > 0.04);
+        }
+        scenesLabel.style.transform = "scale(" + (0.4 + grow * 0.6) + ")";
+        scenesLabel.style.opacity = grow * fade;
+        tick(labelLoop);
+      })();
+    }
+
     scenes.forEach(function (scene, sceneIndex) {
       var sky = scene.querySelector(".svc-scene-sky");
       var ground = scene.querySelector(".svc-scene-ground");
@@ -526,22 +559,32 @@
         return Math.min(1, Math.max(0, -rect.top / total));
       }
 
+      // Starts counting while the scene is still climbing into place —
+      // LEAD px before it pins — so the building can begin arriving
+      // before the label has finished its own rise.
+      var LEAD = 450;
+      function sceneLeadProgress() {
+        var rect = scene.getBoundingClientRect();
+        var total = LEAD + rect.height - window.innerHeight;
+        if (total <= 0) return 0;
+        return Math.min(1, Math.max(0, (LEAD - rect.top) / total));
+      }
+
       (function sceneLoop() {
         var p = sceneProgress();
 
-        // 1. The building is flicked up from beneath the fold and lands.
-        //    The section label grows into place on the same pull, so the
-        //    two arrive together rather than one waiting on the other.
+        // 1. The building is flicked up from beneath the fold, starting
+        //    while the scene is still climbing — so it is already on its
+        //    way in before the label reaches the bar.
         if (cutout) {
-          var inT = easeOutBack(phase(p, 0, 0.14));
+          var lead = sceneLeadProgress();
+          // Offset so the flick and the fade both land on screen — the
+          // stage carries the building, so anything spent earlier than
+          // this happens below the fold and is wasted.
+          var inT = easeOutBack(phase(lead, 0.05, 0.19));
           cutout.style.transform =
             "translateX(-50%) translateY(" + ((1 - inT) * 118) + "%) rotate(" + ((1 - inT) * -7) + "deg)";
-          cutout.style.opacity = phase(p, 0, 0.05);
-        }
-        if (scenesLabel && sceneIndex === 0) {
-          var labelT = easeOut(phase(p, 0, 0.16));
-          scenesLabel.style.transform = "scale(" + (0.62 + labelT * 0.38) + ")";
-          scenesLabel.style.opacity = 0.22 + labelT * 0.78;
+          cutout.style.opacity = phase(lead, 0.05, 0.10);
         }
         // 2. The ground scrolls up under it, overlapping the landing
         // 3. slightly, then the sky closes the frame — both tightened.
@@ -569,11 +612,6 @@
           copy.style.transform = "translateY(" + ((1 - titleIn) * 46) + "px)";
         }
 
-        // The pinned label sits at the top of the frame, so it only needs
-        // to flip once the upward wipe has reached that far.
-        if (scenesLabel && scene.getBoundingClientRect().top < window.innerHeight * 0.5) {
-          scenesLabel.classList.toggle("on-dark", wipe > 0.82);
-        }
         tick(sceneLoop);
       })();
     });
