@@ -25,6 +25,22 @@
     else { requestAnimationFrame(fn); }
   }
 
+  // Every scroll loop below reads getBoundingClientRect each frame, which
+  // forces a layout. Left ungated that ran for every section at once
+  // whether or not it was anywhere near the screen — measured 600/sec on
+  // the homepage and 960/sec on the 415 page. This lets a loop skip its
+  // body, and therefore the read, while its section is far off screen.
+  // Generous margin so a section is already live before it scrolls in,
+  // and it degrades to always-on where IntersectionObserver is missing.
+  function nearViewport(el, marginPx) {
+    var state = { active: true };
+    if (!("IntersectionObserver" in window)) return state;
+    new IntersectionObserver(function (entries) {
+      state.active = entries[0].isIntersecting;
+    }, { rootMargin: (marginPx || 400) + "px 0px" }).observe(el);
+    return state;
+  }
+
   /* ------------------------------------------------------------------
      Mobile navigation
      ------------------------------------------------------------------ */
@@ -169,7 +185,9 @@
 
     // Poll progress + smooth the seek in one rAF loop so wheel steps
     // don't stutter and scrubbing works even if scroll events are missed.
+    var scrubVis = nearViewport(scrubSection);
     (function scrubLoop() {
+      if (!scrubVis.active) { tick(scrubLoop); return; }
       update();
       if (duration > 0) {
         var next = renderedTime < 0 ? targetTime : renderedTime + (targetTime - renderedTime) * 0.22;
@@ -235,7 +253,9 @@
       return Math.min(1, Math.max(0, (vh - rect.top) / span));
     }
 
+    var beatVis = nearViewport(beatSection);
     (function beatLoop() {
+      if (!beatVis.active) { tick(beatLoop); return; }
       var overall = beatProgress();
       var revealProgress = Math.min(1, overall / BEAT_REVEAL_COMPLETE);
       beatWords.forEach(function (w, i) {
@@ -298,7 +318,9 @@
       return Math.min(1, Math.max(0, (vh - rect.top) / span));
     }
 
+    var gatewayVis = nearViewport(gatewaySection);
     (function gatewayLoop() {
+      if (!gatewayVis.active) { tick(gatewayLoop); return; }
       var overall = gatewayProgress();
       var reveal = Math.min(1, overall / GATEWAY_REVEAL_COMPLETE);
       gatewayVideo.style.opacity = reveal * GATEWAY_MAX_OPACITY;
@@ -351,7 +373,9 @@
       return Math.min(1, Math.max(0, (vh - rect.top) / span));
     }
 
+    var peopleVis = nearViewport(peopleSection);
     (function peopleLoop() {
+      if (!peopleVis.active) { tick(peopleLoop); return; }
       var overall = peopleProgress();
       var reveal = Math.min(1, overall / PEOPLE_REVEAL_COMPLETE);
       peopleVideo.style.opacity = reveal * PEOPLE_MAX_OPACITY;
@@ -428,7 +452,9 @@
       return Math.min(1, Math.max(0, (p - from) / (to - from)));
     }
 
+    var fogVis = nearViewport(fogHero);
     (function fogLoop() {
+      if (!fogVis.active) { tick(fogLoop); return; }
       var p = fogProgress();
       // The mark zooms toward the viewer from the first scrolled pixel —
       // scale grows continuously (eased), opacity holds through the early
@@ -528,7 +554,9 @@
     if (scenesLabel && scenes.length) {
       var firstScene = scenes[0];
       var LABEL_PIN_TOP = 84; // nav height + its 0.75rem offset
+      var labelVis = nearViewport(scenesLabel.parentElement || scenesLabel);
       (function labelLoop() {
+        if (!labelVis.active) { tick(labelLoop); return; }
         var vh = window.innerHeight;
         var lr = scenesLabel.getBoundingClientRect();
         // 0 as it enters at the bottom, 1 once it has reached the bar.
@@ -581,7 +609,9 @@
         return Math.min(1, Math.max(0, (LEAD - rect.top) / total));
       }
 
+      var sceneVis = nearViewport(scene);
       (function sceneLoop() {
+        if (!sceneVis.active) { tick(sceneLoop); return; }
         var p = sceneProgress();
         var lead = sceneLeadProgress();
 
@@ -654,39 +684,69 @@
      ------------------------------------------------------------------ */
   var portfolioTiles = document.querySelectorAll(".portfolio-tile");
   var portfolioModal = document.getElementById("portfolio-modal");
-  var portfolioModalVideo = document.querySelector(".portfolio-modal-video");
-  var portfolioModalClose = document.querySelector(".portfolio-modal-close");
-  var portfolioModalBackdrop = document.querySelector(".portfolio-modal-backdrop");
 
-  if (!portfolioModal) return;
+  // Guarded rather than early-returning from the whole module: an early
+  // return here silently kills anything appended after this block on any
+  // page without a modal.
+  if (portfolioModal) {
+    var portfolioModalVideo = portfolioModal.querySelector(".portfolio-modal-video");
+    var portfolioModalClose = portfolioModal.querySelector(".portfolio-modal-close");
+    var portfolioModalBackdrop = portfolioModal.querySelector(".portfolio-modal-backdrop");
+    // Remembered so focus can be handed back to the tile that opened it.
+    var portfolioLastFocused = null;
 
-  function closePortfolioModal() {
-    portfolioModal.classList.remove("open");
-    portfolioModalVideo.pause();
-    portfolioModalVideo.removeAttribute("src");
-    setTimeout(function () {
-      portfolioModal.setAttribute("aria-hidden", "true");
-    }, 400);
-  }
-
-  portfolioTiles.forEach(function (tile) {
-    tile.addEventListener("click", function (e) {
+    function openPortfolioModal(tile) {
       var videoSrc = tile.getAttribute("data-video");
       if (!videoSrc) return;
-
+      portfolioLastFocused = tile;
+      // Locks the page behind the dialog. Without this the hero keeps
+      // scrubbing behind an open video as you scroll.
+      document.documentElement.classList.add("modal-open");
       portfolioModal.setAttribute("aria-hidden", "false");
       portfolioModalVideo.setAttribute("src", videoSrc);
       portfolioModal.classList.add("open");
-      portfolioModalVideo.play().catch(function () {});
-    });
-  });
-
-  portfolioModalClose.addEventListener("click", closePortfolioModal);
-  portfolioModalBackdrop.addEventListener("click", closePortfolioModal);
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && portfolioModal.classList.contains("open")) {
-      closePortfolioModal();
+      portfolioModalVideo.play().catch(function () { /* autoplay blocked */ });
+      portfolioModalClose.focus();
     }
-  });
+
+    function closePortfolioModal() {
+      portfolioModal.classList.remove("open");
+      portfolioModalVideo.pause();
+      portfolioModalVideo.removeAttribute("src");
+      document.documentElement.classList.remove("modal-open");
+      if (portfolioLastFocused) {
+        portfolioLastFocused.focus();
+        portfolioLastFocused = null;
+      }
+      setTimeout(function () {
+        portfolioModal.setAttribute("aria-hidden", "true");
+      }, 400);
+    }
+
+    portfolioTiles.forEach(function (tile) {
+      tile.addEventListener("click", function () { openPortfolioModal(tile); });
+    });
+
+    portfolioModalClose.addEventListener("click", closePortfolioModal);
+    portfolioModalBackdrop.addEventListener("click", closePortfolioModal);
+
+    document.addEventListener("keydown", function (e) {
+      if (!portfolioModal.classList.contains("open")) return;
+      if (e.key === "Escape") { closePortfolioModal(); return; }
+      // Keep Tab inside the dialog — otherwise focus walks the tiles
+      // still sitting behind it.
+      if (e.key !== "Tab") return;
+      var focusable = portfolioModal.querySelectorAll(
+        'button, [href], video[controls], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+  }
 })();

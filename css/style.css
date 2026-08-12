@@ -900,6 +900,14 @@ body.reduced-motion .svc--expandable { transition: none; }
 }
 
 /* Portfolio modal: expanded fullscreen video player */
+/* Freezes the page behind an open dialog. Set on <html> because the
+   scroll container varies by browser, and scrollbar-gutter holds the
+   gutter open so the layout does not jump sideways as it locks. */
+html.modal-open {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
 .portfolio-modal {
   position: fixed;
   inset: 0;
