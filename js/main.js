@@ -601,7 +601,7 @@
         // 5. Then twilight is swiped up from the bottom edge, finishing
         //    early enough to leave a real hold on the lit frame before
         //    the next segment starts building.
-        var wipe = phase(p, 0.58, 0.78);
+        var wipe = phase(p, 0.54, 0.72);
         if (twilight) {
           twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
         }
