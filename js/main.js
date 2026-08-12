@@ -596,10 +596,12 @@
           var skyT = easeOut(phase(p, 0.24, 0.38));
           sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
         }
-        // 4. A long beat (0.44 - 0.62) lets the finished day frame and its
+        // 4. A long beat (0.44 - 0.60) lets the finished day frame and its
         //    title sit before dusk arrives.
-        // 5. Then twilight is swiped up from the bottom edge.
-        var wipe = phase(p, 0.62, 0.86);
+        // 5. Then twilight is swiped up from the bottom edge, finishing
+        //    early enough to leave a real hold on the lit frame before
+        //    the next segment starts building.
+        var wipe = phase(p, 0.58, 0.78);
         if (twilight) {
           twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
         }

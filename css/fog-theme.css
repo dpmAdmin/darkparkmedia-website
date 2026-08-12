@@ -413,8 +413,14 @@ body.theme-fog .svc-scene { position: relative; height: 300vh; }
    its scene overlaps the tail of the one before it. The stage is opaque
    white, so it needs a soft leading edge or it shears a hard line across
    the twilight it is rising over. */
+/* No negative margin: the pane's own soft edge already reaches a full
+   viewport plus its gradient above its top, so any overlap here starts
+   covering the twilight long before the wipe has finished forming it.
+   At -640px it arrived at p 0.59 against a wipe ending at 0.82 — the
+   lit frame never got a moment. Butted up, the gradient arrives after
+   the hold, and Architecture still builds during Real Estate's exit
+   because that exit is a full viewport of glide. */
 body.theme-fog .svc-scene + .svc-scene {
-  margin-top: -800px;
   z-index: 1;
 }
 body.theme-fog .svc-scene + .svc-scene::before {
