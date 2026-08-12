@@ -322,3 +322,99 @@ body.theme-fog .process-step {
 body.theme-fog .btn-primary { color: #fff; }
 body.theme-fog .btn-primary:hover,
 body.theme-fog .btn-primary:focus-visible { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Services scene — Real Estate
+   A tall track with a sticky stage. Each layer is positioned here and
+   driven by the sceneLoop in js/main.js against scroll progress. Layers
+   are deliberately separate (sky / ground / cutout / twilight) so they
+   can move independently — that separation is the whole effect, and it
+   is why the real assets must arrive unflattened too.
+   -------------------------------------------------------------------------- */
+body.theme-fog .svc-scene { position: relative; height: 300vh; }
+body.theme-fog .svc-scene-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.theme-fog .svc-scene-art { position: absolute; inset: 0; }
+body.theme-fog .svc-scene-art > * { position: absolute; }
+
+/* Sky drops in from above to complete the frame */
+body.theme-fog .svc-scene-sky {
+  inset: 0;
+  background: linear-gradient(to bottom, #b9cfe4 0%, #d7e4ef 46%, #eaf0f5 100%);
+  will-change: transform;
+}
+/* Ground the house stands on */
+body.theme-fog .svc-scene-ground {
+  left: 0; right: 0; bottom: 0;
+  height: 29%;
+  background: linear-gradient(to bottom, #cdd7de 0%, #b9c4cd 100%);
+}
+/* The isolated building, dragged in on scroll */
+body.theme-fog .svc-scene-cutout {
+  left: 50%;
+  bottom: 18%;
+  width: min(62vw, 780px);
+  height: auto;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+/* Twilight frame, wiped across by clip-path. Its layers mirror the day
+   scene's geometry exactly and sit at the day scene's *finished*
+   positions, so the wipe changes only the light, never the composition. */
+body.theme-fog .svc-scene-twilight {
+  inset: 0;
+  overflow: hidden;
+  will-change: clip-path;
+}
+body.theme-fog .svc-scene-twilight > * { position: absolute; }
+body.theme-fog .svc-scene-sky--tw {
+  background: linear-gradient(to bottom, #131c33 0%, #33406b 42%, #8a6a86 72%, #d99a72 100%);
+  transform: none;
+}
+body.theme-fog .svc-scene-ground--tw {
+  background: linear-gradient(to bottom, #1d2331 0%, #10141d 100%);
+}
+/* Parked where the day cutout comes to rest */
+body.theme-fog .svc-scene-cutout--tw { transform: translateX(-50%); opacity: 1; }
+
+body.theme-fog .svc-scene-copy {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  will-change: transform, opacity;
+}
+body.theme-fog .svc-scene-eyebrow {
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.72rem;
+  color: var(--amber);
+  margin-bottom: 0.6rem;
+}
+body.theme-fog .svc-scene-title {
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  line-height: 0.95;
+  color: #f4f7fa;
+  /* The wipe passes underneath, so the title has to hold on both the pale
+     day sky and the dark twilight — a tight dark rim plus a soft spread. */
+  text-shadow:
+    0 1px 2px rgba(10, 14, 22, 0.75),
+    0 4px 16px rgba(10, 14, 22, 0.6),
+    0 10px 44px rgba(10, 14, 22, 0.45);
+}
+
+/* Reduced motion: hold the finished twilight frame, everything at rest */
+body.reduced-motion .svc-scene { height: 100vh; height: 100svh; }
+body.reduced-motion .svc-scene-sky,
+body.reduced-motion .svc-scene-cutout { transform: none; opacity: 1; }
+body.reduced-motion .svc-scene-twilight { clip-path: none; }

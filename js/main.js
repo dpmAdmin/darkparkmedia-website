@@ -494,6 +494,67 @@
   }
 
   /* ------------------------------------------------------------------
+     Services scene — the frame assembles itself as you scroll: the
+     cutout building drags in, the sky drops behind it to complete the
+     picture, then the twilight frame wipes across while the title
+     rises through the middle of it. Every phase reads off one progress
+     value, so the whole thing is continuous and reverses cleanly.
+     Written to drive any .svc-scene, so the Architecture segment needs
+     only its own markup and art — no new code.
+     ------------------------------------------------------------------ */
+  var scenes = document.querySelectorAll(".svc-scene");
+  if (scenes.length && !reducedMotion) {
+    scenes.forEach(function (scene) {
+      var sky = scene.querySelector(".svc-scene-sky");
+      var cutout = scene.querySelector(".svc-scene-cutout");
+      var twilight = scene.querySelector(".svc-scene-twilight");
+      var copy = scene.querySelector(".svc-scene-copy");
+
+      function sceneProgress() {
+        var rect = scene.getBoundingClientRect();
+        var total = rect.height - window.innerHeight;
+        if (total <= 0) return 0;
+        return Math.min(1, Math.max(0, -rect.top / total));
+      }
+      function phase(p, from, to) {
+        return Math.min(1, Math.max(0, (p - from) / (to - from)));
+      }
+      // Ease so each move settles instead of arriving at full speed.
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      (function sceneLoop() {
+        var p = sceneProgress();
+
+        // 1. The building is dragged in from the right and set down.
+        if (cutout) {
+          var inT = easeOut(phase(p, 0, 0.3));
+          cutout.style.transform =
+            "translateX(" + (-50 + (1 - inT) * 78) + "%) scale(" + (0.9 + inT * 0.1) + ")";
+          cutout.style.opacity = phase(p, 0, 0.12);
+        }
+        // 2. The sky drops in behind it to complete the frame.
+        if (sky) {
+          var skyT = easeOut(phase(p, 0.16, 0.5));
+          sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
+        }
+        // 3. The twilight frame wipes across the finished picture.
+        if (twilight) {
+          var wipe = phase(p, 0.42, 0.88) * 100;
+          twilight.style.clipPath = "inset(0 0 0 " + (100 - wipe) + "%)";
+        }
+        // 4. The title rises through the middle of the wipe.
+        if (copy) {
+          var titleIn = easeOut(phase(p, 0.46, 0.68));
+          var titleOut = phase(p, 0.9, 1);
+          copy.style.opacity = titleIn * (1 - titleOut);
+          copy.style.transform = "translateY(" + ((1 - titleIn) * 46 - titleOut * 30) + "px)";
+        }
+        tick(sceneLoop);
+      })();
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Portfolio modal: click tile to expand into fullscreen video player
      ------------------------------------------------------------------ */
   var portfolioTiles = document.querySelectorAll(".portfolio-tile");
