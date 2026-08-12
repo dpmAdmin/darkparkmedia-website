@@ -461,7 +461,7 @@
       // white a hair before the unpin, so the glide into the services
       // pane is white-on-white and invisible.
       if (fogRiser) {
-        var riserT = fogPhase(p, 0.38, 0.96);
+        var riserT = fogPhase(p, 0.24, 1);
         fogRiser.style.transform = "translateY(" + (-riserT * 97) + "%)";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";

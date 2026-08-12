@@ -353,10 +353,31 @@ body.theme-fog .btn-primary:focus-visible { color: #fff; }
    across all of them. */
 body.theme-fog .svc-scenes {
   position: relative;
+  /* Rides up over the hero's exit instead of queueing behind it. The
+     hero's last viewport of scroll used to be dead white — the fog had
+     already whitened the frame and nothing happened until the stage
+     finished clearing. The pane now overlaps that stretch, so its label
+     and first scene arrive while the stage is still on its way out.
+     Safe because the fog riser has the frame fully white before this
+     edge enters view; z-index puts it over the spent hero. */
+  z-index: 2;
+  margin-top: -470px;
   background: var(--black);
-  /* Only enough lead-in to clear the fixed nav — the label rides in at the
-     top of the white pane rather than waiting in a tall gap above it. */
-  padding-top: calc(var(--nav-h) + 1.25rem);
+  padding-top: 1.75rem;
+}
+/* Soft leading edge. The riser has the frame white before this arrives,
+   but the two cross within ~30px of scroll at the very bottom of the
+   screen — without this the pane's own edge reads as a hard line for
+   that instant. Kept short so it never fogs the frame prematurely. */
+body.theme-fog .svc-scenes::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 130px;
+  background: linear-gradient(to bottom, rgba(238, 241, 245, 0) 0%, rgba(238, 241, 245, 0.85) 62%, #eef1f5 100%);
+  pointer-events: none;
 }
 /* Rides up the white pane, meets the nav, and stays pinned over the
    scenes for their whole run. Graphite by default (it sits over white
