@@ -562,13 +562,11 @@
 
       // Starts counting while the scene is still climbing into place —
       // LEAD px before it pins — so the building can begin arriving
-      // before the label has finished its own rise. Real Estate's 450
-      // was tuned against the label; later scenes have no label to sync
-      // with, and instead arrive right after their own fog whiteout —
-      // a much larger LEAD is what closes that gap and gets the
-      // building appearing close to when the screen actually goes
-      // white, instead of leaving a long empty hold after it.
-      var LEAD = sceneIndex === 0 ? 450 : 770;
+      // during the climb. The same value for every scene: with the
+      // pane overlap matched to the hero's, each scene's stage climbs
+      // the same 100vh over its predecessor, and the building flicks
+      // in halfway up that climb in all of them.
+      var LEAD = 450;
       function sceneLeadProgress() {
         var rect = scene.getBoundingClientRect();
         var total = LEAD + rect.height - window.innerHeight;
@@ -579,14 +577,6 @@
       (function sceneLoop() {
         var p = sceneProgress();
         var lead = sceneLeadProgress();
-        // Real Estate keeps ground/sky tied to the regular pinned p — that
-        // timing is already tuned. Later scenes have no label to wait on
-        // and arrive right after their predecessor's fog whiteout, so
-        // ground and sky ride the same early lead as the building —
-        // otherwise they'd sit fully hidden until the stage is completely
-        // pinned, well after the building has already landed, and the
-        // building would appear to float in alone with no frame around it.
-        var groundSkyPhase = sceneIndex === 0 ? p : lead;
 
         // 1. The building is flicked up from beneath the fold, starting
         //    while the scene is still climbing — so it is already on its
@@ -600,14 +590,16 @@
             "translateX(-50%) translateY(" + ((1 - inT) * 118) + "%) rotate(" + ((1 - inT) * -7) + "deg)";
           cutout.style.opacity = phase(lead, 0.05, 0.10);
         }
-        // 2. The ground scrolls up under it, overlapping the landing
-        // 3. slightly, then the sky closes the frame — both tightened.
+        // 2. Only after the building lands does the ground scroll up
+        // 3. under it, and then the sky closes the frame — driven by
+        //    pinned progress in every scene, so the build order is
+        //    identical wherever the scene sits on the page.
         if (ground) {
-          var groundT = easeOut(phase(groundSkyPhase, 0.13, 0.26));
+          var groundT = easeOut(phase(p, 0.13, 0.26));
           ground.style.transform = "translateY(" + ((1 - groundT) * 100) + "%)";
         }
         if (sky) {
-          var skyT = easeOut(phase(groundSkyPhase, 0.24, 0.38));
+          var skyT = easeOut(phase(p, 0.24, 0.38));
           sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
         }
         // 4. A long beat (0.44 - 0.60) lets the finished day frame and its

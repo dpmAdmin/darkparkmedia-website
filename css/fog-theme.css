@@ -416,8 +416,15 @@ body.theme-fog .svc-scene { position: relative; height: 300vh; }
    carries a matching soft leading edge of its own, so the two fogs
    meet and converge rather than a hard card edge crossing a still-lit
    frame. */
+/* The overlap is -620px — the SAME depth the services pane uses over
+   the hero, and not by coincidence: hero and scene share the same
+   structure (100vh sticky stage, 100vh exit glide), so copying the
+   number reproduces the handoff exactly. At the moment the outgoing
+   frame finishes whiting out, the incoming pane already covers the
+   bottom third and rides the rest of the way up — pane and fog
+   converging, identical rhythm to hero-into-services. */
 body.theme-fog .svc-scene + .svc-scene {
-  margin-top: -280px;
+  margin-top: -620px;
   z-index: 1;
 }
 body.theme-fog .svc-scene + .svc-scene::before {
@@ -467,18 +474,6 @@ body.theme-fog .svc-scene-cutout {
   height: auto;
   transform-origin: 50% 100%;
   will-change: transform, opacity;
-}
-/* Scenes after the first sit their cutout higher in the stage — closer
-   to the stage's own top rather than its bottom — so less of the stage
-   has to scroll into view before the cutout's own top edge clears the
-   fold. (Moving it toward the bottom, the intuitive-sounding fix, is
-   backwards: the two edges are rigidly linked, so a cutout anchored
-   nearer the bottom needs the stage to travel further before its top
-   is reachable.) Capped at 26% to stay inside the ground layer's 29%
-   band — any higher and the building floats above the ground instead
-   of standing on it. */
-body.theme-fog .svc-scene + .svc-scene .svc-scene-cutout {
-  bottom: 26%;
 }
 /* Twilight frame, wiped across by clip-path. Its layers mirror the day
    scene's geometry exactly and sit at the day scene's *finished*
