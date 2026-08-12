@@ -222,10 +222,13 @@ body.reduced-motion .fog-layer { animation: none; }
   filter: drop-shadow(0 18px 45px rgba(51, 64, 80, 0.28));
 }
 .fog-tag {
-  /* Out of flow so the mark alone sits dead-center in the stage; the
-     line anchors just below it and the fogLoop lifts it from there. */
+  /* Anchored to the stage, high in the frame — above the centre house,
+     back among the distant ones — so it reads as sitting deep in the
+     scene and flying forward from there. A fixed fraction of the frame,
+     so it does not move when the logo resizes. */
   position: absolute;
-  top: calc(100% + 1.4rem);
+  top: 36%;
+  z-index: 1;
   left: 0;
   right: 0;
   width: fit-content;
@@ -247,7 +250,7 @@ body.reduced-motion .fog-layer { animation: none; }
   /* Hidden at rest, parked deep in the scene — the fogLoop flies it
      toward the viewer (scale + fade) against scroll. */
   opacity: 0;
-  transform: scale(0.55);
+  transform: scale(0.42);
   will-change: transform, opacity;
 }
 .fog-hero .hero-scroll-hint { color: var(--fog); }
@@ -356,6 +359,16 @@ body.theme-fog .btn-primary:focus-visible { color: #fff; }
    -------------------------------------------------------------------------- */
 /* Wrapper for the whole run of scenes, so the section label can pin
    across all of them. */
+/* "What we shoot" rides up over the last scene's exit, the same -620px
+   overlap every other handoff uses, so it arrives while that scene is
+   still clearing instead of waiting out a viewport of white behind it. */
+body.theme-fog .svc-scenes + .section {
+  position: relative;
+  z-index: 2;
+  margin-top: -620px;
+  background: var(--black);
+}
+
 body.theme-fog .svc-scenes {
   position: relative;
   /* Rides up over the hero's exit instead of queueing behind it. The

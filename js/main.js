@@ -444,8 +444,10 @@
       // with only a slight upward drift. It fades out before the fog
       // riser reaches it.
       if (fogTag) {
-        var tagT = fogPhase(p, 0.18, 0.66);
-        var tagScale = 0.55 + 1.6 * Math.pow(tagT, 1.4);
+        // Longer flight, and it starts a touch later so the mark is
+        // further gone before the line reads.
+        var tagT = fogPhase(p, 0.22, 0.80);
+        var tagScale = 0.42 + 1.9 * Math.pow(tagT, 1.4);
         // Cap the growth so the single line never outgrows the viewport
         // and gets clipped — offsetWidth is the unscaled layout width.
         var tagBaseW = fogTag.offsetWidth;
@@ -456,14 +458,19 @@
         // downward (transform-origin is its top edge), so it can never
         // climb over the houses.
         fogTag.style.transform = "scale(" + tagScale + ")";
-        fogTag.style.opacity = fogPhase(tagT, 0, 0.25) * (1 - fogPhase(tagT, 0.55, 0.85));
+        // Reaches full opacity quickly and holds it for most of the
+        // flight — the line needs time to actually be read before the
+        // fog takes the frame.
+        fogTag.style.opacity = fogPhase(tagT, 0, 0.18) * (1 - fogPhase(tagT, 0.74, 0.96));
       }
       // The fog riser climbs over the footage as the hero ends — the
       // image never slides away, it dissolves under rising fog. Fully
       // white a hair before the unpin, so the glide into the services
       // pane is white-on-white and invisible.
       if (fogRiser) {
-        var riserT = fogPhase(p, 0.24, 1);
+        // Held back until the line has had its read — it used to start
+        // climbing at 0.24, while the tagline was still arriving.
+        var riserT = fogPhase(p, 0.46, 1);
         fogRiser.style.transform = "translateY(" + (-riserT * 97) + "%)";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
@@ -624,9 +631,15 @@
           riser.style.transform = "translateY(" + (-riserT * 97) + "%)";
         }
 
-        // The title rises with the completed day frame and stays.
+        // The title rises with the completed day frame and stays. It
+        // settles early and quickly: while it is still animating it sits
+        // up to 46px below its resting place, and because the scenes
+        // arrive on screen at different points relative to their own pin
+        // (the second one overlaps its predecessor), catching one
+        // mid-rise is what makes the two titles look like they sit at
+        // different heights. Settled, both are pixel-identical.
         if (copy) {
-          var titleIn = easeOut(phase(p, 0.3, 0.44));
+          var titleIn = easeOut(phase(p, 0.14, 0.26));
           copy.style.opacity = titleIn;
           copy.style.transform = "translateY(" + ((1 - titleIn) * 46) + "px)";
         }
