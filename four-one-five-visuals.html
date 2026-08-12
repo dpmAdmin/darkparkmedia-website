@@ -97,6 +97,10 @@
           <div class="svc-scene-copy">
             <h3 class="svc-scene-title">Real estate</h3>
           </div>
+          <!-- Fog riser, same trick as the hero: climbs and whites out this
+               stage's own frame before it unpins, so the next scene's card
+               arrives white-on-white instead of showing a hard edge. -->
+          <div class="svc-scene-riser" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -115,6 +119,7 @@
           <div class="svc-scene-copy">
             <h3 class="svc-scene-title">Architecture</h3>
           </div>
+          <div class="svc-scene-riser" aria-hidden="true"></div>
         </div>
       </section>
     </div>

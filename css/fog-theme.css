@@ -410,12 +410,25 @@ body.theme-fog .svc-scenes-label.on-dark {
 
 body.theme-fog .svc-scene { position: relative; height: 300vh; }
 /* Architecture starts building while Real Estate is still clearing, so
-   its scene overlaps the tail of the one before it. Architecture's stage
-   is opaque white and slides up as a solid card — no soft leading-edge
-   gradient — so it reads as one panel physically pushing over the one
-   beneath rather than a dissolve. */
+   its scene overlaps the tail of the one before it — same two-sided fog
+   as the hero-to-services handoff: Real Estate's own riser (above)
+   whites out its frame from within before it unpins, and this pane
+   carries a matching soft leading edge of its own, so the two fogs
+   meet and converge rather than a hard card edge crossing a still-lit
+   frame. */
 body.theme-fog .svc-scene + .svc-scene {
   margin-top: -180px;
+  z-index: 1;
+}
+body.theme-fog .svc-scene + .svc-scene::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 130px;
+  background: linear-gradient(to bottom, rgba(238, 241, 245, 0) 0%, rgba(238, 241, 245, 0.85) 62%, #eef1f5 100%);
+  pointer-events: none;
   z-index: 1;
 }
 body.theme-fog .svc-scene-stage {
@@ -473,6 +486,23 @@ body.theme-fog .svc-scene-ground--tw {
 }
 /* Parked where the day cutout comes to rest */
 body.theme-fog .svc-scene-cutout--tw { transform: translateX(-50%); opacity: 1; }
+
+/* Fog riser — same recipe as the hero's: a tall gradient that climbs up
+   over this scene's own frame late in its pinned life, so the stage is
+   already fully whited out by the time it unpins. The next scene's
+   opaque card then arrives white-on-white during the glide, instead of
+   showing a hard edge — the same trick, run a second time. */
+body.theme-fog .svc-scene-riser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 150%;
+  z-index: 3;
+  background: linear-gradient(to bottom, rgba(238, 241, 245, 0) 0%, rgba(238, 241, 245, 0.6) 16%, #eef1f5 30%, #eef1f5 100%);
+  will-change: transform;
+}
+body.reduced-motion .svc-scene-riser { display: none; }
 
 body.theme-fog .svc-scene-copy {
   position: relative;

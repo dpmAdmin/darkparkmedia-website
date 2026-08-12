@@ -551,6 +551,7 @@
       var cutout = scene.querySelector(".svc-scene-cutout");
       var twilight = scene.querySelector(".svc-scene-twilight");
       var copy = scene.querySelector(".svc-scene-copy");
+      var riser = scene.querySelector(".svc-scene-riser");
 
       function sceneProgress() {
         var rect = scene.getBoundingClientRect();
@@ -605,7 +606,18 @@
         if (twilight) {
           twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
         }
-        // 6. …and hangs from 0.86 to the end of the track.
+        // 6. The lit twilight holds clean from 0.72 to 0.82 — a real beat
+        //    on the settled frame before anything else moves.
+        // 7. Then the fog riser climbs, same mechanism as the hero's:
+        //    it completes exactly at p=1, the instant this stage unpins,
+        //    so the stage is already fully white through the entire
+        //    glide that follows — the next scene's card arrives onto
+        //    white, not onto visible twilight, and its hard edge reads
+        //    as nothing.
+        if (riser) {
+          var riserT = phase(p, 0.82, 1);
+          riser.style.transform = "translateY(" + (-riserT * 97) + "%)";
+        }
 
         // The title rises with the completed day frame and stays.
         if (copy) {
