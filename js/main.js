@@ -388,7 +388,7 @@
     var fogTag = fogHero.querySelector(".fog-tag");
     var fogHint = fogHero.querySelector(".hero-scroll-hint");
     var fogMedia = fogHero.querySelector(".fog-media");
-    var fogStage = fogHero.querySelector(".fog-stage");
+    var fogRiser = fogHero.querySelector(".fog-riser");
 
     // Scroll-scrubbed background — the same interaction as the homepage
     // hero: the clip's timeline is the scroll itself, running forward on
@@ -439,36 +439,30 @@
         fogLogo.style.transform = "scale(" + logoScale + ")";
         fogLogo.style.opacity = 1 - fogPhase(logoT, 0.45, 0.95);
       }
-      // The tagline starts deep in the scene, fades on while growing, and
-      // keeps growing the whole way — it never parks at a final size. It
-      // also physically rises, travelling far enough to outrun the pane
-      // lifting beneath it, so the line reads as moving independently of
-      // the footage rather than pinned to it. The fade clears just as it
-      // reaches the nav banner, so it dissolves rather than sliding under.
+      // The tagline sits just under the hillside houses and is pulled
+      // toward the viewer — the same perspective move as the 415 mark —
+      // with only a slight upward drift. It fades out before the fog
+      // riser reaches it.
       if (fogTag) {
-        var tagT = fogPhase(p, 0.26, 0.95);
-        var tagScale = 0.6 + 0.9 * Math.pow(tagT, 1.3);
+        var tagT = fogPhase(p, 0.24, 0.72);
+        var tagScale = 0.55 + 1.6 * Math.pow(tagT, 1.4);
         // Cap the growth so the single line never outgrows the viewport
         // and gets clipped — offsetWidth is the unscaled layout width.
         var tagBaseW = fogTag.offsetWidth;
         if (tagBaseW > 0) {
           tagScale = Math.min(tagScale, (window.innerWidth - 32) / tagBaseW);
         }
-        // Rises only within the lower band of the frame — it drifts up
-        // through the rooflines rather than climbing into the sky and off
-        // the top, so the hillside stays the subject the whole way. Still
-        // outpaces the pane lifting beneath it, keeping the parallax.
-        var tagRise = -tagT * 150;
+        var tagRise = -tagT * 60;
         fogTag.style.transform = "translateY(" + tagRise + "px) scale(" + tagScale + ")";
-        fogTag.style.opacity = fogPhase(tagT, 0, 0.28) * (1 - fogPhase(tagT, 0.62, 0.92));
+        fogTag.style.opacity = fogPhase(tagT, 0, 0.25) * (1 - fogPhase(tagT, 0.55, 0.85));
       }
-      // The pane starts drifting upward the moment the tagline hits full
-      // opacity (p 0.444) — just before its ramp-down — so the exit is
-      // already under way by the time the sticky pin releases and hands
-      // off to the glide.
-      if (fogStage) {
-        var lift = fogPhase(p, 0.444, 1) * window.innerHeight * 0.22;
-        fogStage.style.transform = lift > 0 ? "translateY(" + (-lift) + "px)" : "";
+      // The fog riser climbs over the footage as the hero ends — the
+      // image never slides away, it dissolves under rising fog. Fully
+      // white a hair before the unpin, so the glide into the services
+      // pane is white-on-white and invisible.
+      if (fogRiser) {
+        var riserT = fogPhase(p, 0.62, 0.985);
+        fogRiser.style.transform = "translateY(" + (-riserT * 97) + "%)";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
       // Thin the white veil as the mark flies off, bringing the footage
