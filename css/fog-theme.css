@@ -239,10 +239,15 @@ body.reduced-motion .fog-layer { animation: none; }
   /* Mist-white with a dark drop shadow to carry it over the footage. */
   color: #eef1f5;
   text-shadow: 0 2px 14px rgba(16, 19, 23, 0.85), 0 1px 4px rgba(16, 19, 23, 0.9);
+  /* Grows downward from its top edge only. Scaling from the centre made
+     the line expand upward into the hillside as it came toward the
+     viewer; anchoring the origin at the top means that edge never moves,
+     so it cannot ride up over the houses however large it gets. */
+  transform-origin: 50% 0;
   /* Hidden at rest, parked deep in the scene — the fogLoop flies it
      toward the viewer (scale + fade) against scroll. */
   opacity: 0;
-  transform: translateY(-128px) scale(0.55);
+  transform: scale(0.55);
   will-change: transform, opacity;
 }
 .fog-hero .hero-scroll-hint { color: var(--fog); }
@@ -361,7 +366,7 @@ body.theme-fog .svc-scenes {
      Safe because the fog riser has the frame fully white before this
      edge enters view; z-index puts it over the spent hero. */
   z-index: 2;
-  margin-top: -470px;
+  margin-top: -620px;
   background: var(--black);
   padding-top: 1.75rem;
 }

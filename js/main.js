@@ -452,8 +452,10 @@
         if (tagBaseW > 0) {
           tagScale = Math.min(tagScale, (window.innerWidth - 32) / tagBaseW);
         }
-        var tagRise = -tagT * 60;
-        fogTag.style.transform = "translateY(" + tagRise + "px) scale(" + tagScale + ")";
+        // No rise: the line is anchored under the hillside and only grows
+        // downward (transform-origin is its top edge), so it can never
+        // climb over the houses.
+        fogTag.style.transform = "scale(" + tagScale + ")";
         fogTag.style.opacity = fogPhase(tagT, 0, 0.25) * (1 - fogPhase(tagT, 0.55, 0.85));
       }
       // The fog riser climbs over the footage as the hero ends — the
