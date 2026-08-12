@@ -434,7 +434,7 @@
       // scale grows continuously (eased), opacity holds through the early
       // flight, then it fades as it passes the camera.
       if (fogLogo) {
-        var logoT = fogPhase(p, 0, 0.42);
+        var logoT = fogPhase(p, 0, 0.34);
         var logoScale = 1 + 2.4 * Math.pow(logoT, 1.5);
         fogLogo.style.transform = "scale(" + logoScale + ")";
         fogLogo.style.opacity = 1 - fogPhase(logoT, 0.45, 0.95);
@@ -444,7 +444,7 @@
       // with only a slight upward drift. It fades out before the fog
       // riser reaches it.
       if (fogTag) {
-        var tagT = fogPhase(p, 0.24, 0.72);
+        var tagT = fogPhase(p, 0.18, 0.66);
         var tagScale = 0.55 + 1.6 * Math.pow(tagT, 1.4);
         // Cap the growth so the single line never outgrows the viewport
         // and gets clipped — offsetWidth is the unscaled layout width.
@@ -461,7 +461,7 @@
       // white a hair before the unpin, so the glide into the services
       // pane is white-on-white and invisible.
       if (fogRiser) {
-        var riserT = fogPhase(p, 0.62, 0.985);
+        var riserT = fogPhase(p, 0.38, 0.96);
         fogRiser.style.transform = "translateY(" + (-riserT * 97) + "%)";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";

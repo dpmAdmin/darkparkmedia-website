@@ -130,7 +130,10 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
    so nothing hard-edged can ever show through around the stage. */
 .fog-hero {
   position: relative;
-  height: 260vh;
+  /* Short pinned span (height minus one viewport) so the hero hands off
+     quickly — the remaining 100vh is the glide, which is where the
+     services pane and its label ride in. */
+  height: 190vh;
   background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
 }
 .fog-stage {
