@@ -523,159 +523,73 @@
   }
 
   /* ------------------------------------------------------------------
-     Services scene — the frame assembles itself as you scroll: the
-     cutout building drags in, the sky drops behind it to complete the
-     picture, then the twilight frame wipes across while the title
-     rises through the middle of it. Every phase reads off one progress
-     value, so the whole thing is continuous and reverses cleanly.
-     Written to drive any .svc-scene, so the Architecture segment needs
-     only its own markup and art — no new code.
+     Service-card media (Four One Five Visuals): each card rests on a
+     single still — the slideshow's first frame, or the clip's poster,
+     which is that clip's own frame 0 so nothing jumps when it starts.
+     Motion is hover-driven, so the row is calm until the visitor shows
+     interest in a specific tile, and only one thing ever animates.
+
+     Touch has no hover, so there the card plays whenever it is on screen
+     instead — otherwise the media would be dead on phones.
      ------------------------------------------------------------------ */
-  var scenes = document.querySelectorAll(".svc-scene");
-  var scenesLabel = document.querySelector(".svc-scenes-label");
-  if (scenes.length && !reducedMotion) {
-    function phase(p, from, to) {
-      return Math.min(1, Math.max(0, (p - from) / (to - from)));
-    }
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-    // Overshoots slightly then settles — gives the building the feel of
-    // being flicked into place rather than slid.
-    function easeOutBack(t) {
-      var c1 = 1.70158, c3 = c1 + 1;
-      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-    }
+  var svcCards = document.querySelectorAll(".svc");
+  if (svcCards.length && !reducedMotion) {
+    var hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    /* The label grows as it rides up rather than after it parks, so it is
-       already at full size by the time it reaches the bar — and the first
-       building starts arriving partway through that climb, which is what
-       makes the two read as one move instead of two stages. It then fades
-       out under the twilight, clearing the frame before Architecture
-       begins building. */
-    if (scenesLabel && scenes.length) {
-      var firstScene = scenes[0];
-      var LABEL_PIN_TOP = 84; // nav height + its 0.75rem offset
-      var labelVis = nearViewport(scenesLabel.parentElement || scenesLabel);
-      (function labelLoop() {
-        if (!labelVis.active) { tick(labelLoop); return; }
-        var vh = window.innerHeight;
-        var lr = scenesLabel.getBoundingClientRect();
-        // 0 as it enters at the bottom, 1 once it has reached the bar.
-        var rise = Math.min(1, Math.max(0, (vh - lr.top) / (vh - LABEL_PIN_TOP)));
-        // Fades on around the halfway point of its climb and is at full
-        // size shortly before the building becomes visible, so the two
-        // hand off without a gap.
-        var grow = easeOut(phase(rise, 0.45, 0.80));
+    svcCards.forEach(function (card) {
+      var video = card.querySelector("video.svc-media");
+      var frames = card.querySelectorAll(".svc-slideshow img");
+      if (!video && frames.length < 2) return;
 
-        var fade = 1;
-        var fr = firstScene.getBoundingClientRect();
-        var fspan = fr.height - vh;
-        if (fspan > 0) {
-          var fp = Math.min(1, Math.max(0, -fr.top / fspan));
-          fade = 1 - phase(fp, 0.66, 0.84);
-          scenesLabel.classList.toggle("on-dark", fp > 0.7 && fade > 0.04);
-        }
-        scenesLabel.style.transform = "scale(" + (0.4 + grow * 0.6) + ")";
-        scenesLabel.style.opacity = grow * fade;
-        tick(labelLoop);
-      })();
-    }
+      var timer = null;
+      var i = 0;
+      var wrapped = false;
 
-    scenes.forEach(function (scene, sceneIndex) {
-      var sky = scene.querySelector(".svc-scene-sky");
-      var ground = scene.querySelector(".svc-scene-ground");
-      var cutout = scene.querySelector(".svc-scene-cutout");
-      var twilight = scene.querySelector(".svc-scene-twilight");
-      var copy = scene.querySelector(".svc-scene-copy");
-      var riser = scene.querySelector(".svc-scene-riser");
+      // The first change has to land almost immediately, or the tile reads as
+      // a plain photo and nobody learns there is more behind it. Once that has
+      // registered, the remaining frames can hold long enough to actually be
+      // looked at, and the wrap back to the first frame holds longest.
+      var FIRST = 420;
+      var NEXT = 2400;
+      var WRAP = 3400;
 
-      function sceneProgress() {
-        var rect = scene.getBoundingClientRect();
-        var total = rect.height - window.innerHeight;
-        if (total <= 0) return 0;
-        return Math.min(1, Math.max(0, -rect.top / total));
+      function schedule(delay) {
+        timer = setTimeout(function () {
+          frames[i].classList.remove("is-active");
+          i = (i + 1) % frames.length;
+          if (i === 0) wrapped = true;
+          frames[i].classList.add("is-active");
+          schedule(i === 0 && wrapped ? WRAP : NEXT);
+        }, delay);
       }
 
-      // Starts counting while the scene is still climbing into place —
-      // LEAD px before it pins — so the building can begin arriving
-      // during the climb. The same value for every scene: with the
-      // pane overlap matched to the hero's, each scene's stage climbs
-      // the same 100vh over its predecessor, and the building flicks
-      // in halfway up that climb in all of them.
-      var LEAD = 450;
-      function sceneLeadProgress() {
-        var rect = scene.getBoundingClientRect();
-        var total = LEAD + rect.height - window.innerHeight;
-        if (total <= 0) return 0;
-        return Math.min(1, Math.max(0, (LEAD - rect.top) / total));
+      function start() {
+        if (video) { video.play().catch(function () {}); return; }
+        if (timer) return;
+        schedule(FIRST);
       }
 
-      var sceneVis = nearViewport(scene);
-      (function sceneLoop() {
-        if (!sceneVis.active) { tick(sceneLoop); return; }
-        var p = sceneProgress();
-        var lead = sceneLeadProgress();
+      function stop() {
+        if (video) { video.pause(); video.currentTime = 0; return; }
+        clearTimeout(timer);
+        timer = null;
+        wrapped = false;
+        frames[i].classList.remove("is-active");
+        i = 0;
+        frames[0].classList.add("is-active");
+      }
 
-        // 1. The building is flicked up from beneath the fold, starting
-        //    while the scene is still climbing — so it is already on its
-        //    way in before the label reaches the bar.
-        if (cutout) {
-          // Offset so the flick and the fade both land on screen — the
-          // stage carries the building, so anything spent earlier than
-          // this happens below the fold and is wasted.
-          var inT = easeOutBack(phase(lead, 0.05, 0.19));
-          cutout.style.transform =
-            "translateX(-50%) translateY(" + ((1 - inT) * 118) + "%) rotate(" + ((1 - inT) * -7) + "deg)";
-          cutout.style.opacity = phase(lead, 0.05, 0.10);
-        }
-        // 2. Only after the building lands does the ground scroll up
-        // 3. under it, and then the sky closes the frame — driven by
-        //    pinned progress in every scene, so the build order is
-        //    identical wherever the scene sits on the page.
-        if (ground) {
-          var groundT = easeOut(phase(p, 0.13, 0.26));
-          ground.style.transform = "translateY(" + ((1 - groundT) * 100) + "%)";
-        }
-        if (sky) {
-          var skyT = easeOut(phase(p, 0.24, 0.38));
-          sky.style.transform = "translateY(" + ((1 - skyT) * -100) + "%)";
-        }
-        // 4. A long beat (0.44 - 0.60) lets the finished day frame and its
-        //    title sit before dusk arrives.
-        // 5. Then twilight is swiped up from the bottom edge, finishing
-        //    early enough to leave a real hold on the lit frame before
-        //    the next segment starts building.
-        var wipe = phase(p, 0.54, 0.72);
-        if (twilight) {
-          twilight.style.clipPath = "inset(" + (100 - wipe * 100) + "% 0 0 0)";
-        }
-        // 6. The lit twilight holds clean from 0.72 to 0.82 — a real beat
-        //    on the settled frame before anything else moves.
-        // 7. Then the fog riser climbs, same mechanism as the hero's:
-        //    it completes exactly at p=1, the instant this stage unpins,
-        //    so the stage is already fully white through the entire
-        //    glide that follows — the next scene's card arrives onto
-        //    white, not onto visible twilight, and its hard edge reads
-        //    as nothing.
-        if (riser) {
-          var riserT = phase(p, 0.82, 1);
-          riser.style.transform = "translateY(" + (-riserT * 97) + "%)";
-        }
-
-        // The title rises with the completed day frame and stays. It
-        // settles early and quickly: while it is still animating it sits
-        // up to 46px below its resting place, and because the scenes
-        // arrive on screen at different points relative to their own pin
-        // (the second one overlaps its predecessor), catching one
-        // mid-rise is what makes the two titles look like they sit at
-        // different heights. Settled, both are pixel-identical.
-        if (copy) {
-          var titleIn = easeOut(phase(p, 0.14, 0.26));
-          copy.style.opacity = titleIn;
-          copy.style.transform = "translateY(" + ((1 - titleIn) * 46) + "px)";
-        }
-
-        tick(sceneLoop);
-      })();
+      if (hoverCapable) {
+        card.addEventListener("mouseenter", start);
+        card.addEventListener("mouseleave", stop);
+        // Keyboard users reaching the "Ask about a shoot" link and anything
+        // else focusable inside a card get the same preview.
+        card.addEventListener("focusin", start);
+        card.addEventListener("focusout", stop);
+      } else {
+        var vis = nearViewport(card, 0);
+        setInterval(function () { vis.active ? start() : stop(); }, 600);
+      }
     });
   }
 

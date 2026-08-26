@@ -705,121 +705,62 @@ body.reduced-motion .people-media video { opacity: 0.5; transform: none; }
   border: 1px solid rgba(141, 146, 152, 0.14);
   border-radius: 10px;
   padding: 1.6rem 1.5rem;
+  overflow: hidden;
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .svc:hover { border-color: rgba(232, 151, 58, 0.55); transform: translateY(-4px); }
 .svc h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
 .svc p { color: var(--fog); font-size: 0.98rem; }
 
+/* Quick-look media (Four One Five Visuals service cards): bleeds to the
+   card's outer edge via negative margin rather than sizing the card
+   around it, so the same .svc used elsewhere without media needs no
+   extra markup. Applies to a still, a looping <video>, or the stacked
+   slideshow container below. */
+.svc-media {
+  display: block;
+  width: calc(100% + 3rem);
+  /* Beats the global `img, video { max-width: 100% }` reset, which would
+     otherwise clamp a bleeding <video> back to the padded content box and
+     leave a 3rem gap down its right edge. */
+  max-width: none;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: -1.6rem -1.5rem 1.1rem;
+  background: var(--ink);
+}
+
+/* Cross-dissolving stills, cycled on hover by js/main.js. All frames are
+   stacked at full size and only opacity changes, so nothing reflows as
+   they cycle; the JS just moves the .is-active class along. */
+.svc-slideshow { position: relative; overflow: hidden; }
+.svc-slideshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  /* Quick enough that the first change is unmistakably a change, not a
+     lighting shift — the dwell timings in js/main.js carry the pacing. */
+  transition: opacity 0.45s ease-in-out;
+}
+.svc-slideshow img.is-active { opacity: 1; }
+/* Reduced motion: hold the first frame, no cycling (the JS also stops). */
+body.reduced-motion .svc-slideshow img { transition: none; }
+
 /* --------------------------------------------------------------------------
-   Expandable service tiles (Four One Five Visuals): tap to grow 175% from
-   the top-left corner, siblings slide clear to preserve their gaps, and a
-   placeholder-reel carousel fades in. Transform/opacity are fully JS-driven
-   (see js/svc-expand.js) so the scale, sibling push, and carousel speed can
-   stay locked to one shared progress value.
+   Secondary-service callout beneath the main grid (Four One Five Visuals:
+   Architecture — real, but not what leads the page).
    -------------------------------------------------------------------------- */
-.svc-grid--expand {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  overflow: visible;
+.svc-secondary {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(141, 146, 152, 0.18);
 }
-@media (max-width: 900px) { .svc-grid--expand { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-@media (max-width: 600px) { .svc-grid--expand { grid-template-columns: minmax(0, 1fr); } }
-
-.svc--expandable {
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-  transform-origin: top left;
-  cursor: pointer;
-}
-.svc--expandable:hover { transform: none; }
-.svc--expandable.svc-is-expanded {
-  z-index: 10;
-  border-color: rgba(232, 151, 58, 0.55);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-}
-
-.svc-carousel {
-  /* Taken out of flow so its animated height never resizes the tile's own
-     box — that would nudge the CSS Grid row height and shift the row below
-     it, which is exactly the sibling movement this component should avoid.
-     It hangs below the tile's natural (unscaled) bottom edge instead,
-     scaling and moving together with the tile via its transform. */
-  position: absolute;
-  left: 1.5rem;
-  right: 1.5rem;
-  top: 100%;
-  margin-top: 1rem;
-  overflow: hidden;
-  height: 0;
-  opacity: 0;
-  border-radius: 8px;
-}
-.svc-carousel-track {
-  display: flex;
-  gap: 10px;
-  height: 100%;
-  width: 0;
-  min-width: 100%;
-  cursor: grab;
-  touch-action: pan-y;
-}
-.svc-carousel-track:active { cursor: grabbing; }
-.svc-card {
-  flex: 0 0 auto;
-  height: 100%;
-  border: 1px dashed var(--fog-dark);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  text-align: center;
-  padding: 0.4rem;
-  background: repeating-linear-gradient(-45deg, rgba(141,146,152,0.03) 0 12px, transparent 12px 24px);
-  user-select: none;
-  -webkit-user-select: none;
-}
-.svc-card.ratio-16-9 { aspect-ratio: 16 / 9; }
-.svc-card.ratio-9-16 { aspect-ratio: 9 / 16; }
-.svc-card .ph-label {
-  font-family: var(--display);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.6rem;
-  color: var(--fog);
-}
-.svc-card .ph-sub { font-size: 0.68rem; color: var(--fog-dark); font-style: italic; }
-
-.svc-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(232, 151, 58, 0.5);
-  background: rgba(10, 11, 13, 0.75);
-  color: var(--amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--display);
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-.svc-carousel-arrow:hover { background: rgba(232, 151, 58, 0.2); border-color: var(--amber); }
-.svc-carousel-arrow.prev { left: 6px; }
-.svc-carousel-arrow.next { right: 6px; }
-
-body.reduced-motion .svc--expandable { transition: none; }
+.svc-secondary h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+.svc-secondary p { color: var(--fog); font-size: 0.95rem; }
+.svc-secondary a { color: var(--amber); white-space: nowrap; }
 
 .portfolio-grid {
   display: grid;
