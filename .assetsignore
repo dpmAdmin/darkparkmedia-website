@@ -6,3 +6,8 @@
 wrangler.jsonc
 serve.py
 *.log
+
+# Portfolio project videos are hosted on the R2 CDN — mirrors .gitignore.
+# Without this, Worker deploys would upload all 441MB/18 files publicly
+# even though nothing on the site references them from this path.
+assets/video/Examples of Work/
