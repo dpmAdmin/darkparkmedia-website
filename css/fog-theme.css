@@ -228,6 +228,18 @@ body.theme-fog .svc::before {
 body.theme-fog .svc h3 { color: #f4f6f9; }
 body.theme-fog .svc p { color: #b8c0c9; }
 body.theme-fog .svc:hover { border-color: rgba(122, 166, 201, 0.6); }
+/* The service reel's full-bleed frames sit directly on the light fog
+   page, not as smoked-glass tiles — cancel the dark-tile treatment
+   above and go back to the page's own graphite/fog text colors. */
+body.theme-fog .svc-frame-item {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+body.theme-fog .svc-frame-item::before { content: none; }
+body.theme-fog .svc-frame-item:hover { border-color: transparent; }
+body.theme-fog .svc-frame-item h3 { color: var(--paper); }
+body.theme-fog .svc-frame-item p { color: var(--fog); }
 body.theme-fog .svc--expandable.svc-is-expanded {
   border-color: rgba(122, 166, 201, 0.65);
   box-shadow:

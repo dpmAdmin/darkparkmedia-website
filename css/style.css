@@ -750,6 +750,73 @@ body.reduced-motion .people-media video { opacity: 0.5; transform: none; }
 body.reduced-motion .svc-slideshow img { transition: none; }
 
 /* --------------------------------------------------------------------------
+   Service reel (Four One Five Visuals): each service as a full-bleed
+   2.35:1 letterboxed frame stacked in a column, reusing the same .svc
+   wrapper the hover JS already binds to — only the shape changes. The
+   loop videos are conformed to this exact ratio with black bars baked
+   into their pixels (720x308 live inside a 720x404 canvas), so cover
+   here crops almost exactly onto those bars rather than re-letterboxing
+   an already-letterboxed clip; the stills crop the same way with no
+   special-casing needed.
+   -------------------------------------------------------------------------- */
+.svc-reel {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+/* Cancel the boxed-card treatment .svc carries by default — a full-bleed
+   frame has no card to lift or border to darken on hover. */
+.svc-frame-item {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+.svc-frame-item:hover { transform: none; }
+.svc-frame {
+  position: relative;
+  aspect-ratio: 2.35 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--ink);
+}
+/* Overrides the card-bleed version of .svc-media — inside a frame the
+   media fills its own box directly, no negative-margin trick needed. */
+.svc-frame .svc-media {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  margin: 0;
+}
+.svc-frame-label {
+  position: absolute;
+  left: 1.25rem;
+  top: 1rem;
+  z-index: 1;
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  color: rgba(244, 247, 250, 0.92);
+  text-shadow: 0 1px 6px rgba(10, 14, 22, 0.75);
+}
+.svc-frame-copy {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2rem;
+  margin-top: 1rem;
+  align-items: baseline;
+}
+.svc-frame-copy h3 { font-size: 1.4rem; margin: 0; }
+.svc-frame-copy p { color: var(--fog); font-size: 1rem; margin: 0; }
+@media (max-width: 700px) {
+  .svc-frame-copy { grid-template-columns: 1fr; gap: 0.4rem; }
+}
+
+/* --------------------------------------------------------------------------
    Secondary-service callout beneath the main grid (Four One Five Visuals:
    Architecture — real, but not what leads the page).
    -------------------------------------------------------------------------- */
