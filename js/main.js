@@ -1,4 +1,4 @@
-/* DARK PARK MEDIA — interaction layer */
+/* DARK PARK MEDIA - interaction layer */
 (function () {
   "use strict";
 
@@ -6,7 +6,7 @@
   if (reducedMotion) document.body.classList.add("reduced-motion");
 
   // iOS Safari won't decode/render any frame of a video until play() has
-  // actually fired at least once — setting currentTime alone (as the scroll
+  // actually fired at least once - setting currentTime alone (as the scroll
   // scrub loops do) shows nothing. Kick playback then immediately pause so
   // the decoder initializes and the first frame paints.
   function primeScrubVideo(video) {
@@ -27,7 +27,7 @@
 
   // Every scroll loop below reads getBoundingClientRect each frame, which
   // forces a layout. Left ungated that ran for every section at once
-  // whether or not it was anywhere near the screen — measured 600/sec on
+  // whether or not it was anywhere near the screen - measured 600/sec on
   // the homepage and 960/sec on the 415 page. This lets a loop skip its
   // body, and therefore the read, while its section is far off screen.
   // Generous margin so a section is already live before it scrolls in,
@@ -155,7 +155,7 @@
       primeScrubVideo(scrubVideo);
     }
 
-    // Copy choreography runs over the pinned span — 1 the instant the
+    // Copy choreography runs over the pinned span - 1 the instant the
     // stage unpins and starts gliding away.
     function progress() {
       var rect = scrubSection.getBoundingClientRect();
@@ -166,7 +166,7 @@
 
     // The clip keeps scrubbing past the unpin, through the glide, landing
     // on its last frame as the section's bottom edge clears the top of
-    // the viewport — exactly when the next pane arrives.
+    // the viewport - exactly when the next pane arrives.
     function clipProgress() {
       var rect = scrubSection.getBoundingClientRect();
       if (rect.height <= 0) return 0;
@@ -206,7 +206,7 @@
   }
 
   /* ------------------------------------------------------------------
-     Manifesto beat — CAPTURE. CREATE. DELIVER.
+     Manifesto beat - CAPTURE. CREATE. DELIVER.
      Each word reveals via opacity + blur as it scrolls into place, staggered
      so they settle one after another rather than all at once. Continuous
      and reversible (like the hero scrub), not a one-shot reveal.
@@ -218,7 +218,7 @@
   if (beatSection && beatWords.length && !reducedMotion) {
     var BEAT_STAGGER = 0.25;
     // The reveal finishes by this fraction of the section's time on screen,
-    // not at progress 1 — otherwise the last word only reaches full opacity
+    // not at progress 1 - otherwise the last word only reaches full opacity
     // the instant the section exits the viewport, so it's never actually
     // readable. Leaves a dwell period where the full line sits visible.
     var BEAT_REVEAL_COMPLETE = 0.6;
@@ -242,8 +242,8 @@
 
     // Progress spans the section's entire time on screen: 0 the instant its
     // top edge appears at the bottom of the viewport, 1 the instant its
-    // bottom edge exits at the top — so it's always scrubbing for as long as
-    // any part of it is visible, never idling mid-scroll. No pinning — the
+    // bottom edge exits at the top - so it's always scrubbing for as long as
+    // any part of it is visible, never idling mid-scroll. No pinning - the
     // section just scrolls by like everything else, just slower if it's short.
     function beatProgress() {
       var rect = beatSection.getBoundingClientRect();
@@ -269,8 +269,8 @@
         var panPx = beatMedia.offsetWidth - beatSection.offsetWidth;
         if (panPx > 0) beatMedia.style.transform = "translateX(" + (-panPx * overall) + "px)";
       }
-      // Scrub the clip itself against the same progress — forward on the way
-      // down, backward on the way up — same mechanism as the hero.
+      // Scrub the clip itself against the same progress - forward on the way
+      // down, backward on the way up - same mechanism as the hero.
       if (beatDuration > 0) {
         beatTargetTime = overall * Math.max(0, beatDuration - 0.05);
         var next = beatRenderedTime < 0 ? beatTargetTime : beatRenderedTime + (beatTargetTime - beatRenderedTime) * 0.22;
@@ -286,7 +286,7 @@
   }
 
   /* ------------------------------------------------------------------
-     "What we do" background — scroll-linked like the hero/beat clips:
+     "What we do" background - scroll-linked like the hero/beat clips:
      scrubs forward/back with scroll direction, and scales + fades in as
      a reveal rather than sitting there autoplaying and static.
      ------------------------------------------------------------------ */
@@ -340,7 +340,7 @@
   }
 
   /* ------------------------------------------------------------------
-     "The people" background — scroll-linked like the hero/beat/gateway
+     "The people" background - scroll-linked like the hero/beat/gateway
      clips: scrubs forward/back with scroll direction, and fades + scales
      in as a reveal rather than autoplaying on a loop.
      ------------------------------------------------------------------ */
@@ -395,12 +395,12 @@
   }
 
   /* ------------------------------------------------------------------
-     Fog hero (Four One Five Visuals) — perspective choreography: as you
+     Fog hero (Four One Five Visuals) - perspective choreography: as you
      scroll, the mark zooms toward the viewer and fades away as it
      "passes" the camera, then the tagline flies in from behind and does
      the same. The background clip is scroll-scrubbed exactly like the
-     homepage hero — its timeline is the scroll, forward on the way down
-     and backward on the way up — while the cloud layers keep their CSS
+     homepage hero - its timeline is the scroll, forward on the way down
+     and backward on the way up - while the cloud layers keep their CSS
      drift. Fully reversible: scroll back up and the whole flight runs
      in reverse.
      ------------------------------------------------------------------ */
@@ -414,7 +414,7 @@
     var fogMedia = fogHero.querySelector(".fog-media");
     var fogRiser = fogHero.querySelector(".fog-riser");
 
-    // Scroll-scrubbed background — the same interaction as the homepage
+    // Scroll-scrubbed background - the same interaction as the homepage
     // hero: the clip's timeline is the scroll itself, running forward on
     // the way down and backward on the way up, eased with the same lerp.
     // Top of the page is the first frame by construction.
@@ -430,7 +430,7 @@
       primeScrubVideo(fogVideo);
     }
 
-    // Flight choreography runs over the pinned span — 1 the instant the
+    // Flight choreography runs over the pinned span - 1 the instant the
     // stage unpins and starts gliding away.
     function fogProgress() {
       var rect = fogHero.getBoundingClientRect();
@@ -441,7 +441,7 @@
 
     // The clip keeps scrubbing past the unpin, through the glide, landing
     // on its last frame as the pane's bottom edge clears the top of the
-    // viewport — same treatment as the homepage hero.
+    // viewport - same treatment as the homepage hero.
     function fogClipProgress() {
       var rect = fogHero.getBoundingClientRect();
       if (rect.height <= 0) return 0;
@@ -456,7 +456,7 @@
     (function fogLoop() {
       if (!fogVis.active) { tick(fogLoop); return; }
       var p = fogProgress();
-      // The mark zooms toward the viewer from the first scrolled pixel —
+      // The mark zooms toward the viewer from the first scrolled pixel -
       // scale grows continuously (eased), opacity holds through the early
       // flight, then it fades as it passes the camera.
       if (fogLogo) {
@@ -466,7 +466,7 @@
         fogLogo.style.opacity = 1 - fogPhase(logoT, 0.45, 0.95);
       }
       // The tagline sits just under the hillside houses and is pulled
-      // toward the viewer — the same perspective move as the 415 mark —
+      // toward the viewer - the same perspective move as the 415 mark -
       // with only a slight upward drift. It fades out before the fog
       // riser reaches it.
       if (fogTag) {
@@ -475,7 +475,7 @@
         var tagT = fogPhase(p, 0.22, 0.80);
         var tagScale = 0.42 + 1.9 * Math.pow(tagT, 1.4);
         // Cap the growth so the single line never outgrows the viewport
-        // and gets clipped — offsetWidth is the unscaled layout width.
+        // and gets clipped - offsetWidth is the unscaled layout width.
         var tagBaseW = fogTag.offsetWidth;
         if (tagBaseW > 0) {
           tagScale = Math.min(tagScale, (window.innerWidth - 32) / tagBaseW);
@@ -485,26 +485,26 @@
         // climb over the houses.
         fogTag.style.transform = "scale(" + tagScale + ")";
         // Reaches full opacity quickly and holds it for most of the
-        // flight — the line needs time to actually be read before the
+        // flight - the line needs time to actually be read before the
         // fog takes the frame.
         fogTag.style.opacity = fogPhase(tagT, 0, 0.18) * (1 - fogPhase(tagT, 0.74, 0.96));
       }
-      // The fog riser climbs over the footage as the hero ends — the
+      // The fog riser climbs over the footage as the hero ends - the
       // image never slides away, it dissolves under rising fog. Fully
       // white a hair before the unpin, so the glide into the services
       // pane is white-on-white and invisible.
       if (fogRiser) {
-        // Held back until the line has had its read — it used to start
+        // Held back until the line has had its read - it used to start
         // climbing at 0.24, while the tagline was still arriving.
         var riserT = fogPhase(p, 0.46, 1);
         fogRiser.style.transform = "translateY(" + (-riserT * 97) + "%)";
       }
       if (fogSky) fogSky.style.transform = "translateY(" + p * 60 + "px)";
       // Thin the white veil as the mark flies off, bringing the footage
-      // into view — down to 30% of its resting strength by mid-scroll.
+      // into view - down to 30% of its resting strength by mid-scroll.
       if (fogMedia) fogMedia.style.setProperty("--veil", 1 - fogPhase(p, 0.05, 0.5) * 0.7);
       if (fogHint) fogHint.classList.toggle("is-hidden", p > 0.05);
-      // Scrub the clip — forward on the way down, backward on the way up,
+      // Scrub the clip - forward on the way down, backward on the way up,
       // same lerp as the homepage hero, and still running through the glide.
       if (fogDuration > 0) {
         fogTargetTime = fogClipProgress() * Math.max(0, fogDuration - 0.05);
@@ -524,13 +524,13 @@
 
   /* ------------------------------------------------------------------
      Service-card media (Four One Five Visuals): each card rests on a
-     single still — the slideshow's first frame, or the clip's poster,
+     single still - the slideshow's first frame, or the clip's poster,
      which is that clip's own frame 0 so nothing jumps when it starts.
      Motion is hover-driven, so the row is calm until the visitor shows
      interest in a specific tile, and only one thing ever animates.
 
      Touch has no hover, so there the card plays whenever it is on screen
-     instead — otherwise the media would be dead on phones.
+     instead - otherwise the media would be dead on phones.
      ------------------------------------------------------------------ */
   var svcCards = document.querySelectorAll(".svc");
   if (svcCards.length && !reducedMotion) {
@@ -647,7 +647,7 @@
     document.addEventListener("keydown", function (e) {
       if (!portfolioModal.classList.contains("open")) return;
       if (e.key === "Escape") { closePortfolioModal(); return; }
-      // Keep Tab inside the dialog — otherwise focus walks the tiles
+      // Keep Tab inside the dialog - otherwise focus walks the tiles
       // still sitting behind it.
       if (e.key !== "Tab") return;
       var focusable = portfolioModal.querySelectorAll(

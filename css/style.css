@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DARK PARK MEDIA — base styles
+   DARK PARK MEDIA - base styles
    Palette: near-black / fog grey / sodium-vapor amber
    Type: Big Shoulders (condensed grotesk display) + Newsreader (literary serif)
    ========================================================================== */
@@ -264,7 +264,7 @@ body.has-cursor .cursor-ring, body.has-cursor .cursor-trail { display: block; }
 .skip-link:focus { top: 0; }
 
 /* --------------------------------------------------------------------------
-   Hero — scroll-scrubbed video
+   Hero - scroll-scrubbed video
    -------------------------------------------------------------------------- */
 .hero-scrub { height: 380vh; position: relative; }
 .hero-stage {
@@ -347,7 +347,7 @@ body.has-cursor .cursor-ring, body.has-cursor .cursor-trail { display: block; }
 body.reduced-motion .hero-scrub { height: 100vh; height: 100svh; }
 
 /* --------------------------------------------------------------------------
-   Manifesto — CAPTURE. CREATE. DELIVER. (single static beat, no scroll-jack)
+   Manifesto - CAPTURE. CREATE. DELIVER. (single static beat, no scroll-jack)
    -------------------------------------------------------------------------- */
 .manifesto-beat {
   position: relative;
@@ -564,7 +564,7 @@ body.reduced-motion .gateway-media video { opacity: 0.22; transform: none; }
 }
 
 /* --------------------------------------------------------------------------
-   People — over third clip
+   People - over third clip
    -------------------------------------------------------------------------- */
 .people {
   position: relative;
@@ -742,7 +742,7 @@ body.reduced-motion .people-media video { opacity: 0.5; transform: none; }
   object-fit: cover;
   opacity: 0;
   /* Quick enough that the first change is unmistakably a change, not a
-     lighting shift — the dwell timings in js/main.js carry the pacing. */
+     lighting shift - the dwell timings in js/main.js carry the pacing. */
   transition: opacity 0.45s ease-in-out;
 }
 .svc-slideshow img.is-active { opacity: 1; }
@@ -752,7 +752,7 @@ body.reduced-motion .svc-slideshow img { transition: none; }
 /* --------------------------------------------------------------------------
    Service reel (Four One Five Visuals): each service as a full-bleed
    2.35:1 letterboxed frame stacked in a column, reusing the same .svc
-   wrapper the hover JS already binds to — only the shape changes. The
+   wrapper the hover JS already binds to - only the shape changes. The
    loop videos are conformed to this exact ratio with black bars baked
    into their pixels (720x308 live inside a 720x404 canvas), so cover
    here crops almost exactly onto those bars rather than re-letterboxing
@@ -765,7 +765,7 @@ body.reduced-motion .svc-slideshow img { transition: none; }
   gap: 3rem;
   margin-top: 3rem;
 }
-/* Cancel the boxed-card treatment .svc carries by default — a full-bleed
+/* Cancel the boxed-card treatment .svc carries by default - a full-bleed
    frame has no card to lift or border to darken on hover. */
 .svc-frame-item {
   background: none;
@@ -781,7 +781,7 @@ body.reduced-motion .svc-slideshow img { transition: none; }
   border-radius: 4px;
   background: var(--ink);
 }
-/* Overrides the card-bleed version of .svc-media — inside a frame the
+/* Overrides the card-bleed version of .svc-media - inside a frame the
    media fills its own box directly, no negative-margin trick needed. */
 .svc-frame .svc-media {
   width: 100%;
@@ -818,7 +818,7 @@ body.reduced-motion .svc-slideshow img { transition: none; }
 
 /* --------------------------------------------------------------------------
    Secondary-service callout beneath the main grid (Four One Five Visuals:
-   Architecture — real, but not what leads the page).
+   Architecture - real, but not what leads the page).
    -------------------------------------------------------------------------- */
 .svc-secondary {
   margin-top: 2rem;
@@ -1034,16 +1034,16 @@ html.js body.reduced-motion .reveal { opacity: 1; transform: none; transition: n
 
 /* --------------------------------------------------------------------------
    DIVISION BRANDLINE (moved out of fog-theme.css so all division pages
-   can use it — it was structural, not fog-specific)
+   can use it - it was structural, not fog-specific)
    -------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------
-   Nav brandline — "DPM › <Division>". Shared by every division page so
+   Nav brandline - "DPM › <Division>". Shared by every division page so
    the brand hierarchy reads the same everywhere; colours come from each
    page's own palette variables. The parent mark rests
    compact at half opacity; hovering it builds the initials out into
    "Dark Park Media LLC" word by word, each rising from underneath its
    initial, sliding the caret and the 415 wordmark to the right while
-   the 415 mark drops to half opacity — focus hands back to the parent
+   the 415 mark drops to half opacity - focus hands back to the parent
    studio for the duration of the hover.
    -------------------------------------------------------------------------- */
 .nav-brandline {

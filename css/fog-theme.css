@@ -1,20 +1,20 @@
 /* ==========================================================================
-   FOUR ONE FIVE VISUALS — fog theme
+   FOUR ONE FIVE VISUALS - fog theme
    Inverted "sky / cloud / fog" skin scoped to body.theme-fog: near-white
    atmosphere, graphite type, steel-blue accent, liquid-glass graphite tiles.
-   Loads AFTER style.css, only on pages that opt in via the body class —
+   Loads AFTER style.css, only on pages that opt in via the body class -
    most of the inversion happens by redefining the palette variables.
    ========================================================================== */
 
 body.theme-fog {
-  --black: #eef1f5;      /* page base — was near-black */
-  --ink: #e4e9ef;        /* deeper section wash — now a shade of mist */
+  --black: #eef1f5;      /* page base - was near-black */
+  --ink: #e4e9ef;        /* deeper section wash - now a shade of mist */
   --panel: rgba(255, 255, 255, 0.72);
   --fog-dark: #a7b0ba;   /* borders / dividers */
   --fog: #5a646f;        /* secondary text */
   --fog-light: #39424c;  /* body text */
-  --paper: #1c2127;      /* headings — graphite */
-  --amber: #5e87ab;      /* accent — steel blue */
+  --paper: #1c2127;      /* headings - graphite */
+  --amber: #5e87ab;      /* accent - steel blue */
   --amber-bright: #4a749a;
   --amber-dim: rgba(94, 135, 171, 0.16);
   background: var(--black);
@@ -23,7 +23,7 @@ body.theme-fog {
 body.theme-fog ::selection { background: #5e87ab; color: #fff; }
 
 /* --------------------------------------------------------------------------
-   Nav — frosted white glass
+   Nav - frosted white glass
    -------------------------------------------------------------------------- */
 body.theme-fog .nav {
   background: linear-gradient(to bottom, rgba(244, 247, 250, 0.92), rgba(244, 247, 250, 0.72));
@@ -32,7 +32,7 @@ body.theme-fog .nav {
 body.theme-fog .nav-toggle { border-color: rgba(90, 100, 111, 0.3); }
 
 
-/* Custom cursor — graphite-black ring and dot instead of the amber set
+/* Custom cursor - graphite-black ring and dot instead of the amber set
    (the trail's orange was hardcoded in style.css, not var-driven). */
 body.theme-fog .cursor-ring { border-color: #1c2127; }
 body.theme-fog .cursor-ring::after { background: #1c2127; }
@@ -45,7 +45,7 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
 }
 
 /* --------------------------------------------------------------------------
-   Fog hero — pinned scroll stage, same skeleton as the homepage hero: a
+   Fog hero - pinned scroll stage, same skeleton as the homepage hero: a
    tall scroll track with a sticky viewport-height stage. The mark holds
    alone over the drifting clouds, lifts and fades on scroll while the
    tagline follows it up, reveals, then fades out before the next panel.
@@ -57,7 +57,7 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
 .fog-hero {
   position: relative;
   /* Short pinned span (height minus one viewport) so the hero hands off
-     quickly — the remaining 100vh is the glide, which is where the
+     quickly - the remaining 100vh is the glide, which is where the
      services pane and its label ride in. */
   height: 190vh;
   background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
@@ -74,7 +74,7 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
   justify-content: center;
   background: linear-gradient(to bottom, #d9e3ee 0%, #e9eef4 55%, #eef1f5 100%);
 }
-/* Background clip slot — sits under the cloud layers so the fog drifts
+/* Background clip slot - sits under the cloud layers so the fog drifts
    over the footage. Empty until the hero video lands; js/main.js scrubs
    it against scroll automatically once a video exists here. */
 .fog-media { position: absolute; inset: 0; }
@@ -90,7 +90,7 @@ body.theme-fog .cursor-trail { border-color: rgba(28, 33, 39, 0.32); }
   background: linear-gradient(to bottom, rgba(217,227,238,0.6) 0%, rgba(233,238,244,0.38) 45%, rgba(238,241,245,0.6) 100%);
   opacity: var(--veil, 1);
 }
-/* Fog riser — sits just below the stage at rest (clipped), then climbs
+/* Fog riser - sits just below the stage at rest (clipped), then climbs
    over the footage as the hero ends. Its leading edge is a long
    transparent-to-white gradient, so the image dissolves under fog
    rather than being covered by a hard sheet; its body is the same white
@@ -148,8 +148,8 @@ body.reduced-motion .fog-layer { animation: none; }
   filter: drop-shadow(0 18px 45px rgba(51, 64, 80, 0.28));
 }
 .fog-tag {
-  /* Anchored to the stage, high in the frame — above the centre house,
-     back among the distant ones — so it reads as sitting deep in the
+  /* Anchored to the stage, high in the frame - above the centre house,
+     back among the distant ones - so it reads as sitting deep in the
      scene and flying forward from there. A fixed fraction of the frame,
      so it does not move when the logo resizes. */
   position: absolute;
@@ -173,7 +173,7 @@ body.reduced-motion .fog-layer { animation: none; }
      viewer; anchoring the origin at the top means that edge never moves,
      so it cannot ride up over the houses however large it gets. */
   transform-origin: 50% 0;
-  /* Hidden at rest, parked deep in the scene — the fogLoop flies it
+  /* Hidden at rest, parked deep in the scene - the fogLoop flies it
      toward the viewer (scale + fade) against scroll. */
   opacity: 0;
   transform: scale(0.42);
@@ -181,33 +181,33 @@ body.reduced-motion .fog-layer { animation: none; }
 }
 .fog-hero .hero-scroll-hint { color: var(--fog); }
 
-/* The pinned stage is 100vh tall inside a 190vh track — after the fog
+/* The pinned stage is 100vh tall inside a 190vh track - after the fog
    riser finishes whiting it out (well before unpin), the remaining ~100vh
    of scroll is still spent gliding that now-blank white stage off screen
    before the next section's own top can appear, reading as a dead gap.
    Both the stage and the page body resolve to the exact same white
-   (#eef1f5), so the section can safely ride up and overlap that glide —
+   (#eef1f5), so the section can safely ride up and overlap that glide -
    there is no seam to hide, just scroll distance to reclaim. */
 body.theme-fog .fog-hero + .section {
   position: relative;
   z-index: 2;
   margin-top: -620px;
 }
-/* Reduced motion: no pin, no choreography — one calm viewport, all resting.
+/* Reduced motion: no pin, no choreography - one calm viewport, all resting.
    The glide-away dead zone doesn't exist here, so the overlap above would
-   just pull the next section up into the hero itself — cancel it. */
+   just pull the next section up into the hero itself - cancel it. */
 body.reduced-motion .fog-hero { height: 100vh; height: 100svh; }
 body.reduced-motion .fog-tag { opacity: 1; transform: none; }
 body.reduced-motion .fog-hero + .section { margin-top: 0; }
 
 /* --------------------------------------------------------------------------
-   Liquid-glass graphite tiles — service cards keep their dark identity as
+   Liquid-glass graphite tiles - service cards keep their dark identity as
    smoked glass floating on the fog. No overflow:hidden here: the expandable
    carousel hangs below the tile's box (see .svc-carousel in style.css).
    -------------------------------------------------------------------------- */
 body.theme-fog .svc {
   /* Near-opaque graphite reads as smoked glass on its own; backdrop-filter
-     is deliberately absent — it makes these tiles paint blank in Chrome's
+     is deliberately absent - it makes these tiles paint blank in Chrome's
      compositor (verified live), and at this opacity blur adds nothing. */
   background: linear-gradient(150deg, rgba(44, 49, 57, 0.9), rgba(26, 30, 36, 0.96));
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -229,7 +229,7 @@ body.theme-fog .svc h3 { color: #f4f6f9; }
 body.theme-fog .svc p { color: #b8c0c9; }
 body.theme-fog .svc:hover { border-color: rgba(122, 166, 201, 0.6); }
 /* The service reel's full-bleed frames sit directly on the light fog
-   page, not as smoked-glass tiles — cancel the dark-tile treatment
+   page, not as smoked-glass tiles - cancel the dark-tile treatment
    above and go back to the page's own graphite/fog text colors. */
 body.theme-fog .svc-frame-item {
   background: none;
@@ -259,7 +259,7 @@ body.theme-fog .svc-carousel-arrow {
 }
 
 /* --------------------------------------------------------------------------
-   Portfolio tiles — thumbnails in polished glass frames, labels as graphite
+   Portfolio tiles - thumbnails in polished glass frames, labels as graphite
    glass chips.
    -------------------------------------------------------------------------- */
 body.theme-fog .portfolio-tile {
@@ -276,7 +276,7 @@ body.theme-fog .tile-label {
   color: #f4f6f9;
 }
 
-/* Modal — foggy white backdrop, player stays dark */
+/* Modal - foggy white backdrop, player stays dark */
 body.theme-fog .portfolio-modal-backdrop { background: rgba(238, 241, 245, 0.92); }
 body.theme-fog .portfolio-modal-container {
   background: #101215;
@@ -290,14 +290,14 @@ body.theme-fog .portfolio-modal-close {
 }
 
 /* --------------------------------------------------------------------------
-   Process steps — light glass over the fog
+   Process steps - light glass over the fog
    -------------------------------------------------------------------------- */
 body.theme-fog .process-step {
   border-color: rgba(255, 255, 255, 0.65);
   box-shadow: 0 14px 34px rgba(45, 58, 72, 0.12);
 }
 
-/* Buttons — steel accent needs white text when filled */
+/* Buttons - steel accent needs white text when filled */
 body.theme-fog .btn-primary { color: #fff; }
 body.theme-fog .btn-primary:hover,
 body.theme-fog .btn-primary:focus-visible { color: #fff; }
