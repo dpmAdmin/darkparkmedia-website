@@ -4,21 +4,20 @@
   <meta charset="UTF-8">
   <script>document.documentElement.classList.add("js")</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Four One Five Visuals — Real Estate &amp; Architectural Film from the Bay Area | Dark Park Media</title>
-  <meta name="description" content="Four One Five Visuals is Dark Park Media's Bay Area real estate production crew: cinematic listing films, architectural films, and photography for properties and spaces.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,400;10..72,600;10..72,700;10..72,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/fog-theme.css">
+  <title>Four One Five Visuals - Real Estate Media for the Bay Area | Dark Park Media</title>
+  <meta name="description" content="Four One Five Visuals is Dark Park Media's Bay Area real estate media crew: cinematic listing films, photography, and aerial coverage delivered as one package, shot in a single visit.">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@200,300,400,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/fofv.css">
 </head>
-<body class="theme-fog">
+<body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="nav">
     <div class="nav-inner">
       <div class="nav-brandline">
-        <a href="https://darkpark.media/" class="nav-parent" aria-label="Dark Park Media LLC — main studio site">D<span class="pw-rest">ark&nbsp;</span>P<span class="pw-rest">ark&nbsp;</span>M<span class="pw-rest">edia</span><span class="pw-rest">&nbsp;LLC</span></a>
+        <a href="https://darkpark.media/" class="nav-parent" aria-label="Dark Park Media LLC - main studio site">D<span class="pw-rest">ark&nbsp;</span>P<span class="pw-rest">ark&nbsp;</span>M<span class="pw-rest">edia</span><span class="pw-rest">&nbsp;LLC</span></a>
         <span class="nav-caret" aria-hidden="true">&rsaquo;</span>
         <a href="four-one-five-visuals.html" class="nav-logo" aria-label="Four One Five Visuals home"><span class="logo-accent">Four&nbsp;One&nbsp;Five</span>&nbsp;Visuals</a>
       </div>
@@ -26,221 +25,243 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="nav-links">
-        <li><a href="index.html#what-we-do">What we do</a></li>
-        <li><a href="index.html#work">Work</a></li>
-        <li><a class="nav-cta" href="mailto:contact@fouronefivevisuals.com">Contact us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a class="nav-cta" href="#contact">Book a shoot</a></li>
       </ul>
     </div>
   </header>
 
-  <main id="main">
+  <!-- HERO: fixed to the viewport, the page scrolls over it. One still
+       frame of the hillside shot with fog rolling across it (canvas in
+       js/fofv.js) - the clip is no longer scrubbed. Swap hero-still.jpg
+       to change the frame. -->
+  <div class="hero" aria-label="Four One Five Visuals">
+    <img class="hero-still" src="assets/img/fofv/hero-still.jpg" alt="" fetchpriority="high">
+    <div class="hero-mist" aria-hidden="true"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
+    <canvas class="hero-fog" aria-hidden="true"></canvas>
+    <div class="hero-brand">
+      <h1 class="hero-logo"><img src="assets/logos/box-fofv-transparent.png" alt="Four One Five Visuals"></h1>
+      <p class="hero-kicker">Real Estate Media</p>
+      <p class="hero-tag">Your listing, seen.</p>
+      <a class="hero-link" href="#services">Video, photography, aerials - one visit <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span class="arrow">&darr;</span> Scroll down to discover</div>
 
-    <!-- HERO: pinned scroll stage, same pattern as the homepage hero. The
-         415 mark holds alone over the fog, lifts and fades on scroll while
-         the tagline follows it up, reveals, and fades back out before the
-         services panel arrives. Cloud drift is CSS (fog-theme.css); the
-         choreography lives in the fogLoop block in js/main.js. -->
-    <section class="fog-hero" aria-label="Four One Five Visuals">
-      <div class="fog-stage">
-        <!-- Background clip (shared with the homepage hero for now — swap the
-             src when 415 gets its own footage). Scroll-scrubbed by the
-             fogLoop in js/main.js, with the fog drifting over it. -->
-        <div class="fog-media" aria-hidden="true">
-          <video src="assets/video/ZoomHeroTemp.mp4" muted playsinline preload="auto"></video>
+  <main id="main" class="page">
+
+    <!-- INTRO: the showpiece frame, the begin-here button, and the approach line -->
+    <section class="intro" aria-label="Introduction">
+      <div class="intro-frame svc halo reveal wipe wipe-center">
+        <div class="frame frame-235">
+          <video class="svc-media" src="assets/video/fofv-video-loop.mp4" poster="assets/img/fofv/video-poster.jpg" loop muted playsinline preload="none" aria-label="Clips from listing films across three Marin properties"></video>
+          <span class="frame-label">Listing film &middot; Marin</span>
         </div>
-        <div class="fog-sky" aria-hidden="true">
-          <div class="fog-layer fog-a"></div>
-          <div class="fog-layer fog-b"></div>
-          <div class="fog-layer fog-c"></div>
-        </div>
-        <div class="fog-copy">
-          <h1 class="fog-logo"><img src="assets/logos/box-fofv-transparent.png" alt="Four One Five Visuals"></h1>
-        </div>
-        <!-- Sits high in the frame — up past the centre house, back among
-             the far houses — and flies forward toward the camera from
-             there. Anchored to the stage rather than nested under the
-             logo so its height is a fixed fraction of the frame and does
-             not shift with the logo's size. -->
-        <p class="fog-tag">real estate &amp; architectural film from the Bay Area</p>
-        <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
-        <!-- Fog riser: a tall white gradient that climbs over the footage
-             at the end of the hero — the image never slides away, it
-             dissolves under fog, and the white it leaves behind is the
-             services pane's white, so the handoff has no visible seam.
-             Driven by the fogLoop in js/main.js. -->
-        <div class="fog-riser" aria-hidden="true"></div>
+      </div>
+      <div class="intro-cta reveal">
+        <a class="intro-cta-btn" href="#contact">
+          <span class="intro-cta-kicker">Begin here</span>
+          <span class="intro-cta-label">Book a shoot</span>
+          <span class="intro-cta-line" aria-hidden="true"></span>
+        </a>
       </div>
     </section>
 
-    <section class="section" aria-label="Services">
-      <div class="wrap">
-        <p class="eyebrow reveal">Services</p>
-        <h2 class="section-title reveal">What we shoot</h2>
-        <p class="lede reveal">Real estate is our focus — photography, video, and drone coverage built to make a listing stand out, not blend in.</p>
-        <div class="svc-reel">
-          <div class="svc svc-frame-item reveal">
-            <div class="svc-frame">
+    <section class="approach" aria-label="Our approach">
+      <div class="approach-inner">
+        <span class="label reveal">Our approach</span>
+        <h2 class="reveal">Real estate media, delivered as one package - cinematic video, photography, and aerial coverage, shot in a single visit and cut to make the listing the one buyers remember.</h2>
+      </div>
+    </section>
+
+    <!-- SERVICES: numbered, media and copy trading sides -->
+    <div id="services" aria-label="Services">
+
+      <section class="svc svc--wide">
+        <div class="svc-copy reveal">
+          <span class="svc-num label">01</span>
+          <h3>Video</h3>
+          <p>Cinematic listing films and walkthroughs - the approach, twilight exteriors, neighborhood context - cut for the pace buyers actually watch at and delivered ready for the MLS, social, and your own marketing.</p>
+          <a class="cta-link" href="#work"><span class="cta-text">Watch a listing film</span><span class="cta-line" aria-hidden="true"></span><span class="cta-arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="svc-media-col halo reveal wipe">
+          <div class="frame frame-235">
+            <video class="svc-media" src="assets/video/fofv-video-loop.mp4" poster="assets/img/fofv/video-poster.jpg" loop muted playsinline preload="none" aria-label="Clips from listing films across three Marin properties"></video>
+            <span class="frame-label">01 &middot; Video</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="svc svc--left">
+        <div class="svc-row">
+          <div class="svc-media-col halo reveal wipe">
+            <div class="frame frame-235">
               <div class="svc-media svc-slideshow" role="img" aria-label="Real estate photography: twilight exteriors and staged interiors">
                 <img src="assets/img/fofv/photo-1.jpg" alt="" class="is-active">
                 <img src="assets/img/fofv/photo-2.jpg" alt="">
                 <img src="assets/img/fofv/photo-3.jpg" alt="">
               </div>
-              <span class="svc-frame-label">01 &middot; Photography</span>
-            </div>
-            <div class="svc-frame-copy">
-              <h3>Photography</h3>
-              <p>High-resolution stills for MLS, print, and marketing — twilight exteriors, staged interiors, and the detail shots a listing needs to earn a second look.</p>
+              <span class="frame-label">02 &middot; Photography</span>
             </div>
           </div>
-          <div class="svc svc-frame-item reveal">
-            <div class="svc-frame">
-              <video class="svc-media" src="assets/video/fofv-video-loop.mp4" poster="assets/img/fofv/video-poster.jpg" loop muted playsinline preload="none" aria-label="Clips from listing films across three Marin properties"></video>
-              <span class="svc-frame-label">02 &middot; Video</span>
-            </div>
-            <div class="svc-frame-copy">
-              <h3>Video</h3>
-              <p>Cinematic listing films and walkthroughs, cut for the pace buyers actually watch at — this is the format that gets a property remembered.</p>
-            </div>
+          <div class="svc-copy reveal">
+            <span class="svc-num label">02</span>
+            <h3>Photography</h3>
+            <p>High-resolution stills for MLS, print, and marketing: daytime and twilight exteriors, staged interiors, and the detail shots a listing needs to earn a second look.</p>
+            <a class="cta-link" href="#contact"><span class="cta-text">Plan a shoot</span><span class="cta-line" aria-hidden="true"></span><span class="cta-arrow" aria-hidden="true">&rarr;</span></a>
           </div>
-          <div class="svc svc-frame-item reveal">
-            <div class="svc-frame">
+        </div>
+      </section>
+
+      <section class="svc svc--right">
+        <div class="svc-row is-reverse">
+          <div class="svc-media-col halo reveal wipe">
+            <div class="frame frame-235">
               <video class="svc-media" src="assets/video/fofv-drone-loop.mp4" poster="assets/img/fofv/drone-poster.jpg" loop muted playsinline preload="none" aria-label="Aerial drone footage over a Marin County hillside neighborhood"></video>
-              <span class="svc-frame-label">03 &middot; Drone &amp; Aerial</span>
-            </div>
-            <div class="svc-frame-copy">
-              <h3>Drone &amp; Aerial</h3>
-              <p>FAA Part 107 aerial coverage flown in the same visit — establishing shots, lot lines, and context no ground camera can reach.</p>
+              <span class="frame-label">03 &middot; Aerials, included</span>
             </div>
           </div>
+          <div class="svc-copy reveal">
+            <span class="svc-num label">03</span>
+            <h3>Aerials, included</h3>
+            <p>Every package ships with FAA Part 107 aerial coverage flown in the same visit - establishing shots, lot lines, and the context no ground camera can reach. It's standard, not an add-on: the drone only stays in the case if you ask us to leave it there.</p>
+            <a class="cta-link" href="#contact"><span class="cta-text">Book a shoot</span><span class="cta-line" aria-hidden="true"></span><span class="cta-arrow" aria-hidden="true">&rarr;</span></a>
+          </div>
         </div>
-        <div class="svc-secondary reveal">
-          <h3>Also: Architecture</h3>
-          <p>Composition-led films and photography for architects, builders, and designers, when the project is the building itself. <a href="#contact">Ask about a shoot &rsaquo;</a></p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" aria-label="Selected work" style="background: var(--ink);">
-      <div class="wrap">
-        <p class="eyebrow reveal">Selected work</p>
-        <h2 class="section-title reveal">Portfolio</h2>
-        <p class="lede reveal">Recent property films — tap a tile to watch.</p>
-        <div class="portfolio-grid">
-          <button class="portfolio-tile reveal" data-video="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr - Final.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr Thumbnail.png')" aria-label="Play: 88 Lucas Park Dr">
-            <span class="tile-label">88 Lucas Park Dr</span>
-            <span class="tile-play-icon"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
-          </button>
-          <button class="portfolio-tile reveal" data-video="assets/video/7-francisco-vista-court.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 7 Francisco Vista Court - CC - 051826/7 Francisco Vista Court Thumbnail.png')" aria-label="Play: 7 Francisco Vista Court">
-            <span class="tile-label">7 Francisco Vista Court</span>
-            <span class="tile-play-icon"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Process">
-      <div class="wrap">
-        <p class="eyebrow reveal">Process</p>
-        <h2 class="section-title reveal">How a shoot runs</h2>
-        <div class="process-list">
-          <div class="process-step reveal">
-            <div>
-              <h3>Scope &amp; scout</h3>
-              <p>We define the deliverables, walk or review the location, and plan coverage — including whether Bay Aerials joins the shoot for aerial passes.</p>
-            </div>
-          </div>
-          <div class="process-step reveal">
-            <div>
-              <h3>Shoot day</h3>
-              <p>A tight crew with a shot list. Ground cinematography, photography, and any coordinated aerial work captured in one scheduled pass.</p>
-            </div>
-          </div>
-          <div class="process-step reveal">
-            <div>
-              <h3>Edit &amp; finish</h3>
-              <p>Selects, cut, color, and sound handled in-house. You review online; revisions are structured and scheduled, not open-ended.</p>
-            </div>
-          </div>
-          <div class="process-step reveal">
-            <div>
-              <h3>Delivery</h3>
-              <p>Final masters delivered in every format the project needs — and if Motion Marketing is engaged, the work goes straight into distribution.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section division-contact" id="contact" aria-label="Contact Four One Five Visuals">
-      <div class="wrap">
-        <p class="eyebrow reveal">Contact</p>
-        <h2 class="section-title reveal">Book a production</h2>
-        <p class="lede reveal" style="margin: 0 auto;">Tell us about the property, the product, or the spot — we'll come back with an approach and a quote.</p>
-        <div class="cta-actions reveal">
-          <a class="btn btn-primary" href="mailto:anthony@darkpark.media?subject=Production%20inquiry%20%E2%80%94%20Four%20One%20Five%20Visuals">Email the production team</a>
-          <a class="btn" href="index.html#contact">General inquiries</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- PORTFOLIO MODAL: expanded pop-up for portfolio videos -->
-    <div class="portfolio-modal" id="portfolio-modal" aria-hidden="true"
-         role="dialog" aria-modal="true" aria-label="Project video player">
-      <div class="portfolio-modal-backdrop"></div>
-      <div class="portfolio-modal-container">
-        <button class="portfolio-modal-close" aria-label="Close portfolio">
-          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        <video class="portfolio-modal-video" muted playsinline controls preload="metadata"></video>
+      <div class="svc-secondary reveal">
+        <span class="label">Also</span>
+        <p>Architecture - composition-led films and photography for architects, builders, and designers, when the project is the building itself. <a href="#contact">Ask about a shoot &rsaquo;</a></p>
       </div>
     </div>
+
+    <!-- SELECTED WORK -->
+    <section class="work" id="work" aria-label="Selected work">
+      <div class="work-head">
+        <span class="label reveal">Selected work</span>
+        <h2 class="reveal">Recent listing films</h2>
+        <p class="reveal">Tap a frame to watch.</p>
+      </div>
+      <div class="portfolio-grid">
+        <button class="portfolio-tile reveal" data-video="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr - Final.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr Thumbnail.png')" aria-label="Play: 88 Lucas Park Dr">
+          <span class="tile-label">88 Lucas Park Dr</span>
+          <span class="tile-play-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8V4z"/></svg></span>
+        </button>
+        <button class="portfolio-tile reveal" data-video="assets/video/7-francisco-vista-court.mp4" style="background-image:url('https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 7 Francisco Vista Court - CC - 051826/7 Francisco Vista Court Thumbnail.png')" aria-label="Play: 7 Francisco Vista Court">
+          <span class="tile-label">7 Francisco Vista Court</span>
+          <span class="tile-play-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8V4z"/></svg></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="process" aria-label="Process">
+      <div class="process-head">
+        <span class="label reveal">Process</span>
+        <h2 class="reveal">How a shoot runs</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="label">01</span>
+          <h4>Scope &amp; scout</h4>
+          <p>We confirm the deliverables, review the property, and plan coverage - ground, stills, and aerial passes in one visit.</p>
+        </div>
+        <div class="step reveal">
+          <span class="label">02</span>
+          <h4>Shoot day</h4>
+          <p>A tight crew with a shot list. Cinematography, photography, and the drone captured in a single scheduled pass.</p>
+        </div>
+        <div class="step reveal">
+          <span class="label">03</span>
+          <h4>Edit &amp; finish</h4>
+          <p>Selects, cut, color, and sound handled in-house. You review online; revisions are structured, not open-ended.</p>
+        </div>
+        <div class="step reveal">
+          <span class="label">04</span>
+          <h4>Delivery</h4>
+          <p>Masters in every format the listing needs - MLS, print, social - and straight into distribution if Motion Marketing is engaged.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING: headline + badge, inquiry card -->
+    <section class="closing" id="contact" aria-label="Contact Four One Five Visuals">
+      <div class="closing-copy">
+        <img class="closing-img reveal" src="assets/img/fofv/drone-poster.jpg" alt="Aerial view of a Marin County hillside neighborhood">
+        <h2 class="reveal">Real Estate Media <span class="grad-text">in the Bay Area,</span><br>Built to Sell the Property</h2>
+        <div class="badge reveal"><span>Marin</span><span class="dot" aria-hidden="true">&bull;</span><span>San Francisco</span><span class="dot" aria-hidden="true">&bull;</span><span>Bay Area</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-bar" aria-hidden="true"></div>
+        <div class="card-body">
+          <h3>Your listing,<br><span class="grad-text">ready to launch</span></h3>
+          <span class="form-label">Start with the details</span>
+          <!-- Static site: the card composes an email (js/fofv.js). The
+               visible address is the 415 inbox; mail routes to Anthony. -->
+          <form class="inquiry-form fields" data-to="anthony@darkpark.media" novalidate>
+            <div class="row2">
+              <div class="field"><input type="text" id="f-first" name="first" placeholder=" " autocomplete="given-name"><label for="f-first">First name</label></div>
+              <div class="field"><input type="text" id="f-last" name="last" placeholder=" " autocomplete="family-name"><label for="f-last">Last name</label></div>
+            </div>
+            <div class="field"><input type="email" id="f-email" name="email" placeholder=" " autocomplete="email"><label for="f-email">Email</label></div>
+            <div class="field"><input type="tel" id="f-phone" name="phone" placeholder=" " autocomplete="tel"><label for="f-phone">Phone number</label></div>
+            <div class="field"><input type="text" id="f-address" name="address" placeholder=" " autocomplete="street-address"><label for="f-address">Property address</label></div>
+            <button class="card-submit" type="submit">Book a shoot <span class="cta-arrow" aria-hidden="true">&rarr;</span></button>
+          </form>
+          <p class="card-or">or</p>
+          <a class="card-alt" href="mailto:anthony@darkpark.media?subject=Shoot%20inquiry%20%E2%80%94%20Four%20One%20Five%20Visuals">Email us directly <span class="cta-arrow" aria-hidden="true">&rarr;</span></a>
+          <p class="card-addr">contact@fouronefivevisuals.com</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-row">
+        <span class="footer-brand">FOUR ONE FIVE VISUALS</span>
+        <div class="footer-social">
+          <!-- PLACEHOLDER: replace # with real profile URLs when supplied -->
+          <a href="#" aria-label="Instagram (link coming soon)" aria-disabled="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="YouTube (link coming soon)" aria-disabled="true"><svg viewBox="0 0 24 24"><path d="M22 12s0-4-.5-5.5a2.6 2.6 0 0 0-1.8-1.8C18 4.2 12 4.2 12 4.2s-6 0-7.7.5A2.6 2.6 0 0 0 2.5 6.5C2 8 2 12 2 12s0 4 .5 5.5a2.6 2.6 0 0 0 1.8 1.8c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.6 2.6 0 0 0 1.8-1.8C22 16 22 12 22 12z"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="LinkedIn (link coming soon)" aria-disabled="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-rule" aria-hidden="true"></div>
+      <div class="footer-row">
+        <p class="footer-small">&copy; 2026 Dark Park Media LLC</p>
+        <div class="footer-links">
+          <a href="mailto:anthony@darkpark.media">contact@fouronefivevisuals.com</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="bay-aerials.html">Bay Aerials</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="motion-marketing.html">Motion Marketing</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="index.html">Dark Park Media</a>
+        </div>
+      </div>
+    </footer>
 
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <span class="nav-logo"><span class="logo-accent">Dark&nbsp;Park</span>&nbsp;Media</span>
-          <p>Northern California production, aerial cinematography, and digital marketing.</p>
-        </div>
-        <div>
-          <h4>Explore</h4>
-          <ul>
-            <li><a href="four-one-five-visuals.html">Four One Five Visuals</a></li>
-            <li><a href="bay-aerials.html">Bay Aerials</a></li>
-            <li><a href="motion-marketing.html">Motion Marketing</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li><a href="mailto:anthony@darkpark.media">Email us</a></li>
-            <li><a href="four-one-five-visuals.html#contact">Production inquiries</a></li>
-            <li><a href="bay-aerials.html#contact">Aerial inquiries</a></li>
-            <li><a href="motion-marketing.html#contact">Digital inquiries</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Social</h4>
-          <ul>
-            <!-- PLACEHOLDER: replace # with real profile URLs when supplied -->
-            <li><a href="#" aria-disabled="true">Instagram (link coming soon)</a></li>
-            <li><a href="#" aria-disabled="true">YouTube (link coming soon)</a></li>
-            <li><a href="#" aria-disabled="true">LinkedIn (link coming soon)</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 Dark Park Media LLC.</span>
-        <span>Capture. Create. Deliver.</span>
-      </div>
+  <!-- PORTFOLIO MODAL: expanded pop-up for portfolio videos (main.js) -->
+  <div class="portfolio-modal" id="portfolio-modal" aria-hidden="true"
+       role="dialog" aria-modal="true" aria-label="Project video player">
+    <div class="portfolio-modal-backdrop"></div>
+    <div class="portfolio-modal-container">
+      <button class="portfolio-modal-close" aria-label="Close portfolio">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <video class="portfolio-modal-video" muted playsinline controls preload="metadata"></video>
     </div>
-  </footer>
+  </div>
 
   <script src="js/main.js"></script>
+  <script src="js/fofv.js"></script>
 </body>
 </html>
