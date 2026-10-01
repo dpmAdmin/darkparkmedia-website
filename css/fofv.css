@@ -699,6 +699,7 @@ body.reduced-motion .intro-cta-line { animation: none; }
   border: 0;
   border-radius: 3px;
   overflow: hidden;
+  background-image: var(--thumb);
   background-size: cover;
   background-position: center;
   background-color: #1c2127;
@@ -709,21 +710,6 @@ body.reduced-motion .intro-cta-line { animation: none; }
 .portfolio-tile:hover, .portfolio-tile:focus-visible {
   transform: translateY(-5px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03), 0 14px 34px rgba(0, 0, 0, 0.1), 0 34px 60px rgba(0, 0, 0, 0.08);
-}
-.tile-label {
-  position: absolute;
-  left: 0.9rem;
-  bottom: 0.9rem;
-  padding: 0.42rem 0.75rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #f4f6f9;
-  background: rgba(24, 28, 33, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 4px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 .tile-play-icon {
   position: absolute;
@@ -738,10 +724,17 @@ body.reduced-motion .intro-cta-line { animation: none; }
   border: 1px solid rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  transition: transform 0.5s var(--ease-out), background 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.5s var(--ease-out), background 0.3s ease;
 }
 .tile-play-icon svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
-.portfolio-tile:hover .tile-play-icon { transform: translate(-50%, -50%) scale(1.08); background: rgba(255, 255, 255, 0.24); }
+.portfolio-tile:hover .tile-play-icon,
+.portfolio-tile:focus-visible .tile-play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1.08); background: rgba(255, 255, 255, 0.24); }
+/* No hover on touch screens: keep the button visible as the tap cue. */
+@media (hover: none) {
+  .tile-play-icon { opacity: 1; }
+  .portfolio-tile { background-image: var(--thumb-touch, var(--thumb)); }  /* touch screens get a different frame */
+}
 
 /* --------------------------------------------------------------------------
    Closing - headline + badge on the left, glass inquiry card on the right
