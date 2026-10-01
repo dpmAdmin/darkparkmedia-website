@@ -495,9 +495,9 @@ html.js body.reduced-motion .reveal { opacity: 1; transform: none; clip-path: no
 }
 .intro .intro-frame { width: 100%; max-width: none; padding-left: 0; padding-right: 0; }
 .reel { aspect-ratio: 16 / 9; }
-/* The clips are 2.35:1 letterboxed in 16:9 files; scaling the video 1.32x in a
-   16:9 frame fills it and crops the black bars (and a little off each side). */
-.reel video.reel-item { transform: scale(1.32); }
+/* The listing-film loop is still a 2.35:1 picture letterboxed in a 16:9 file;
+   scaling it 1.32x in a 16:9 frame crops the baked-in bars. */
+.reel video.reel-item[data-bars] { transform: scale(1.32); }
 .intro-cta { margin-top: 7vh; position: relative; }
 .intro-cta-btn {
   position: relative;
