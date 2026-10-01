@@ -1,0 +1,27 @@
+// Serves the Four One Five Visuals page at fouronefivevisuals.com.
+// All other hosts fall through to the static assets (Dark Park Media site).
+const FOFV_HOSTS = new Set(["fouronefivevisuals.com", "www.fouronefivevisuals.com"]);
+const FOFV_PAGE = "/four-one-five-visuals.html";
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (FOFV_HOSTS.has(url.hostname)) {
+      if (url.hostname.startsWith("www.")) {
+        url.hostname = "fouronefivevisuals.com";
+        return Response.redirect(url.toString(), 301);
+      }
+      if (url.pathname === FOFV_PAGE) {
+        url.pathname = "/";
+        return Response.redirect(url.toString(), 301);
+      }
+      if (url.pathname === "/") {
+        url.pathname = FOFV_PAGE;
+        return env.ASSETS.fetch(new Request(url, request));
+      }
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
