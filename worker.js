@@ -22,6 +22,11 @@ export default {
       }
     }
 
+    // The 415 page lives on its own domain; send old darkpark.media paths there.
+    if (url.pathname === FOFV_PAGE || url.pathname === FOFV_PAGE + ".html") {
+      return Response.redirect("https://fouronefivevisuals.com/", 301);
+    }
+
     return env.ASSETS.fetch(request);
   },
 };
