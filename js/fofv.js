@@ -190,7 +190,7 @@
       var el = items[cur];
       el.classList.add("is-active");
       if (el.tagName === "VIDEO") {
-        el.currentTime = 0;
+        el.currentTime = parseFloat(el.getAttribute("data-start")) || 0;
         var p = el.play();
         if (p && p.catch) p.catch(function () {});
       }
