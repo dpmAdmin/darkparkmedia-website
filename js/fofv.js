@@ -167,6 +167,55 @@
     }
   }
 
+  /* ---------------- showpiece reel ---------------- */
+  // Cycles the intro frame through the two clips and the photo set, crossfading.
+  // Runs only while the frame is on screen.
+  var reel = document.querySelector(".reel");
+  if (reel && !reducedMotion) {
+    var items = reel.querySelectorAll(".reel-item");
+    var cur = 0;
+    var timer = null;
+    var PHOTO_MS = 2600;
+
+    function dwell(el) {
+      if (el.tagName !== "VIDEO") return PHOTO_MS;
+      var cap = parseInt(el.getAttribute("data-max"), 10) || 1e9;
+      var len = isFinite(el.duration) && el.duration > 0 ? el.duration * 1000 : 6000;
+      return Math.min(cap, len);
+    }
+    function show(i) {
+      items[cur].classList.remove("is-active");
+      if (items[cur].tagName === "VIDEO") items[cur].pause();
+      cur = i;
+      var el = items[cur];
+      el.classList.add("is-active");
+      if (el.tagName === "VIDEO") {
+        el.currentTime = 0;
+        var p = el.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+      timer = setTimeout(function () { show((cur + 1) % items.length); }, dwell(el));
+    }
+    function startReel() {
+      if (timer) return;
+      var el = items[cur];
+      if (el.tagName === "VIDEO") { var p = el.play(); if (p && p.catch) p.catch(function () {}); }
+      timer = setTimeout(function () { show((cur + 1) % items.length); }, dwell(el));
+    }
+    function stopReel() {
+      clearTimeout(timer);
+      timer = null;
+      if (items[cur].tagName === "VIDEO") items[cur].pause();
+    }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries[0].isIntersecting ? startReel() : stopReel();
+      }, { threshold: 0.35 }).observe(reel);
+    } else {
+      startReel();
+    }
+  }
+
   /* ---------------- inquiry card → mailto ---------------- */
   var form = document.querySelector(".inquiry-form");
   if (form) {
