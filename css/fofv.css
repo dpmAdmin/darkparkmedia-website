@@ -493,7 +493,10 @@ html.js body.reduced-motion .reveal { opacity: 1; transform: none; clip-path: no
   align-items: center;
   padding: 2vh clamp(0.5rem, 1.5vw, 1.25rem) 4vh;
 }
-.intro .intro-frame { width: 100%; max-width: none; padding-left: 0; padding-right: 0; }
+/* Shrunk for now: the clips and a few stills in the reel are low resolution, so a
+   smaller frame keeps them from being scaled up as far. Raise the cap once the
+   sources are re-rendered. */
+.intro .intro-frame { width: 100%; max-width: min(100%, 880px); margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; }
 .reel { aspect-ratio: 16 / 9; }
 /* The listing-film loop is still a 2.35:1 picture letterboxed in a 16:9 file;
    scaling it 1.32x in a 16:9 frame crops the baked-in bars. */
