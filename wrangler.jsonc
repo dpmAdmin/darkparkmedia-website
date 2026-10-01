@@ -9,6 +9,7 @@
   },
   "routes": [
     { "pattern": "darkpark.media", "custom_domain": true },
+    { "pattern": "www.darkpark.media", "custom_domain": true },
     { "pattern": "fouronefivevisuals.com", "custom_domain": true },
     { "pattern": "www.fouronefivevisuals.com", "custom_domain": true }
   ]
