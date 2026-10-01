@@ -1113,45 +1113,34 @@ html.js body.reduced-motion .reveal { opacity: 1; transform: none; transition: n
   transition: opacity 0.25s ease, font-size 0.32s ease;
 }
 
-/* Homepage brandline: "Dark Park Media › FOFV". Mirrors the division pages'
-   "DPM ›" interaction in reverse: the division rests as a compact FOFV, and
-   hovering it grows it to the studio mark's size and builds the initials out
-   into "Four One Five Visuals" word by word while the studio mark steps back.
+/* Homepage brandline: "Dark Park Media › FOFV". The division rests as a compact
+   FOFV; hovering or focusing it builds the initials out into "Four One Five
+   Visuals" word by word, extending to the right. Nothing else in the bar moves.
    Narrow screens drop it from the bar; the menu carries the full link. */
 .nav-sub {
   font-family: var(--display);
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   letter-spacing: 0.1em;
   color: var(--paper);
   opacity: 0.6;
-  transition: opacity 0.25s ease, font-size 0.32s ease 0.28s;
+  transition: opacity 0.25s ease;
 }
-.nav-sub:hover, .nav-sub:focus-visible {
-  opacity: 1;
-  font-size: 1.3rem;
-  transition: opacity 0.25s ease, font-size 0.32s ease;
-}
-.nav-sub .pw-rest:nth-of-type(1) { transition-delay: 0s; }
-.nav-sub .pw-rest:nth-of-type(2) { transition-delay: 0.08s; }
-.nav-sub .pw-rest:nth-of-type(3) { transition-delay: 0.16s; }
-.nav-sub .pw-rest:nth-of-type(4) { transition-delay: 0.24s; }
+.nav-sub:hover, .nav-sub:focus-visible { opacity: 1; }
+.nav-sub .pw-rest:nth-of-type(1) { transition-delay: 0.18s; }
+.nav-sub .pw-rest:nth-of-type(2) { transition-delay: 0.12s; }
+.nav-sub .pw-rest:nth-of-type(3) { transition-delay: 0.06s; }
+.nav-sub .pw-rest:nth-of-type(4) { transition-delay: 0s; }
 .nav-sub:hover .pw-rest, .nav-sub:focus-visible .pw-rest {
   max-width: 7ch;
   opacity: 1;
   transform: translateY(0);
 }
-.nav-sub:hover .pw-rest:nth-of-type(1), .nav-sub:focus-visible .pw-rest:nth-of-type(1) { transition-delay: 0.08s; }
-.nav-sub:hover .pw-rest:nth-of-type(2), .nav-sub:focus-visible .pw-rest:nth-of-type(2) { transition-delay: 0.16s; }
-.nav-sub:hover .pw-rest:nth-of-type(3), .nav-sub:focus-visible .pw-rest:nth-of-type(3) { transition-delay: 0.24s; }
-.nav-sub:hover .pw-rest:nth-of-type(4), .nav-sub:focus-visible .pw-rest:nth-of-type(4) { transition-delay: 0.32s; }
-.nav-brandline:has(.nav-sub:hover) .nav-logo,
-.nav-brandline:has(.nav-sub:focus-visible) .nav-logo {
-  opacity: 0.5;
-  font-size: 0.75rem;
-  transition: opacity 0.25s ease, font-size 0.32s ease;
-}
+.nav-sub:hover .pw-rest:nth-of-type(1), .nav-sub:focus-visible .pw-rest:nth-of-type(1) { transition-delay: 0s; }
+.nav-sub:hover .pw-rest:nth-of-type(2), .nav-sub:focus-visible .pw-rest:nth-of-type(2) { transition-delay: 0.07s; }
+.nav-sub:hover .pw-rest:nth-of-type(3), .nav-sub:focus-visible .pw-rest:nth-of-type(3) { transition-delay: 0.14s; }
+.nav-sub:hover .pw-rest:nth-of-type(4), .nav-sub:focus-visible .pw-rest:nth-of-type(4) { transition-delay: 0.21s; }
 .nav-links .nav-menu-only { display: none; }
 @media (max-width: 860px) {
   .nav-brandline .nav-caret, .nav-brandline .nav-sub { display: none; }
