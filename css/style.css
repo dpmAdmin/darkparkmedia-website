@@ -1112,3 +1112,23 @@ html.js body.reduced-motion .reveal { opacity: 1; transform: none; transition: n
   font-size: 0.65rem;
   transition: opacity 0.25s ease, font-size 0.32s ease;
 }
+
+/* Homepage brandline: "Dark Park Media › Four One Five Visuals". The division
+   link rests small and muted beside the studio mark and lights up on hover.
+   Narrow screens drop it from the bar; the menu carries the same link. */
+.nav-sub {
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  opacity: 0.6;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+.nav-sub:hover, .nav-sub:focus-visible { opacity: 1; color: var(--amber); }
+.nav-links .nav-menu-only { display: none; }
+@media (max-width: 860px) {
+  .nav-brandline .nav-caret, .nav-brandline .nav-sub { display: none; }
+  .nav-links .nav-menu-only { display: list-item; }
+}
