@@ -62,7 +62,8 @@ window.CREDITS = {
     media: [{ k: "yt", id: "KAeBEJROTQQ", label: "Official clip" }]
   },
   "home-free": {
-    blurb: "FOX series where couples compete to win a dream home, reviving a run-down house each week under contractor Mike Holmes."
+    blurb: "FOX series where couples compete to win a dream home, reviving a run-down house each week under contractor Mike Holmes.",
+    media: [{ k: "img", src: "assets/img/credits/home-free.jpg", label: "Home Free" }]
   },
   "amazing-america": {
     blurb: "Sportsman Channel series with Sarah Palin exploring America's outdoor lifestyle, with stories from coast to coast. Produced by Pilgrim."
