@@ -94,7 +94,8 @@ window.CREDITS = {
     media: [{ k: "yt", id: "poCDpevKrYs", label: "Official promo" }]
   },
   "restaurant-stakeout": {
-    blurb: "Restaurateur Willie Degel puts hidden cameras inside struggling restaurants to find out what is going wrong, then helps fix it."
+    blurb: "Restaurateur Willie Degel puts hidden cameras inside struggling restaurants to find out what is going wrong, then helps fix it.",
+    media: [{ k: "yt", id: "FAIXpJL7gkE", label: "Official promo" }]
   },
   "tia-mowry-at-home": {
     blurb: "Tia Mowry cooks and entertains at home with her family and friends, for Cooking Channel."
