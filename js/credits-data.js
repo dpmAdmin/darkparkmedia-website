@@ -86,7 +86,8 @@ window.CREDITS = {
     media: [{ k: "yt", id: "ixSQm053XaY", label: "Official UFC look back" }]
   },
   "all-you-can-eat": {
-    blurb: "A food series for History."
+    blurb: "A food series for History.",
+    media: [{ k: "img", src: "assets/img/credits/all-you-can-eat.jpg", label: "All You Can Eat" }]
   },
   "patricia-heaton-parties": {
     blurb: "Patricia Heaton hosts themed party menus on Food Network. The series won a Daytime Emmy for Outstanding Culinary Program.",
