@@ -265,6 +265,9 @@
     metaEl.textContent = meta;
     if (info.emmy) metaEl.appendChild(el("span", "emmy", "Daytime Emmy winner"));
     document.getElementById("sheet-blurb").textContent = d.blurb || "";
+    var factBox = document.getElementById("sheet-fact");
+    document.getElementById("sheet-fact-text").textContent = d.fact || "";
+    factBox.hidden = !d.fact;
     var sr = document.getElementById("sheet-series");
     var list = document.getElementById("sheet-series-list");
     list.innerHTML = "";

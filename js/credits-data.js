@@ -1,6 +1,6 @@
 /* Credit pop-up content. Keys match data-credit on each row of the credits list.
    Role, network and season come from the row itself; this file adds the
-   description, the media, and anything extra.
+   description, the media, and anything extra (an optional "fact" adds a Fun fact box).
 
    media items:
      { k: "yt",  id: "VIDEOID", start: 3, label: "Official clip" }   YouTube (official uploads)
@@ -35,6 +35,7 @@ window.CREDITS = {
   },
   "american-chopper": {
     blurb: "Orange County Choppers, the Teutul family, and the custom bikes. I was lead editor on the Discovery reunion series and editor on season 9.",
+    fact: "American Chopper is one of the shows that kicked off my career in editorial. I was an assistant editor on it in the show's early years.",
     media: [{ k: "yt", id: "qa1WXiXnHek", start: 3, label: "The Last Ride" }]
   },
   "car-matchmaker": {
