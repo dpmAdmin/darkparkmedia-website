@@ -49,7 +49,7 @@ window.CREDITS = {
   "go-fund-yourself": {
     blurb: "A crowdfunding show for Cheddar from Verb Technology. Entrepreneurs pitch a panel of Titans, and viewers can invest in real time. I supervise the edit, and I cut the sizzle.",
     media: [
-      { k: "mp4", src: "https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/GFY%20Sizzle%205%20Fine%20Cut%20082525/GFY%20Sizzle%205%20Fine%20Cut%20082525.mp4", poster: "https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/GFY%20Sizzle%205%20Fine%20Cut%20082525/GFY%20Thumbnail.png", label: "Sizzle" },
+      { k: "mp4", src: "https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/GFY%20Sizzle%205%20Fine%20Cut%20082525/GFY%20Sizzle%205%20Fine%20Cut%20082525.mp4", poster: "assets/img/credits/gfy-thumb.jpg", label: "Sizzle" },
       { k: "yt", id: "3VlbC70NX4w", label: "Cheddar episode" }
     ]
   },

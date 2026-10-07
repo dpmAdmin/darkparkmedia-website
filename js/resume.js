@@ -175,7 +175,7 @@
 
   function visibleRows() { return rows.filter(function (li) { return !li.hidden; }); }
   function posterOf(item) {
-    if (item.k === "yt") return "https://i.ytimg.com/vi/" + item.id + "/hqdefault.jpg";
+    if (item.k === "yt") return "assets/img/yt/" + item.id + ".jpg";
     return item.poster || item.src;
   }
   function el(tag, cls, text) {
@@ -288,7 +288,6 @@
         var ti = document.createElement("img");
         ti.src = posterOf(item);
         ti.alt = "";
-        ti.loading = "lazy";
         t.appendChild(ti);
         if (item.k !== "img") t.appendChild(el("i", "thumb-play"));
         t.addEventListener("click", function () { showMedia(n, info); });
