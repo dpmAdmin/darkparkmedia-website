@@ -15,3 +15,6 @@ assets/video/divisions.mp4
 
 # Full-size photo originals, kept local; the site uses the resized photo-N.jpg files
 assets/img/fofv/originals/
+
+# Full-size credit image originals, kept local
+assets/img/credits/originals/

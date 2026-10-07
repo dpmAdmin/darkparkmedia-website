@@ -66,16 +66,20 @@ window.CREDITS = {
     media: [{ k: "img", src: "assets/img/credits/home-free.jpg", label: "Home Free" }]
   },
   "amazing-america": {
-    blurb: "Sportsman Channel series with Sarah Palin exploring America's outdoor lifestyle, with stories from coast to coast. Produced by Pilgrim."
+    blurb: "Sportsman Channel series with Sarah Palin exploring America's outdoor lifestyle, with stories from coast to coast. Produced by Pilgrim.",
+    media: [{ k: "img", src: "assets/img/credits/amazing-america.jpg", fit: "contain", label: "Amazing America with Sarah Palin" }]
   },
   "saving-private-k-9": {
-    blurb: "Sportsman Channel series about military and law enforcement service dogs: their training, their heroics, and their lives after service. Produced by Pilgrim."
+    blurb: "Sportsman Channel series about military and law enforcement service dogs: their training, their heroics, and their lives after service. Produced by Pilgrim.",
+    media: [{ k: "img", src: "assets/img/credits/saving-private-k-9.jpg", label: "Saving Private K-9" }]
   },
   "camp-stew": {
-    blurb: "Penn Jillette adds his commentary to some of the wildest outdoor clips ever caught on tape. A half hour of hunting, fishing, and outdoor chaos for Sportsman Channel."
+    blurb: "Penn Jillette adds his commentary to some of the wildest outdoor clips ever caught on tape. A half hour of hunting, fishing, and outdoor chaos for Sportsman Channel.",
+    media: [{ k: "img", src: "assets/img/credits/camp-stew.jpg", label: "Camp Stew with Penn Jillette" }]
   },
   "the-north-korea-crisis": {
-    blurb: "A documentary for History, where I was lead editor."
+    blurb: "A two-hour History special on North Korea's complicated history, extreme politics, and rigid societal standards, and the legacy of internal oppression and external aggression they created. I was lead editor.",
+    media: [{ k: "img", src: "assets/img/credits/north-korea-crisis.jpg", label: "North Korea: Dark Secrets" }]
   },
   "dirty-jobs": {
     blurb: "Mike Rowe takes on the messy, unusual jobs that keep America running. A Discovery staple.",
@@ -95,10 +99,14 @@ window.CREDITS = {
   },
   "restaurant-stakeout": {
     blurb: "Restaurateur Willie Degel puts hidden cameras inside struggling restaurants to find out what is going wrong, then helps fix it.",
-    media: [{ k: "yt", id: "FAIXpJL7gkE", label: "Official promo" }]
+    media: [
+      { k: "img", src: "assets/img/credits/restaurant-stakeout.jpg", pos: "center 8%", label: "Restaurant Stakeout" },
+      { k: "yt", id: "FAIXpJL7gkE", label: "Official promo" }
+    ]
   },
   "tia-mowry-at-home": {
-    blurb: "Tia Mowry cooks and entertains at home with her family and friends, for Cooking Channel."
+    blurb: "Tia Mowry cooks and entertains at home with her family and friends, for Cooking Channel.",
+    media: [{ k: "img", src: "assets/img/credits/tia-mowry-at-home.jpg", pos: "center 35%", label: "Tia Mowry at Home" }]
   },
   "my-big-fat-fabulous-life": {
     blurb: "TLC series following Whitney Way Thore through her life, work, and relationships. I edited the reunion.",
@@ -113,6 +121,7 @@ window.CREDITS = {
     media: [{ k: "yt", id: "4Sg8iJKeeUU", label: "Official clip" }]
   },
   "shinesty": {
-    blurb: "A comedic docu-series about the young entrepreneurs behind Shinesty, the Boulder, Colorado apparel company known for its outrageous clothing."
+    blurb: "A comedic docu-series about the young entrepreneurs behind Shinesty, the Boulder, Colorado apparel company known for its outrageous clothing.",
+    media: [{ k: "img", src: "assets/img/credits/shinesty.jpg", pos: "center 30%", label: "Shinesty" }]
   }
 };

@@ -222,6 +222,7 @@
       im.src = item.src;
       im.alt = info.title + ": " + (item.label || "still");
       if (item.pos) im.style.objectPosition = item.pos;
+      if (item.fit) im.style.objectFit = item.fit;
       sStage.appendChild(im);
     } else {
       var b = el("button", "stage-play");
