@@ -39,7 +39,8 @@ window.CREDITS = {
     media: [{ k: "yt", id: "qa1WXiXnHek", start: 3, label: "The Last Ride" }]
   },
   "car-matchmaker": {
-    blurb: "Esquire Network series hosted by Spike Feresten, who gets to know someone who needs a car and finds three vehicles for them to choose from."
+    blurb: "Esquire Network series hosted by Spike Feresten, who gets to know someone who needs a car and finds three vehicles for them to choose from.",
+    media: [{ k: "img", src: "assets/img/credits/car-matchmaker.jpg", pos: "center 25%", label: "Car Matchmaker with Spike Feresten" }]
   },
   "the-great-food-truck-race": {
     blurb: "Food Network competition where teams drive food trucks across the country and the team with the most sales wins. Season 4 ran the longest route in series history, 4,181 miles, and the winning team kept the truck and a $50,000 prize.",

@@ -221,6 +221,7 @@
       var im = document.createElement("img");
       im.src = item.src;
       im.alt = info.title + ": " + (item.label || "still");
+      if (item.pos) im.style.objectPosition = item.pos;
       sStage.appendChild(im);
     } else {
       var b = el("button", "stage-play");
