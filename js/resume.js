@@ -157,4 +157,183 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closePlayer();
   });
+
+  /* ---------- credit pop-up ---------- */
+  var CREDITS = window.CREDITS || {};
+  var sheet = document.getElementById("sheet");
+  var sPanel = document.getElementById("sheet-panel");
+  var sStage = document.getElementById("sheet-stage");
+  var sThumbs = document.getElementById("sheet-thumbs");
+  var sMedia = document.getElementById("sheet-media");
+  var sCap = document.createElement("p");
+  sCap.className = "stage-cap";
+  sMedia.insertBefore(sCap, sThumbs);
+  var CAT = { motors: "Motorsports and auto", comp: "Competition", outdoor: "Outdoor and Sportsman", docs: "Documentary", life: "Lifestyle and food" };
+  var curRows = [];
+  var curIdx = 0;
+  var curMedia = [];
+
+  function visibleRows() { return rows.filter(function (li) { return !li.hidden; }); }
+  function posterOf(item) {
+    if (item.k === "yt") return "https://i.ytimg.com/vi/" + item.id + "/hqdefault.jpg";
+    return item.poster || item.src;
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+  function loadPlayer(item) {
+    sStage.innerHTML = "";
+    if (item.k === "yt") {
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(item.id) + "?autoplay=1&rel=0&modestbranding=1&playsinline=1" + (item.start ? "&start=" + item.start : "");
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      f.title = item.label || "Video";
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      sStage.appendChild(f);
+    } else {
+      var v = document.createElement("video");
+      v.src = item.src;
+      v.controls = true;
+      v.autoplay = true;
+      v.setAttribute("playsinline", "");
+      sStage.appendChild(v);
+    }
+  }
+  function showMedia(i, info) {
+    sStage.innerHTML = "";
+    sStage.classList.remove("is-empty");
+    var item = curMedia[i];
+    if (!item) {
+      sStage.classList.add("is-empty");
+      var card = el("div", "stage-card");
+      card.appendChild(el("span", "stage-net", info.net));
+      card.appendChild(el("small", "", info.role));
+      sStage.appendChild(card);
+      sCap.textContent = "";
+      return;
+    }
+    sCap.textContent = item.label || "";
+    if (item.k === "img") {
+      var im = document.createElement("img");
+      im.src = item.src;
+      im.alt = info.title + ": " + (item.label || "still");
+      sStage.appendChild(im);
+    } else {
+      var b = el("button", "stage-play");
+      b.type = "button";
+      b.setAttribute("aria-label", "Play: " + (item.label || info.title));
+      var pi = document.createElement("img");
+      pi.src = posterOf(item);
+      pi.alt = "";
+      b.appendChild(pi);
+      var ring = el("span", "play-ring");
+      ring.setAttribute("aria-hidden", "true");
+      ring.appendChild(el("span", "play-tri"));
+      b.appendChild(ring);
+      b.addEventListener("click", function () { loadPlayer(item); });
+      sStage.appendChild(b);
+    }
+    [].forEach.call(sThumbs.children, function (t, n) { t.classList.toggle("is-on", n === i); t.setAttribute("aria-pressed", n === i ? "true" : "false"); });
+  }
+  function rowInfo(li) {
+    var em = li.querySelector("em");
+    var roleEl = li.querySelector(".l-role");
+    var role = roleEl.cloneNode(true);
+    var emmy = role.querySelector(".emmy");
+    if (emmy) role.removeChild(emmy);
+    return {
+      title: li.querySelector("b").textContent,
+      season: em ? em.textContent : "",
+      role: role.textContent.trim(),
+      net: li.querySelector(".l-net").textContent.trim(),
+      emmy: !!emmy,
+      cat: CAT[li.getAttribute("data-cat")] || ""
+    };
+  }
+  function renderSheet() {
+    var li = curRows[curIdx];
+    var info = rowInfo(li);
+    var d = CREDITS[li.getAttribute("data-credit")] || {};
+    document.getElementById("sheet-title").textContent = info.title;
+    document.getElementById("sheet-eyebrow").textContent = info.net + (info.cat ? "  /  " + info.cat : "");
+    var meta = info.role + (info.season ? "  /  " + info.season : "");
+    var metaEl = document.getElementById("sheet-meta");
+    metaEl.textContent = meta;
+    if (info.emmy) metaEl.appendChild(el("span", "emmy", "Daytime Emmy winner"));
+    document.getElementById("sheet-blurb").textContent = d.blurb || "";
+    var sr = document.getElementById("sheet-series");
+    var list = document.getElementById("sheet-series-list");
+    list.innerHTML = "";
+    if (d.series && d.series.length) {
+      d.series.forEach(function (t) { list.appendChild(el("li", "", t)); });
+      sr.hidden = false;
+    } else sr.hidden = true;
+    document.getElementById("sheet-count").textContent = (curIdx + 1) + " of " + curRows.length;
+    curMedia = d.media || [];
+    sThumbs.innerHTML = "";
+    if (curMedia.length > 1) {
+      curMedia.forEach(function (item, n) {
+        var t = el("button", "thumb-btn");
+        t.type = "button";
+        t.setAttribute("aria-label", item.label || "Media " + (n + 1));
+        t.title = item.label || "";
+        var ti = document.createElement("img");
+        ti.src = posterOf(item);
+        ti.alt = "";
+        ti.loading = "lazy";
+        t.appendChild(ti);
+        if (item.k !== "img") t.appendChild(el("i", "thumb-play"));
+        t.addEventListener("click", function () { showMedia(n, info); });
+        sThumbs.appendChild(t);
+      });
+    }
+    showMedia(0, info);
+    sPanel.scrollTop = 0;
+  }
+  function openSheet(li) {
+    curRows = visibleRows();
+    curIdx = Math.max(0, curRows.indexOf(li));
+    renderSheet();
+    sheet.hidden = false;
+    document.body.classList.add("modal-open");
+    sheet.querySelector(".sheet-x").focus();
+  }
+  function stepSheet(dir) {
+    if (!curRows.length) return;
+    curIdx = (curIdx + dir + curRows.length) % curRows.length;
+    renderSheet();
+  }
+  function closeSheet() {
+    if (sheet.hidden) return;
+    sStage.innerHTML = "";
+    sheet.hidden = true;
+    document.body.classList.remove("modal-open");
+    var row = curRows[curIdx];
+    if (row) {
+      row.focus({ preventScroll: true });
+      var r = row.getBoundingClientRect();
+      var head = document.querySelector(".credits-head");
+      var top = (head ? head.getBoundingClientRect().bottom : 70) + 8;
+      if (r.top < top || r.bottom > window.innerHeight) row.scrollIntoView({ block: "center" });
+    }
+  }
+  rows.forEach(function (li) {
+    li.addEventListener("click", function () { openSheet(li); });
+    li.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openSheet(li); }
+    });
+  });
+  document.getElementById("sheet-prev").addEventListener("click", function () { stepSheet(-1); });
+  document.getElementById("sheet-next").addEventListener("click", function () { stepSheet(1); });
+  sheet.addEventListener("click", function (e) { if (e.target.hasAttribute("data-sheet-close")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if (sheet.hidden) return;
+    if (e.key === "Escape") closeSheet();
+    else if (e.key === "ArrowRight") stepSheet(1);
+    else if (e.key === "ArrowLeft") stepSheet(-1);
+  });
 })();
