@@ -7,6 +7,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // Listing films are too big for site files (25 MiB cap); they live in the
+    // fofv-media R2 bucket and stream from /media/<listing>/<file>.
+    const media = url.pathname.match(/^\/media\/([a-z0-9-]+\/[\w.-]+)$/);
+    if (media) return serveMedia(env, media[1], request);
+
     if (FOFV_HOSTS.has(url.hostname)) {
       if (url.hostname.startsWith("www.")) {
         url.hostname = "fouronefivevisuals.com";
@@ -35,3 +40,24 @@ export default {
     return env.ASSETS.fetch(request);
   },
 };
+
+// A film from R2, with Range support so browsers can seek and start playing at once.
+async function serveMedia(env, key, request) {
+  const range = request.headers.get("Range");
+  const obj = await env.MEDIA.get(key, range ? { range: request.headers } : {});
+  if (!obj) return new Response("Not found", { status: 404 });
+  const headers = new Headers();
+  obj.writeHttpMetadata(headers);
+  headers.set("ETag", obj.httpEtag);
+  headers.set("Accept-Ranges", "bytes");
+  headers.set("Cache-Control", "public, max-age=604800");
+  if (range && obj.range) {
+    const start = obj.range.offset ?? 0;
+    const end = start + (obj.range.length ?? obj.size - start) - 1;
+    headers.set("Content-Range", `bytes ${start}-${end}/${obj.size}`);
+    headers.set("Content-Length", String(end - start + 1));
+    return new Response(obj.body, { status: 206, headers });
+  }
+  headers.set("Content-Length", String(obj.size));
+  return new Response(obj.body, { headers });
+}
