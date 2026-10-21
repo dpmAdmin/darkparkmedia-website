@@ -82,8 +82,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero h1{font-size:clamp(40px,5.4vw,84px);max-width:17ch}
 .hero p{margin-top:18px;max-width:46ch;font-size:clamp(16px,1.3vw,19px);color:rgba(255,255,255,.88)}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.hero-cap{position:absolute;z-index:2;right:var(--gutter);bottom:clamp(36px,7vh,80px);font:500 12px/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);text-align:right}
-@media(max-width:700px){.hero-cap{display:none}}
 
 /* facts strip */
 .facts{border-bottom:1px solid var(--line)}
@@ -146,6 +144,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .tile .play svg{width:20px;height:20px}
 .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 50%,rgba(0,0,0,.6))}
 @media(min-width:800px){.tiles{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.tiles{grid-template-columns:repeat(3,1fr)}.tile{aspect-ratio:16/9}}
 
 /* services */
 .svc{display:grid;gap:clamp(28px,4vw,56px)}
@@ -232,18 +231,18 @@ footer nav a:hover{color:var(--on-night)}
 
 <main id="main">
 <section class="hero" aria-label="Introduction">
-  <img class="on" src="assets/img/work/sh-01-2400.jpg" srcset="assets/img/work/sh-01-1200.jpg 1200w, assets/img/work/sh-01-2400.jpg 2400w" sizes="100vw" alt="33 Shell Road at twilight" fetchpriority="high" data-cap="33 Shell Road · Mill Valley">
-  <img data-src="assets/img/work/ww-188-2400.jpg" data-srcset="assets/img/work/ww-188-1200.jpg 1200w, assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="126 Winding Way at sunset" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/sh-16-2400.jpg" data-srcset="assets/img/work/sh-16-1200.jpg 1200w, assets/img/work/sh-16-2400.jpg 2400w" sizes="100vw" alt="Covered patio at 33 Shell Road" data-cap="33 Shell Road · Mill Valley">
-  <img data-src="assets/img/work/ww-001-2400.jpg" data-srcset="assets/img/work/ww-001-1200.jpg 1200w, assets/img/work/ww-001-2400.jpg 2400w" sizes="100vw" alt="Entry courtyard at 126 Winding Way" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/sh-19-2400.jpg" data-srcset="assets/img/work/sh-19-1200.jpg 1200w, assets/img/work/sh-19-2400.jpg 2400w" sizes="100vw" alt="Outdoor lounge at 33 Shell Road" data-cap="33 Shell Road · Mill Valley">
-  <img data-src="assets/img/work/ww-034-2400.jpg" data-srcset="assets/img/work/ww-034-1200.jpg 1200w, assets/img/work/ww-034-2400.jpg 2400w" sizes="100vw" alt="Living room at 126 Winding Way" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/sh-14-2400.jpg" data-srcset="assets/img/work/sh-14-1200.jpg 1200w, assets/img/work/sh-14-2400.jpg 2400w" sizes="100vw" alt="Primary bath at 33 Shell Road" data-cap="33 Shell Road · Mill Valley">
-  <img data-src="assets/img/work/ww-157-2400.jpg" data-srcset="assets/img/work/ww-157-1200.jpg 1200w, assets/img/work/ww-157-2400.jpg 2400w" sizes="100vw" alt="126 Winding Way interior" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/sh-23-2400.jpg" data-srcset="assets/img/work/sh-23-1200.jpg 1200w, assets/img/work/sh-23-2400.jpg 2400w" sizes="100vw" alt="Pool house shower at 33 Shell Road" data-cap="33 Shell Road · Mill Valley">
-  <img data-src="assets/img/work/ww-015-2400.jpg" data-srcset="assets/img/work/ww-015-1200.jpg 1200w, assets/img/work/ww-015-2400.jpg 2400w" sizes="100vw" alt="Kitchen at 126 Winding Way" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/ww-031-2400.jpg" data-srcset="assets/img/work/ww-031-1200.jpg 1200w, assets/img/work/ww-031-2400.jpg 2400w" sizes="100vw" alt="126 Winding Way interior" data-cap="126 Winding Way · Ross">
-  <img data-src="assets/img/work/ww-081-2400.jpg" data-srcset="assets/img/work/ww-081-1200.jpg 1200w, assets/img/work/ww-081-2400.jpg 2400w" sizes="100vw" alt="126 Winding Way interior" data-cap="126 Winding Way · Ross">
+  <img class="on" src="assets/img/work/sh-01-2400.jpg" srcset="assets/img/work/sh-01-1200.jpg 1200w, assets/img/work/sh-01-2400.jpg 2400w" sizes="100vw" alt="A Mill Valley home at twilight" fetchpriority="high">
+  <img data-src="assets/img/work/ww-188-2400.jpg" data-srcset="assets/img/work/ww-188-1200.jpg 1200w, assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="A Ross home at sunset">
+  <img data-src="assets/img/work/sh-16-2400.jpg" data-srcset="assets/img/work/sh-16-1200.jpg 1200w, assets/img/work/sh-16-2400.jpg 2400w" sizes="100vw" alt="Covered patio">
+  <img data-src="assets/img/work/ww-001-2400.jpg" data-srcset="assets/img/work/ww-001-1200.jpg 1200w, assets/img/work/ww-001-2400.jpg 2400w" sizes="100vw" alt="Entry courtyard at twilight">
+  <img data-src="assets/img/work/sh-19-2400.jpg" data-srcset="assets/img/work/sh-19-1200.jpg 1200w, assets/img/work/sh-19-2400.jpg 2400w" sizes="100vw" alt="Outdoor lounge">
+  <img data-src="assets/img/work/ww-034-2400.jpg" data-srcset="assets/img/work/ww-034-1200.jpg 1200w, assets/img/work/ww-034-2400.jpg 2400w" sizes="100vw" alt="Vaulted living room">
+  <img data-src="assets/img/work/sh-14-2400.jpg" data-srcset="assets/img/work/sh-14-1200.jpg 1200w, assets/img/work/sh-14-2400.jpg 2400w" sizes="100vw" alt="Primary bath">
+  <img data-src="assets/img/work/ww-157-2400.jpg" data-srcset="assets/img/work/ww-157-1200.jpg 1200w, assets/img/work/ww-157-2400.jpg 2400w" sizes="100vw" alt="Interior">
+  <img data-src="assets/img/work/sh-23-2400.jpg" data-srcset="assets/img/work/sh-23-1200.jpg 1200w, assets/img/work/sh-23-2400.jpg 2400w" sizes="100vw" alt="Outdoor shower">
+  <img data-src="assets/img/work/ww-015-2400.jpg" data-srcset="assets/img/work/ww-015-1200.jpg 1200w, assets/img/work/ww-015-2400.jpg 2400w" sizes="100vw" alt="Kitchen">
+  <img data-src="assets/img/work/ww-031-2400.jpg" data-srcset="assets/img/work/ww-031-1200.jpg 1200w, assets/img/work/ww-031-2400.jpg 2400w" sizes="100vw" alt="Interior">
+  <img data-src="assets/img/work/ww-081-2400.jpg" data-srcset="assets/img/work/ww-081-1200.jpg 1200w, assets/img/work/ww-081-2400.jpg 2400w" sizes="100vw" alt="Interior">
   <div class="hero-copy wrap">
     <h1 class="display">Real estate photography and film for Marin.</h1>
     <p>Listing photos, films and aerials for agents in Marin County and San Francisco. Photos within 24 hours; films within 5 days of the shoot.</p>
@@ -252,7 +251,6 @@ footer nav a:hover{color:var(--on-night)}
       <a class="btn btn-line" href="#work">See the work</a>
     </div>
   </div>
-  <p class="hero-cap" id="hero-cap" aria-live="off">33 Shell Road · Mill Valley</p>
 </section>
 
 <section class="facts" aria-label="At a glance">
@@ -302,6 +300,10 @@ footer nav a:hover{color:var(--on-night)}
       <button class="tile reveal" type="button" data-film="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples of Work/RE 88 Lucas Park Dr - Final/RE 88 Lucas Park Dr - Final.mp4" style="background-image:url('assets/img/fofv/touch-thumb-lucas.jpg')" aria-label="Play the 88 Lucas Park Drive film">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
         <span class="f-cap"><span>88 Lucas Park Drive</span><span>1:57</span></span>
+      </button>
+      <button class="tile reveal" type="button" data-film="/media/7-francisco-vista-court/film-v5.mp4" style="background-image:url('assets/img/work/film-tiburon.jpg')" aria-label="Play the 7 Francisco Vista Court film">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
+        <span class="f-cap"><span>7 Francisco Vista Court &middot; Tiburon</span><span>2:39</span></span>
       </button>
       <button class="tile reveal" type="button" data-film="" style="background-image:url('assets/img/work/sh-20-1200.jpg')" aria-label="33 Shell Road film, coming soon">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
@@ -421,10 +423,10 @@ footer nav a:hover{color:var(--on-night)}
   document.querySelectorAll(".nav a").forEach(function(a){a.addEventListener("click",function(){document.body.classList.remove("menu-open");mb.setAttribute("aria-expanded",false);});});
 
   // hero crossfade
-  var slides=[].slice.call(hero.querySelectorAll("img")), cap=document.getElementById("hero-cap"), h=0;
+  var slides=[].slice.call(hero.querySelectorAll("img")), h=0;
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   function load(img){if(img&&img.dataset.src){img.srcset=img.dataset.srcset;img.src=img.dataset.src;delete img.dataset.src;}}
-  if(!reduce){load(slides[1]);setInterval(function(){slides[h].classList.remove("on");h=(h+1)%slides.length;load(slides[h]);load(slides[(h+1)%slides.length]);slides[h].classList.add("on");cap.textContent=slides[h].dataset.cap;},6500);}
+  if(!reduce){load(slides[1]);setInterval(function(){slides[h].classList.remove("on");h=(h+1)%slides.length;load(slides[h]);load(slides[(h+1)%slides.length]);slides[h].classList.add("on");},6500);}
 
   // reveal on scroll
   var io="IntersectionObserver" in window ? new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px"}) : null;
