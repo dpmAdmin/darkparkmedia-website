@@ -186,6 +186,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media(min-width:600px){.form .two{grid-template-columns:1fr 1fr}}
 @media(min-width:900px){.c-grid{grid-template-columns:5fr 6fr}}
 
+.book{max-width:900px;text-align:center;display:grid;justify-items:center;gap:18px}
+.book h2{font-size:clamp(40px,5.4vw,80px)}
+.book .lede{color:var(--ink-2);max-width:52ch}
+.btn-xl{height:64px;padding:0 38px;font-size:18px;margin-top:8px}
+.book .alt{font-size:15px;color:var(--ink-2)}
+.book .alt a{border-bottom:1px solid currentColor}
+.book .alt a:hover{color:var(--accent-deep)}
+.more{width:100%;margin-top:28px;text-align:left;border-top:1px solid var(--line);padding-top:18px}
+.more summary{cursor:pointer;list-style:none;text-align:center;font-size:14px;color:var(--ink-2)}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:" +"}
+.more[open] summary::after{content:" \2212"}
+.more summary:hover{color:var(--ink)}
+.more .form{margin-top:22px}
+.btn-line-ink{border:1px solid var(--ink);color:var(--ink)}
+.btn-line-ink:hover{background:var(--ink);color:var(--paper)}
 /* footer */
 footer{background:var(--night);color:var(--on-night-2);padding-block:48px calc(env(safe-area-inset-bottom,0px) + 40px);font-size:14px}
 .f-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
@@ -224,7 +240,7 @@ footer nav a:hover{color:var(--on-night)}
     <a class="brand" href="#main" aria-label="Four One Five Visuals, top of page"><b>Four One Five</b> Visuals</a>
     <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
     <nav class="nav" id="nav" aria-label="Site">
-      <a href="#work">Work</a><a href="#films">Films</a><a href="#services">Services</a><a href="#contact">Contact</a>
+      <a href="#work">Work</a><a href="#films">Films</a><a href="#services">Services</a>
       <a class="btn btn-accent" href="https://order.fouronefivevisuals.com">Book a shoot</a>
     </nav>
   </div>
@@ -345,30 +361,28 @@ footer nav a:hover{color:var(--on-night)}
 </section>
 
 <section class="section contact" id="contact" aria-labelledby="c-h">
-  <div class="wrap c-grid">
-    <div>
-      <p class="label">Contact</p>
-      <h2 class="display" id="c-h">Have a listing coming up?</h2>
-      <p class="lede">Book directly online, or send the details and we'll reply the same day.</p>
-      <div class="c-direct">
-        <a href="https://order.fouronefivevisuals.com">Book online <span aria-hidden="true">&rarr;</span></a>
-        <a href="sms:+14154252955">Text 415.425.2955 <span aria-hidden="true">&rarr;</span></a>
-        <a href="mailto:contact@fouronefivevisuals.com">contact@fouronefivevisuals.com <span aria-hidden="true">&rarr;</span></a>
-      </div>
-    </div>
-    <form class="form" id="inquiry" data-to="contact@fouronefivevisuals.com" novalidate>
-      <div class="two">
-        <div><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
-        <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
-      </div>
-      <div class="two">
-        <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
-        <div><label for="f-address">Property address</label><input id="f-address" name="address" type="text" autocomplete="street-address"></div>
-      </div>
-      <div><label for="f-msg">What does the listing need?</label><textarea id="f-msg" name="message"></textarea></div>
-      <button class="btn btn-accent" type="submit">Send inquiry <span class="arrow" aria-hidden="true">&rarr;</span></button>
-      <p class="form-note">This opens your email app with the details filled in.</p>
-    </form>
+  <div class="wrap book">
+    <p class="label">Book</p>
+    <h2 class="display" id="c-h">Have a listing coming up?</h2>
+    <p class="lede">Enter the address, choose what the listing needs, see the price and pick your date. It takes a few minutes, and you can pay now or after delivery.</p>
+    <a class="btn btn-accent btn-xl" href="https://order.fouronefivevisuals.com">Book a shoot <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    <p class="alt">Questions first? Text <a href="sms:+14154252955">415.425.2955</a> or email <a href="mailto:contact@fouronefivevisuals.com">contact@fouronefivevisuals.com</a>.</p>
+    <details class="more">
+      <summary>Or send us the details instead</summary>
+      <form class="form" id="inquiry" data-to="contact@fouronefivevisuals.com" novalidate>
+        <div class="two">
+          <div><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
+          <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+        </div>
+        <div class="two">
+          <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div><label for="f-address">Property address</label><input id="f-address" name="address" type="text" autocomplete="street-address"></div>
+        </div>
+        <div><label for="f-msg">What does the listing need?</label><textarea id="f-msg" name="message"></textarea></div>
+        <button class="btn btn-line-ink" type="submit">Send details <span class="arrow" aria-hidden="true">&rarr;</span></button>
+        <p class="form-note">This opens your email app with the details filled in.</p>
+      </form>
+    </details>
   </div>
 </section>
 </main>
