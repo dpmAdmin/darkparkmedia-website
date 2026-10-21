@@ -25,6 +25,11 @@ export default {
         url.pathname = FOFV_PAGE;
         return env.ASSETS.fetch(new Request(url, request));
       }
+      // The photo-first redesign, for review before it replaces the homepage.
+      if (url.pathname === "/preview") {
+        url.pathname = "/fofv-preview";
+        return env.ASSETS.fetch(new Request(url, request));
+      }
     }
 
     if (url.hostname === "www.darkpark.media") {
