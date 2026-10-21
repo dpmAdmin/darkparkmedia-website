@@ -25,9 +25,14 @@ export default {
         url.pathname = FOFV_PAGE;
         return env.ASSETS.fetch(new Request(url, request));
       }
-      // The photo-first redesign, for review before it replaces the homepage.
+      // The redesign went live 2026-10-21; the review address now points home.
       if (url.pathname === "/preview") {
-        url.pathname = "/fofv-preview";
+        url.pathname = "/";
+        return Response.redirect(url.toString(), 301);
+      }
+      // The pre-2026-10-21 page, kept for reference (noindex).
+      if (url.pathname === "/previous") {
+        url.pathname = "/fofv-previous";
         return env.ASSETS.fetch(new Request(url, request));
       }
     }
