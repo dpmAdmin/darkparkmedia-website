@@ -209,6 +209,9 @@ footer{background:var(--night);color:var(--on-night-2);padding-block:48px calc(e
 footer .brand{color:var(--on-night)}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 22px}
 footer nav a:hover{color:var(--on-night)}
+.f-cols{display:grid;gap:22px;margin-top:32px}
+.f-h{width:100%;font:500 11px/1.4 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--on-night)}
+@media(min-width:900px){.f-cols{grid-template-columns:1fr 2fr}}
 .legal{margin-top:28px;padding-top:20px;border-top:1px solid rgba(244,239,231,.12)}
 
 /* lightbox and film player */
@@ -232,6 +235,7 @@ footer nav a:hover{color:var(--on-night)}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero img{transition:opacity .01s}.js .reveal{opacity:1;transform:none;transition:none}.ph img,.arrow{transition:none}}
 </style>
 <script>document.documentElement.classList.add("js")</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://fouronefivevisuals.com/#business","name":"Four One Five Visuals","url":"https://fouronefivevisuals.com/","description":"Real estate photography, listing films, drone aerials and property websites for agents in Marin County and San Francisco.","image":"https://fouronefivevisuals.com/assets/img/work/sh-01-2400.jpg","logo":"https://fouronefivevisuals.com/assets/logos/box-fofv-transparent.png","telephone":"+1-415-425-2955","email":"contact@fouronefivevisuals.com","address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US"},"areaServed":[{"@type":"AdministrativeArea","name":"Marin County, CA"},{"@type":"City","name":"San Francisco, CA"},{"@type":"City","name":"Mill Valley, CA"},{"@type":"City","name":"Ross, CA"},{"@type":"City","name":"Tiburon, CA"},{"@type":"City","name":"San Rafael, CA"},{"@type":"City","name":"Sausalito, CA"},{"@type":"City","name":"San Anselmo, CA"},{"@type":"City","name":"Fairfax, CA"},{"@type":"City","name":"Greenbrae, CA"},{"@type":"City","name":"Kentfield, CA"},{"@type":"City","name":"Larkspur, CA"},{"@type":"City","name":"Corte Madera, CA"},{"@type":"City","name":"Novato, CA"}],"knowsAbout":["Real estate photography","Listing films","Drone aerial photography","Twilight photography","Property websites"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Real estate media","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Real estate photography"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Listing films"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Drone aerial photography and video"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Real and virtual twilight"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Floor plans"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Property websites"}}]},"potentialAction":{"@type":"ReserveAction","target":"https://order.fouronefivevisuals.com","name":"Book a shoot"},"parentOrganization":{"@type":"Organization","name":"Dark Park Media LLC"}}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -394,13 +398,17 @@ footer nav a:hover{color:var(--on-night)}
       <span class="brand"><b>Four One Five</b> Visuals</span>
       <nav aria-label="Footer"><a href="#work">Work</a><a href="#films">Films</a><a href="#services">Services</a><a href="https://order.fouronefivevisuals.com">Book</a><a href="https://darkpark.media/bay-aerials.html">Bay Aerials</a><a href="https://darkpark.media/motion-marketing.html">Motion Marketing</a></nav>
     </div>
+    <div class="f-cols">
+      <nav aria-labelledby="f-svc"><h2 class="f-h" id="f-svc">Services</h2><a href="/real-estate-photography">Photography</a><a href="/listing-films">Listing films</a><a href="/drone-aerial-photography">Drone and aerials</a><a href="/property-websites">Property websites</a></nav>
+      <nav aria-labelledby="f-area"><h2 class="f-h" id="f-area">Areas we serve</h2><a href="/mill-valley">Mill Valley</a><a href="/ross">Ross</a><a href="/tiburon">Tiburon</a><a href="/san-rafael">San Rafael</a><a href="/san-anselmo">San Anselmo</a><a href="/fairfax">Fairfax</a><a href="/greenbrae">Greenbrae</a><a href="/kentfield">Kentfield</a><a href="/sausalito">Sausalito</a><a href="/san-francisco">San Francisco</a></nav>
+    </div>
     <p class="legal">&copy; 2026 Dark Park Media LLC. Four One Five Visuals is a brand of Dark Park Media LLC. Marin County and San Francisco, California.</p>
   </div>
 </footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
   <div class="lb-top"><span id="lb-t"></span><button class="x" type="button" id="lb-x" aria-label="Close">&times;</button></div>
-  <div class="lb-stage"><img id="lb-img" alt=""><button class="nav-arrow prev" type="button" id="lb-p" aria-label="Previous photo">&larr;</button><button class="nav-arrow next" type="button" id="lb-n" aria-label="Next photo">&rarr;</button></div>
+  <div class="lb-stage"><img id="lb-img" alt="Selected photo, full size"><button class="nav-arrow prev" type="button" id="lb-p" aria-label="Previous photo">&larr;</button><button class="nav-arrow next" type="button" id="lb-n" aria-label="Next photo">&rarr;</button></div>
   <div class="lb-foot"></div>
 </div>
 <div class="player" id="player" hidden role="dialog" aria-modal="true" aria-label="Film player">
@@ -424,7 +432,7 @@ footer nav a:hover{color:var(--on-night)}
       var cls="r"+r[0], items=r.slice(1);
       html+='<div class="row '+cls+' reveal">'+items.map(function(id){
         var i=set.ids.indexOf(id);
-        return '<figure class="ph"><img src="'+src(id,1200)+'" srcset="'+src(id,1200)+' 1200w, '+src(id,2400)+' 2400w" sizes="'+(r[0]===1?"100vw":"(max-width:700px) 100vw, 50vw")+'" alt="" loading="lazy" width="1200" height="800"><button type="button" data-open="'+k+'" data-i="'+i+'" aria-label="Open photo '+(i+1)+' of '+set.ids.length+', '+set.name+'"></button></figure>';
+        return '<figure class="ph"><img src="'+src(id,1200)+'" srcset="'+src(id,1200)+' 1200w, '+src(id,2400)+' 2400w" sizes="'+(r[0]===1?"100vw":"(max-width:700px) 100vw, 50vw")+'" alt="'+set.name+', photo '+(i+1)+'" loading="lazy" width="1200" height="800"><button type="button" data-open="'+k+'" data-i="'+i+'" aria-label="Open photo '+(i+1)+' of '+set.ids.length+', '+set.name+'"></button></figure>';
       }).join("")+'</div>';
     });
     g.innerHTML=html;
