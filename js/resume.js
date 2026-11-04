@@ -168,7 +168,7 @@
   var sCap = document.createElement("p");
   sCap.className = "stage-cap";
   sMedia.insertBefore(sCap, sThumbs);
-  var CAT = { motors: "Motorsports and auto", comp: "Competition", outdoor: "Outdoor and Sportsman", docs: "Documentary", life: "Lifestyle and food" };
+  var CAT = { motors: "Motorsports and auto", comp: "Competition", outdoor: "Outdoor and Sportsman", docs: "Documentary", life: "Lifestyle and food", brand: "Branded and digital" };
   var curRows = [];
   var curIdx = 0;
   var curMedia = [];
@@ -279,6 +279,7 @@
     } else sr.hidden = true;
     document.getElementById("sheet-count").textContent = (curIdx + 1) + " of " + curRows.length;
     curMedia = d.media || [];
+    document.getElementById("sheet-body").classList.toggle("is-portrait", !!(curMedia[0] && curMedia[0].portrait));
     sThumbs.innerHTML = "";
     if (curMedia.length > 1) {
       curMedia.forEach(function (item, n) {

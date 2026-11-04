@@ -385,3 +385,12 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   .ledger li:hover::before, .ledger li:focus-visible::before { opacity: 1; transform: translateY(-50%); }
   .ledger li:hover .l-net, .ledger li:focus-visible .l-net { opacity: 0; }
 }
+
+/* Portrait media (9:16): a narrower media column with a tall stage */
+.sheet-body.is-portrait { grid-template-columns: minmax(0, 340px) 1fr; }
+.sheet-body.is-portrait .sheet-stage { aspect-ratio: 9 / 16; max-height: calc(100vh - 9rem); max-height: calc(100dvh - 9rem); margin: 0 auto; }
+.sheet-body.is-portrait .stage-play img { object-fit: cover; }
+@media (max-width: 860px) {
+  .sheet-body.is-portrait { grid-template-columns: 1fr; }
+  .sheet-body.is-portrait .sheet-stage { width: min(100%, 340px); }
+}
