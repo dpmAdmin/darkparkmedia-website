@@ -55,7 +55,7 @@ window.CREDITS = {
   },
   "nxcogni": {
     blurb: "A 40-second vertical brand video for Nextida's NxCogni, cut for social and built around the SupplySide Global 2026 launch. A Dark Park Media production.",
-    media: [{ k: "mp4", src: "assets/video/nxcogni-final-916.mp4", poster: "assets/img/credits/nxcogni-poster.jpg", portrait: true, label: "Final cut, 9:16", note: "The following video was made entirely in house. From photos to renders. Sound on." }]
+    media: [{ k: "mp4", src: "assets/video/nxcogni-final-916.mp4", poster: "assets/img/credits/nxcogni-poster.jpg", portrait: true, label: "Final cut, 9:16", note: "The following video was made entirely in house. From photos to renders." }]
   },
   "guys-grocery-games": {
     blurb: "Guy Fieri hosts chefs competing inside a grocery store, cooking with whatever the aisles give them.",

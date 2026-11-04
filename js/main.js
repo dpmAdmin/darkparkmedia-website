@@ -619,12 +619,12 @@
       document.documentElement.classList.add("modal-open");
       portfolioModal.setAttribute("aria-hidden", "false");
       portfolioModalVideo.setAttribute("src", videoSrc);
-      // A tile can carry a short note shown across the top of the player,
-      // and can ask for sound (the click that opens the player allows it).
+      // A tile can carry a short note shown across the top of the player.
       var note = tile.getAttribute("data-note") || "";
       portfolioModalNote.textContent = note;
       portfolioModalNote.hidden = !note;
-      portfolioModalVideo.muted = !tile.hasAttribute("data-sound");
+      // Plays with sound: the click that opens the player allows it.
+      portfolioModalVideo.muted = false;
       portfolioModal.classList.add("open");
       portfolioModalVideo.play().catch(function () { /* autoplay blocked */ });
       portfolioModalClose.focus();
