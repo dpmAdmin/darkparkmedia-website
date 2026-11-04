@@ -168,6 +168,9 @@
   var sCap = document.createElement("p");
   sCap.className = "stage-cap";
   sMedia.insertBefore(sCap, sThumbs);
+  var sNote = el("p", "stage-note");
+  sNote.hidden = true;
+  sMedia.insertBefore(sNote, sStage);
   var CAT = { motors: "Motorsports and auto", comp: "Competition", outdoor: "Outdoor and Sportsman", docs: "Documentary", life: "Lifestyle and food", brand: "Branded and digital" };
   var curRows = [];
   var curIdx = 0;
@@ -214,9 +217,12 @@
       card.appendChild(el("small", "", info.role));
       sStage.appendChild(card);
       sCap.textContent = "";
+      sNote.hidden = true;
       return;
     }
     sCap.textContent = item.label || "";
+    sNote.textContent = item.note || "";
+    sNote.hidden = !item.note;
     if (item.k === "img") {
       var im = document.createElement("img");
       im.src = item.src;

@@ -605,6 +605,7 @@
   if (portfolioModal) {
     var portfolioModalVideo = portfolioModal.querySelector(".portfolio-modal-video");
     var portfolioModalClose = portfolioModal.querySelector(".portfolio-modal-close");
+    var portfolioModalNote = portfolioModal.querySelector(".portfolio-modal-note");
     var portfolioModalBackdrop = portfolioModal.querySelector(".portfolio-modal-backdrop");
     // Remembered so focus can be handed back to the tile that opened it.
     var portfolioLastFocused = null;
@@ -618,6 +619,12 @@
       document.documentElement.classList.add("modal-open");
       portfolioModal.setAttribute("aria-hidden", "false");
       portfolioModalVideo.setAttribute("src", videoSrc);
+      // A tile can carry a short note shown across the top of the player,
+      // and can ask for sound (the click that opens the player allows it).
+      var note = tile.getAttribute("data-note") || "";
+      portfolioModalNote.textContent = note;
+      portfolioModalNote.hidden = !note;
+      portfolioModalVideo.muted = !tile.hasAttribute("data-sound");
       portfolioModal.classList.add("open");
       portfolioModalVideo.play().catch(function () { /* autoplay blocked */ });
       portfolioModalClose.focus();
@@ -627,6 +634,7 @@
       portfolioModal.classList.remove("open");
       portfolioModalVideo.pause();
       portfolioModalVideo.removeAttribute("src");
+      portfolioModalNote.hidden = true;
       document.documentElement.classList.remove("modal-open");
       if (portfolioLastFocused) {
         portfolioLastFocused.focus();

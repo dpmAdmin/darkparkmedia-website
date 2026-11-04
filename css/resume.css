@@ -394,3 +394,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   .sheet-body.is-portrait { grid-template-columns: 1fr; }
   .sheet-body.is-portrait .sheet-stage { width: min(100%, 340px); }
 }
+
+/* Note across the top of a pop-up's media (from a media item's note) */
+.stage-note { margin: 0 0 0.6rem; padding: 0.6rem 0.8rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.5; color: var(--paper); background: var(--green-deep); border-radius: 3px; }
+.stage-note[hidden] { display: none; }
+.sheet-body.is-portrait .stage-note { width: 100%; }
