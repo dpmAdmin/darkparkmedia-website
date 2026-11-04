@@ -836,6 +836,12 @@ body.reduced-motion .svc-slideshow img { transition: none; }
   margin-top: 3rem;
 }
 @media (max-width: 600px) { .portfolio-grid { grid-template-columns: 1fr; } }
+/* A wide featured tile spans both columns (used for the newest piece) */
+.portfolio-tile.portfolio-tile--wide { grid-column: 1 / -1; aspect-ratio: 1080 / 462; }
+/* The banner art is pale, so the usual dark edge gradient is lightened and the label gets its own backing */
+.portfolio-tile--wide::after { background: linear-gradient(to bottom, rgba(10,11,13,0.3) 0%, rgba(10,11,13,0) 22%, rgba(10,11,13,0) 78%, rgba(10,11,13,0.3) 100%); }
+.portfolio-tile--wide:hover::after { background: linear-gradient(to bottom, rgba(10,11,13,0.45) 0%, rgba(10,11,13,0.1) 22%, rgba(10,11,13,0.1) 78%, rgba(10,11,13,0.45) 100%); }
+.portfolio-tile--wide .tile-label { background: rgba(10,11,13,0.62); padding: 0.35rem 0.7rem; border-radius: 4px; right: auto; width: auto; max-width: calc(100% - 2rem); }
 /* Portfolio tiles: clickable video thumbnails */
 .portfolio-tile {
   aspect-ratio: 16 / 10;
