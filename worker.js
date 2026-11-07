@@ -6,7 +6,7 @@ const FOFV_PAGE = "/four-one-five-visuals";
 const FOFV_PAGES = new Set([
   "real-estate-photography", "listing-films", "drone-aerial-photography", "property-websites",
   "mill-valley", "ross", "tiburon", "san-rafael", "san-anselmo", "fairfax", "greenbrae",
-  "kentfield", "sausalito", "san-francisco",
+  "kentfield", "sausalito", "san-francisco", "twilight-photography", "about",
   // Listing pages (files in /415/work/).
   "work", "work/33-shell-road", "work/126-winding-way", "work/88-lucas-park-drive", "work/7-francisco-vista-court",
 ]);
@@ -35,6 +35,9 @@ const LLMS_TXT = `# Four One Five Visuals
 - Listing films: https://fouronefivevisuals.com/listing-films
 - Drone and aerial photography: https://fouronefivevisuals.com/drone-aerial-photography
 - Property websites: https://fouronefivevisuals.com/property-websites
+- Twilight photography: https://fouronefivevisuals.com/twilight-photography
+- About the studio (founder Anthony Slezak): https://fouronefivevisuals.com/about
+- Recent listings with full photo sets and films: https://fouronefivevisuals.com/work
 - Towns served: Mill Valley, Ross, Tiburon, San Rafael, San Anselmo, Fairfax, Greenbrae, Kentfield, Sausalito, San Francisco (each at https://fouronefivevisuals.com/<town-slug>)
 `;
 
