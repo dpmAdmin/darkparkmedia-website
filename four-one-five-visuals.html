@@ -19,6 +19,7 @@
 <link rel="icon" href="/assets/icons/icon-512.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/assets/icons/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="preload" as="image" imagesrcset="assets/img/work/sh-01-600.avif 600w, assets/img/work/sh-01-900.avif 900w, assets/img/work/sh-01-1200.avif 1200w, assets/img/work/sh-01-1800.avif 1800w, assets/img/work/sh-01-2400.avif 2400w" imagesizes="100vw" type="image/avif" fetchpriority="high">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
@@ -41,6 +42,7 @@
 html{scroll-behavior:smooth;color-scheme:light}
 body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,video{display:block;max-width:100%}
+picture{display:contents}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -268,18 +270,18 @@ footer nav a:hover{color:var(--on-night)}
 
 <main id="main">
 <section class="hero" aria-label="Introduction">
-  <img class="on" src="assets/img/work/sh-01-2400.jpg" srcset="assets/img/work/sh-01-1200.jpg 1200w, assets/img/work/sh-01-2400.jpg 2400w" sizes="100vw" alt="A Mill Valley home at twilight" fetchpriority="high">
-  <img data-src="assets/img/work/ww-188-2400.jpg" data-srcset="assets/img/work/ww-188-1200.jpg 1200w, assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="A Ross home at sunset">
-  <img data-src="assets/img/work/sh-16-2400.jpg" data-srcset="assets/img/work/sh-16-1200.jpg 1200w, assets/img/work/sh-16-2400.jpg 2400w" sizes="100vw" alt="Covered patio">
-  <img data-src="assets/img/work/ww-001-2400.jpg" data-srcset="assets/img/work/ww-001-1200.jpg 1200w, assets/img/work/ww-001-2400.jpg 2400w" sizes="100vw" alt="Entry courtyard at twilight">
-  <img data-src="assets/img/work/sh-19-2400.jpg" data-srcset="assets/img/work/sh-19-1200.jpg 1200w, assets/img/work/sh-19-2400.jpg 2400w" sizes="100vw" alt="Outdoor lounge">
-  <img data-src="assets/img/work/ww-034-2400.jpg" data-srcset="assets/img/work/ww-034-1200.jpg 1200w, assets/img/work/ww-034-2400.jpg 2400w" sizes="100vw" alt="Vaulted living room">
-  <img data-src="assets/img/work/sh-14-2400.jpg" data-srcset="assets/img/work/sh-14-1200.jpg 1200w, assets/img/work/sh-14-2400.jpg 2400w" sizes="100vw" alt="Primary bath">
-  <img data-src="assets/img/work/ww-157-2400.jpg" data-srcset="assets/img/work/ww-157-1200.jpg 1200w, assets/img/work/ww-157-2400.jpg 2400w" sizes="100vw" alt="Entry stair at 126 Winding Way, Ross">
-  <img data-src="assets/img/work/sh-23-2400.jpg" data-srcset="assets/img/work/sh-23-1200.jpg 1200w, assets/img/work/sh-23-2400.jpg 2400w" sizes="100vw" alt="Outdoor shower">
-  <img data-src="assets/img/work/ww-015-2400.jpg" data-srcset="assets/img/work/ww-015-1200.jpg 1200w, assets/img/work/ww-015-2400.jpg 2400w" sizes="100vw" alt="Kitchen at 126 Winding Way, Ross">
-  <img data-src="assets/img/work/ww-031-2400.jpg" data-srcset="assets/img/work/ww-031-1200.jpg 1200w, assets/img/work/ww-031-2400.jpg 2400w" sizes="100vw" alt="Office gallery at 126 Winding Way, Ross">
-  <img data-src="assets/img/work/ww-081-2400.jpg" data-srcset="assets/img/work/ww-081-1200.jpg 1200w, assets/img/work/ww-081-2400.jpg 2400w" sizes="100vw" alt="Primary bath at 126 Winding Way, Ross">
+  <picture><source type="image/avif" srcset="assets/img/work/sh-01-600.avif 600w, assets/img/work/sh-01-900.avif 900w, assets/img/work/sh-01-1200.avif 1200w, assets/img/work/sh-01-1800.avif 1800w, assets/img/work/sh-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="assets/img/work/sh-01-600.webp 600w, assets/img/work/sh-01-900.webp 900w, assets/img/work/sh-01-1200.webp 1200w, assets/img/work/sh-01-1800.webp 1800w, assets/img/work/sh-01-2400.webp 2400w" sizes="100vw"><img src="assets/img/work/sh-01-2400.jpg" srcset="assets/img/work/sh-01-1200.jpg 1200w, assets/img/work/sh-01-2400.jpg 2400w" sizes="100vw" alt="A Mill Valley home at twilight" width="2400" height="1600" class="on" fetchpriority="high"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-188-600.avif 600w, assets/img/work/ww-188-900.avif 900w, assets/img/work/ww-188-1200.avif 1200w, assets/img/work/ww-188-1800.avif 1800w, assets/img/work/ww-188-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-188-600.webp 600w, assets/img/work/ww-188-900.webp 900w, assets/img/work/ww-188-1200.webp 1200w, assets/img/work/ww-188-1800.webp 1800w, assets/img/work/ww-188-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-188-2400.jpg" data-srcset="assets/img/work/ww-188-1200.jpg 1200w, assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="A Ross home at sunset" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/sh-16-600.avif 600w, assets/img/work/sh-16-900.avif 900w, assets/img/work/sh-16-1200.avif 1200w, assets/img/work/sh-16-1800.avif 1800w, assets/img/work/sh-16-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/sh-16-600.webp 600w, assets/img/work/sh-16-900.webp 900w, assets/img/work/sh-16-1200.webp 1200w, assets/img/work/sh-16-1800.webp 1800w, assets/img/work/sh-16-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/sh-16-2400.jpg" data-srcset="assets/img/work/sh-16-1200.jpg 1200w, assets/img/work/sh-16-2400.jpg 2400w" sizes="100vw" alt="Covered patio" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-001-600.avif 600w, assets/img/work/ww-001-900.avif 900w, assets/img/work/ww-001-1200.avif 1200w, assets/img/work/ww-001-1800.avif 1800w, assets/img/work/ww-001-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-001-600.webp 600w, assets/img/work/ww-001-900.webp 900w, assets/img/work/ww-001-1200.webp 1200w, assets/img/work/ww-001-1800.webp 1800w, assets/img/work/ww-001-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-001-2400.jpg" data-srcset="assets/img/work/ww-001-1200.jpg 1200w, assets/img/work/ww-001-2400.jpg 2400w" sizes="100vw" alt="Entry courtyard at twilight" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/sh-19-600.avif 600w, assets/img/work/sh-19-900.avif 900w, assets/img/work/sh-19-1200.avif 1200w, assets/img/work/sh-19-1800.avif 1800w, assets/img/work/sh-19-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/sh-19-600.webp 600w, assets/img/work/sh-19-900.webp 900w, assets/img/work/sh-19-1200.webp 1200w, assets/img/work/sh-19-1800.webp 1800w, assets/img/work/sh-19-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/sh-19-2400.jpg" data-srcset="assets/img/work/sh-19-1200.jpg 1200w, assets/img/work/sh-19-2400.jpg 2400w" sizes="100vw" alt="Outdoor lounge" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-034-600.avif 600w, assets/img/work/ww-034-900.avif 900w, assets/img/work/ww-034-1200.avif 1200w, assets/img/work/ww-034-1800.avif 1800w, assets/img/work/ww-034-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-034-600.webp 600w, assets/img/work/ww-034-900.webp 900w, assets/img/work/ww-034-1200.webp 1200w, assets/img/work/ww-034-1800.webp 1800w, assets/img/work/ww-034-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-034-2400.jpg" data-srcset="assets/img/work/ww-034-1200.jpg 1200w, assets/img/work/ww-034-2400.jpg 2400w" sizes="100vw" alt="Vaulted living room" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/sh-14-600.avif 600w, assets/img/work/sh-14-900.avif 900w, assets/img/work/sh-14-1200.avif 1200w, assets/img/work/sh-14-1800.avif 1800w, assets/img/work/sh-14-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/sh-14-600.webp 600w, assets/img/work/sh-14-900.webp 900w, assets/img/work/sh-14-1200.webp 1200w, assets/img/work/sh-14-1800.webp 1800w, assets/img/work/sh-14-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/sh-14-2400.jpg" data-srcset="assets/img/work/sh-14-1200.jpg 1200w, assets/img/work/sh-14-2400.jpg 2400w" sizes="100vw" alt="Primary bath" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-157-600.avif 600w, assets/img/work/ww-157-900.avif 900w, assets/img/work/ww-157-1200.avif 1200w, assets/img/work/ww-157-1800.avif 1800w, assets/img/work/ww-157-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-157-600.webp 600w, assets/img/work/ww-157-900.webp 900w, assets/img/work/ww-157-1200.webp 1200w, assets/img/work/ww-157-1800.webp 1800w, assets/img/work/ww-157-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-157-2400.jpg" data-srcset="assets/img/work/ww-157-1200.jpg 1200w, assets/img/work/ww-157-2400.jpg 2400w" sizes="100vw" alt="Entry stair at 126 Winding Way, Ross" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/sh-23-600.avif 600w, assets/img/work/sh-23-900.avif 900w, assets/img/work/sh-23-1200.avif 1200w, assets/img/work/sh-23-1800.avif 1800w, assets/img/work/sh-23-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/sh-23-600.webp 600w, assets/img/work/sh-23-900.webp 900w, assets/img/work/sh-23-1200.webp 1200w, assets/img/work/sh-23-1800.webp 1800w, assets/img/work/sh-23-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/sh-23-2400.jpg" data-srcset="assets/img/work/sh-23-1200.jpg 1200w, assets/img/work/sh-23-2400.jpg 2400w" sizes="100vw" alt="Outdoor shower" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-015-600.avif 600w, assets/img/work/ww-015-900.avif 900w, assets/img/work/ww-015-1200.avif 1200w, assets/img/work/ww-015-1800.avif 1800w, assets/img/work/ww-015-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-015-600.webp 600w, assets/img/work/ww-015-900.webp 900w, assets/img/work/ww-015-1200.webp 1200w, assets/img/work/ww-015-1800.webp 1800w, assets/img/work/ww-015-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-015-2400.jpg" data-srcset="assets/img/work/ww-015-1200.jpg 1200w, assets/img/work/ww-015-2400.jpg 2400w" sizes="100vw" alt="Kitchen at 126 Winding Way, Ross" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-031-600.avif 600w, assets/img/work/ww-031-900.avif 900w, assets/img/work/ww-031-1200.avif 1200w, assets/img/work/ww-031-1800.avif 1800w, assets/img/work/ww-031-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-031-600.webp 600w, assets/img/work/ww-031-900.webp 900w, assets/img/work/ww-031-1200.webp 1200w, assets/img/work/ww-031-1800.webp 1800w, assets/img/work/ww-031-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-031-2400.jpg" data-srcset="assets/img/work/ww-031-1200.jpg 1200w, assets/img/work/ww-031-2400.jpg 2400w" sizes="100vw" alt="Office gallery at 126 Winding Way, Ross" width="2400" height="1600"></picture>
+  <picture><source type="image/avif" data-srcset="assets/img/work/ww-081-600.avif 600w, assets/img/work/ww-081-900.avif 900w, assets/img/work/ww-081-1200.avif 1200w, assets/img/work/ww-081-1800.avif 1800w, assets/img/work/ww-081-2400.avif 2400w" sizes="100vw"><source type="image/webp" data-srcset="assets/img/work/ww-081-600.webp 600w, assets/img/work/ww-081-900.webp 900w, assets/img/work/ww-081-1200.webp 1200w, assets/img/work/ww-081-1800.webp 1800w, assets/img/work/ww-081-2400.webp 2400w" sizes="100vw"><img data-src="assets/img/work/ww-081-2400.jpg" data-srcset="assets/img/work/ww-081-1200.jpg 1200w, assets/img/work/ww-081-2400.jpg 2400w" sizes="100vw" alt="Primary bath at 126 Winding Way, Ross" width="2400" height="1600"></picture>
   <div class="hero-copy wrap">
     <h1 class="display">Real estate photography and film for Marin.</h1>
     <p>Listing photos, films and aerials for agents in Marin County and San Francisco. Photos within 24 hours; films within 5 days of the shoot.</p>
@@ -318,7 +320,7 @@ footer nav a:hover{color:var(--on-night)}
 </section>
 
 <section class="band" aria-labelledby="band-h">
-  <img src="assets/img/work/ww-189-2400.jpg" srcset="assets/img/work/ww-189-1200.jpg 1200w, assets/img/work/ww-189-2400.jpg 2400w" sizes="100vw" alt="Aerial view at golden hour toward Mt. Tamalpais" loading="lazy">
+  <picture><source type="image/avif" srcset="assets/img/work/ww-189-600.avif 600w, assets/img/work/ww-189-900.avif 900w, assets/img/work/ww-189-1200.avif 1200w, assets/img/work/ww-189-1800.avif 1800w, assets/img/work/ww-189-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="assets/img/work/ww-189-600.webp 600w, assets/img/work/ww-189-900.webp 900w, assets/img/work/ww-189-1200.webp 1200w, assets/img/work/ww-189-1800.webp 1800w, assets/img/work/ww-189-2400.webp 2400w" sizes="100vw"><img src="assets/img/work/ww-189-1200.jpg" srcset="assets/img/work/ww-189-1200.jpg 1200w, assets/img/work/ww-189-2400.jpg 2400w" sizes="100vw" alt="Aerial view at golden hour toward Mt. Tamalpais" width="2400" height="1600" loading="lazy"></picture>
   <div class="wrap"><p class="label" style="color:rgba(255,255,255,.75)">Aerials &middot; FAA Part 107</p><h2 class="display" id="band-h">The context no ground camera can reach.</h2><p>Up to 100-megapixel drone photos and 6K aerial video.</p></div>
 </section>
 
@@ -357,9 +359,9 @@ footer nav a:hover{color:var(--on-night)}
       <p>Book photography on its own or add film, aerials and twilight. Prices step with the home's size and show up front.</p>
     </div>
     <div class="svc">
-      <article class="reveal"><img src="assets/img/work/sh-04-1200.jpg" alt="Kitchen at 33 Shell Road" loading="lazy" width="1200" height="800"><h3>Photography</h3><p>Bracketed and hand-finished interiors, daytime and twilight exteriors and the details that earn a second look. Delivered at MLS and print sizes.</p></article>
-      <article class="reveal"><img src="assets/img/work/film-loop-poster.jpg" alt="Still from the 126 Winding Way listing film" loading="lazy" width="1920" height="1080"><h3>Listing films</h3><p>Cinematic walkthroughs with aerial openings and twilight endings, delivered branded and unbranded, plus verticals for social.</p></article>
-      <article class="reveal"><img src="assets/img/work/ww-003-1200.jpg" alt="Drone view straight down over a house, pool and oak-covered grounds" loading="lazy" width="1200" height="800"><h3>Aerials</h3><p>FAA Part 107 drone photos up to 100 megapixels and 6K video, for lot lines, views and neighborhood context.</p></article>
+      <article class="reveal"><picture><source type="image/avif" srcset="assets/img/work/sh-04-600.avif 600w, assets/img/work/sh-04-900.avif 900w, assets/img/work/sh-04-1200.avif 1200w, assets/img/work/sh-04-1800.avif 1800w, assets/img/work/sh-04-2400.avif 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><source type="image/webp" srcset="assets/img/work/sh-04-600.webp 600w, assets/img/work/sh-04-900.webp 900w, assets/img/work/sh-04-1200.webp 1200w, assets/img/work/sh-04-1800.webp 1800w, assets/img/work/sh-04-2400.webp 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><img src="assets/img/work/sh-04-1200.jpg" srcset="assets/img/work/sh-04-1200.jpg 1200w, assets/img/work/sh-04-2400.jpg 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw" alt="Kitchen at 33 Shell Road" width="1200" height="800" loading="lazy"></picture><h3>Photography</h3><p>Bracketed and hand-finished interiors, daytime and twilight exteriors and the details that earn a second look. Delivered at MLS and print sizes.</p></article>
+      <article class="reveal"><picture><source type="image/avif" srcset="assets/img/work/film-loop-poster-600.avif 600w, assets/img/work/film-loop-poster-900.avif 900w, assets/img/work/film-loop-poster-1200.avif 1200w, assets/img/work/film-loop-poster-1800.avif 1800w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><source type="image/webp" srcset="assets/img/work/film-loop-poster-600.webp 600w, assets/img/work/film-loop-poster-900.webp 900w, assets/img/work/film-loop-poster-1200.webp 1200w, assets/img/work/film-loop-poster-1800.webp 1800w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><img src="assets/img/work/film-loop-poster.jpg" sizes="(min-width:900px) min(33vw, 450px), 100vw" alt="Still from the 126 Winding Way listing film" width="1920" height="1080" loading="lazy"></picture><h3>Listing films</h3><p>Cinematic walkthroughs with aerial openings and twilight endings, delivered branded and unbranded, plus verticals for social.</p></article>
+      <article class="reveal"><picture><source type="image/avif" srcset="assets/img/work/ww-003-600.avif 600w, assets/img/work/ww-003-900.avif 900w, assets/img/work/ww-003-1200.avif 1200w, assets/img/work/ww-003-1800.avif 1800w, assets/img/work/ww-003-2400.avif 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><source type="image/webp" srcset="assets/img/work/ww-003-600.webp 600w, assets/img/work/ww-003-900.webp 900w, assets/img/work/ww-003-1200.webp 1200w, assets/img/work/ww-003-1800.webp 1800w, assets/img/work/ww-003-2400.webp 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw"><img src="assets/img/work/ww-003-1200.jpg" srcset="assets/img/work/ww-003-1200.jpg 1200w, assets/img/work/ww-003-2400.jpg 2400w" sizes="(min-width:900px) min(33vw, 450px), 100vw" alt="Drone view straight down over a house, pool and oak-covered grounds" width="1200" height="800" loading="lazy"></picture><h3>Aerials</h3><p>FAA Part 107 drone photos up to 100 megapixels and 6K video, for lot lines, views and neighborhood context.</p></article>
     </div>
     <div class="extras">
       <p class="label">Also available</p>
@@ -456,14 +458,30 @@ footer nav a:hover{color:var(--on-night)}
     ww:    {name:"126 Winding Way · Ross", ids:["ww-104","ww-034","ww-040","ww-042","ww-055","ww-015","ww-031","ww-059","ww-071","ww-081","ww-157","ww-163","ww-011","ww-003","ww-179","ww-001","ww-188","ww-189"],
             rows:[[1,"ww-104"],[2,"ww-034","ww-040"],[12,"ww-042","ww-055"],[3,"ww-015","ww-031","ww-059"],[2,"ww-071","ww-081"],[3,"ww-157","ww-163","ww-011"],[2,"ww-003","ww-179"],[3,"ww-001","ww-188","ww-189"]]}
   };
-  var src = function(id,s){return "assets/img/work/"+id+"-"+s+".jpg";};
+  var src = function(id,s,fmt){return "assets/img/work/"+id+"-"+s+"."+(fmt||"jpg");};
+  var set2 = function(id,fmt){return [600,900,1200,1800,2400].map(function(w){return src(id,w,fmt)+" "+w+"w";}).join(", ");};
+  // Slot widths per row shape (wrap maxes at 1440px minus gutters): full, halves, thirds, big+small.
+  var sizesFor = function(shape,i){
+    var m="(max-width:700px) ";
+    if(shape===1) return "(min-width:1440px) 1360px, 100vw";
+    if(shape===2) return m+"100vw, (min-width:1440px) 676px, 50vw";
+    if(shape===3) return (i===0? m+"100vw, " : m+"50vw, ")+"(min-width:1440px) 448px, 33vw";
+    var big=(shape===21&&i===0)||(shape===12&&i===1);
+    return m+"100vw, "+(big?"(min-width:1440px) 900px, 66vw":"(min-width:1440px) 450px, 33vw");
+  };
+  // Best format the browser can decode, for the lightbox (markup uses <picture>).
+  var FMT="jpg";
+  (function(){var probe=function(fmt,uri,cb){var im=new Image();im.onload=function(){cb(im.width>0);};im.onerror=function(){cb(false);};im.src=uri;};
+    probe("avif","data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEDQgMgkQAAAAB8dSLfI=",function(ok){if(ok){FMT="avif";return;}
+    probe("webp","data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=",function(ok){if(ok)FMT="webp";});});})();
   Object.keys(SETS).forEach(function(k){
     var set=SETS[k], g=document.getElementById("g-"+k), html="";
     set.rows.forEach(function(r){
       var cls="r"+r[0], items=r.slice(1);
       html+='<div class="row '+cls+' reveal">'+items.map(function(id){
         var i=set.ids.indexOf(id);
-        return '<figure class="ph"><img src="'+src(id,1200)+'" srcset="'+src(id,1200)+' 1200w, '+src(id,2400)+' 2400w" sizes="'+(r[0]===1?"100vw":"(max-width:700px) 100vw, 50vw")+'" alt="'+set.name+', photo '+(i+1)+'" loading="lazy" width="1200" height="800"><button type="button" data-open="'+k+'" data-i="'+i+'" aria-label="Open photo '+(i+1)+' of '+set.ids.length+', '+set.name+'"></button></figure>';
+        var sz=sizesFor(r[0], items.indexOf(id));
+        return '<figure class="ph"><picture><source type="image/avif" srcset="'+set2(id,"avif")+'" sizes="'+sz+'"><source type="image/webp" srcset="'+set2(id,"webp")+'" sizes="'+sz+'"><img src="'+src(id,1200)+'" srcset="'+src(id,1200)+' 1200w, '+src(id,2400)+' 2400w" sizes="'+sz+'" alt="'+set.name+', photo '+(i+1)+'" loading="lazy" width="1200" height="800"></picture><button type="button" data-open="'+k+'" data-i="'+i+'" aria-label="Open photo '+(i+1)+' of '+set.ids.length+', '+set.name+'"></button></figure>';
       }).join("")+'</div>';
     });
     g.innerHTML=html;
@@ -480,7 +498,7 @@ footer nav a:hover{color:var(--on-night)}
   // hero crossfade
   var slides=[].slice.call(hero.querySelectorAll("img")), h=0;
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function load(img){if(img&&img.dataset.src){img.srcset=img.dataset.srcset;img.src=img.dataset.src;delete img.dataset.src;}}
+  function load(img){if(img&&img.dataset.src){[].forEach.call(img.parentNode.querySelectorAll("source[data-srcset]"),function(sc){sc.srcset=sc.dataset.srcset;delete sc.dataset.srcset;});img.srcset=img.dataset.srcset;img.src=img.dataset.src;delete img.dataset.src;}}
   if(!reduce){load(slides[1]);setInterval(function(){slides[h].classList.remove("on");h=(h+1)%slides.length;load(slides[h]);load(slides[(h+1)%slides.length]);slides[h].classList.add("on");},6500);}
 
   // reveal on scroll
@@ -494,7 +512,7 @@ footer nav a:hover{color:var(--on-night)}
 
   // lightbox
   var lb=document.getElementById("lb"), img=document.getElementById("lb-img"), t=document.getElementById("lb-t"), cur=null, at=0, back=null;
-  function show(i){var ids=SETS[cur].ids;at=(i+ids.length)%ids.length;img.src=src(ids[at],2400);img.alt=SETS[cur].name+", photo "+(at+1)+" of "+ids.length;t.textContent=SETS[cur].name+"  ·  "+(at+1)+" / "+ids.length;new Image().src=src(ids[(at+1)%ids.length],2400);}
+  function show(i){var ids=SETS[cur].ids;at=(i+ids.length)%ids.length;img.src=src(ids[at],2400,FMT);img.alt=SETS[cur].name+", photo "+(at+1)+" of "+ids.length;t.textContent=SETS[cur].name+"  ·  "+(at+1)+" / "+ids.length;new Image().src=src(ids[(at+1)%ids.length],2400,FMT);}
   function open(k,i,from){cur=k;back=from;lb.hidden=false;document.body.style.overflow="hidden";show(i);document.getElementById("lb-x").focus();}
   function close(){lb.hidden=true;document.body.style.overflow="";back&&back.focus();}
   document.addEventListener("click",function(e){var b=e.target.closest("[data-open]");if(b)open(b.dataset.open,+b.dataset.i,b);});

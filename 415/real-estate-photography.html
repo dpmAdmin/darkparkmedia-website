@@ -18,6 +18,7 @@
 <link rel="icon" href="/assets/icons/icon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/icons/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="preload" as="image" imagesrcset="/assets/img/work/ww-188-600.avif 600w, /assets/img/work/ww-188-900.avif 900w, /assets/img/work/ww-188-1200.avif 1200w, /assets/img/work/ww-188-1800.avif 1800w, /assets/img/work/ww-188-2400.avif 2400w" imagesizes="100vw" type="image/avif" fetchpriority="high">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
@@ -38,6 +39,7 @@
 html{color-scheme:light}
 body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
+picture{display:contents}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -68,7 +70,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .menu-open{overflow:hidden}
 }
 .hero{position:relative;height:min(68svh,760px);min-height:420px;overflow:hidden;color:#fff;background:var(--night);display:grid;align-items:end}
-.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,13,11,.15) 0%,rgba(15,13,11,0) 35%,rgba(15,13,11,.72) 100%)}
 .hero .wrap{position:relative;z-index:2;width:100%;padding-block:clamp(32px,6vh,64px)}
 .hero .label{color:rgba(255,255,255,.78)}
@@ -124,7 +126,7 @@ footer nav a:hover{color:var(--on-night)}
   </div>
 </header>
 <main id="main">
-<section class="hero" aria-labelledby="h1"><img class="" src="/assets/img/work/ww-188-2400.jpg" srcset="/assets/img/work/ww-188-1200.jpg 1200w, /assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="A Marin home at sunset" width="2400" height="1600" fetchpriority="high"><div class="wrap"><p class="label">Services</p><h1 class="display" id="h1">Real estate photography for Marin and San Francisco</h1></div></section>
+<section class="hero" aria-labelledby="h1"><picture><source type="image/avif" srcset="/assets/img/work/ww-188-600.avif 600w, /assets/img/work/ww-188-900.avif 900w, /assets/img/work/ww-188-1200.avif 1200w, /assets/img/work/ww-188-1800.avif 1800w, /assets/img/work/ww-188-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="/assets/img/work/ww-188-600.webp 600w, /assets/img/work/ww-188-900.webp 900w, /assets/img/work/ww-188-1200.webp 1200w, /assets/img/work/ww-188-1800.webp 1800w, /assets/img/work/ww-188-2400.webp 2400w" sizes="100vw"><img src="/assets/img/work/ww-188-2400.jpg" srcset="/assets/img/work/ww-188-1200.jpg 1200w, /assets/img/work/ww-188-2400.jpg 2400w" sizes="100vw" alt="A Marin home at sunset" width="2400" height="1600" class="" fetchpriority="high"></picture><div class="wrap"><p class="label">Services</p><h1 class="display" id="h1">Real estate photography for Marin and San Francisco</h1></div></section>
 <div class="wrap"><div class="body">
 <p>Buyers decide in the first few photos whether a house is worth a showing. We shoot so those photos do the work: bright, true-to-life interiors, exteriors timed to the light, and the details that earn a second look.</p>
 <ul>
