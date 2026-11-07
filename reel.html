@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Anthony Slezak · Reel</title>
+<meta name="description" content="Anthony Slezak, supervising editor. Two decades in television, a decade on Street Outlaws, plus commercial, AI and branded work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,400;10..72,600;10..72,700;10..72,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0b0d; --ink:#121417; --panel:#17191d; --fog-dark:#33373c;
+    --fog:#8d9298; --fog-light:#c8ccd0; --paper:#ecedee;
+    --amber:#e8973a; --amber-bright:#ffb35c; --amber-dim:rgba(232,151,58,.14);
+    --display:"Big Shoulders","Arial Narrow",sans-serif;
+    --serif:"Newsreader",Georgia,serif;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--black);color:var(--fog-light);font:400 18px/1.55 var(--serif)}
+  h1,h2,h3{font-family:var(--display);color:var(--paper);line-height:1;text-transform:uppercase;letter-spacing:.01em}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .tag{font:600 13px/1 var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+
+  /* hero */
+  .hero{position:relative;min-height:74vh;display:flex;align-items:flex-end;overflow:hidden}
+  .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,13,.15) 0%,var(--black) 96%)}
+  .hero .wrap{position:relative;z-index:1;padding-bottom:52px;width:100%}
+  .hero h1{font-size:clamp(56px,11vw,128px);font-weight:800;margin:14px 0 18px}
+  .hero p{max-width:640px;font-size:clamp(18px,2.2vw,21px);color:var(--fog-light)}
+  .hero em{color:var(--paper)}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--fog-dark);border:1px solid var(--fog-dark);border-radius:var(--radius);overflow:hidden;margin:8px 0 80px}
+  .stat{background:var(--ink);padding:22px 18px}
+  .stat b{display:block;font:800 clamp(36px,5vw,52px)/1 var(--display);color:var(--amber)}
+  .stat span{color:var(--fog);font-size:15px}
+
+  section{margin-bottom:84px}
+  section>h2{font-size:clamp(36px,5.5vw,60px);font-weight:800;margin:12px 0 22px}
+  .lede{color:var(--fog);max-width:660px;margin:-6px 0 28px}
+
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--panel);border:1px solid var(--fog-dark);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+  .card .body{padding:18px 20px 22px}
+  .card h3{font-size:26px;font-weight:700;margin-bottom:6px}
+  .card p{color:var(--fog);font-size:16px}
+  .meta{font:600 13px/1.2 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .btn{display:inline-block;margin-top:14px;padding:10px 18px;border:1px solid var(--amber);border-radius:999px;color:var(--amber);text-decoration:none;font:600 15px var(--display);letter-spacing:.1em;text-transform:uppercase}
+  .btn:hover{background:var(--amber);color:var(--black)}
+
+  /* video */
+  .vid{display:block;width:100%;aspect-ratio:16/9;background:#000;object-fit:contain}
+  .vid.tall{aspect-ratio:9/16;max-height:640px}
+  .feature{display:grid;grid-template-columns:minmax(0,360px) 1fr;gap:28px;align-items:center;background:var(--panel);border:1px solid var(--fog-dark);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+  .feature .body{padding:24px 28px 28px 4px}
+  .feature h3{font-size:36px;font-weight:800;margin-bottom:10px}
+
+  /* youtube click-to-play */
+  .yt{position:relative;aspect-ratio:16/9;background:#000 center/cover no-repeat;cursor:pointer;border:0;width:100%;display:block}
+  .yt::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.3);transition:background .2s}
+  .yt:hover::before{background:rgba(0,0,0,.05)}
+  .yt::after{content:"";position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;
+    background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230a0b0d'/%3E%3C/svg%3E") center/26px no-repeat}
+  .yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .yt.playing::before,.yt.playing::after{display:none}
+
+  /* credits */
+  .credits{columns:2;column-gap:32px}
+  .credits li{list-style:none;break-inside:avoid;padding:12px 0;border-bottom:1px solid var(--fog-dark);display:flex;justify-content:space-between;gap:14px}
+  .credits li b{font-weight:500;color:var(--paper)}
+  .credits li span{color:var(--fog);font-size:15px;text-align:right}
+  .em{color:var(--amber)}
+
+  .tools{display:flex;flex-wrap:wrap;gap:10px}
+  .tools span{border:1px solid var(--fog-dark);background:var(--panel);border-radius:999px;padding:8px 15px;font-size:16px}
+
+  footer{border-top:1px solid var(--fog-dark);padding:30px 0 50px;color:var(--fog);font-size:15px}
+
+  @media (max-width:860px){
+    .grid.three{grid-template-columns:1fr 1fr}
+    .feature{grid-template-columns:1fr}
+    .feature .body{padding:20px}
+  }
+  @media (max-width:640px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid,.grid.three{grid-template-columns:1fr}
+    .credits{columns:1}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <video autoplay muted loop playsinline preload="metadata" src="/assets/video/resume-hero.mp4" aria-hidden="true"></video>
+  <div class="wrap">
+    <div class="tag">Supervising Editor / Editor · Dark Park Media LLC</div>
+    <h1>Anthony Slezak</h1>
+    <p>Two decades in the television industry, including a decade inside <em>Street Outlaws</em>. Now commercials, branded spots, AI and UGC ads, and YouTube-native content.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="stats">
+    <div class="stat"><b>20+</b><span>Years in editorial</span></div>
+    <div class="stat"><b>200+</b><span>Franchise hours a year</span></div>
+    <div class="stat"><b>10+</b><span>Street Outlaws spin-offs</span></div>
+    <div class="stat"><b>6</b><span>Seasons of No Prep Kings as lead</span></div>
+  </div>
+
+  <section>
+    <div class="tag">Selected work</div>
+    <h2>Commercial, AI and digital.</h2>
+
+    <div class="grid three" style="margin-bottom:20px">
+      <article class="card">
+        <video class="vid tall" controls playsinline preload="metadata" src="/assets/video/nxcogni-final-916.mp4#t=1"></video>
+        <div class="body"><div class="meta">Nextida · Brand video</div><h3>NxCogni</h3><p>AI generation, real photography and 3D animation in Blender, all made in-house.</p></div>
+      </article>
+      <article class="card">
+        <video class="vid tall" controls playsinline preload="metadata" src="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/KAT%20Nissan%20V001%20020926%20FC3/KAT%20Nissan%20V001%20020926%20FC3.mp4#t=1"></video>
+        <div class="body"><div class="meta">Nissan · Social</div><h3>Nissan Social</h3><p>Vertical branded spot for social.</p></div>
+      </article>
+      <article class="card">
+        <video class="vid tall" controls playsinline preload="metadata" src="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/KAT%20Microsoft%20v1%20061726/KAT%20Microsoft%20v1%20061726.mp4#t=1"></video>
+        <div class="body"><div class="meta">Microsoft · Social</div><h3>Microsoft Social</h3><p>Vertical branded spot for social.</p></div>
+      </article>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <video class="vid" controls playsinline preload="metadata" src="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/GFY%20Sizzle%205%20Fine%20Cut%20082525/GFY%20Sizzle%205%20Fine%20Cut%20082525.mp4#t=1"></video>
+        <div class="body"><div class="meta">Cheddar · Supervising Editor</div><h3>Go Fund Yourself</h3><p>Series sizzle, cut on a 3-day turnaround.</p></div>
+      </article>
+      <article class="card">
+        <div class="body" style="padding-top:26px">
+          <div class="meta">Speed Promotions · YouTube / Live · Client</div>
+          <h3>Street Outlaws: Live &amp; The Outlaws</h3>
+          <p>Supervising editor on the live and YouTube side, including short-form cut hook-first for the scroll.</p>
+          <a class="btn" href="https://www.youtube.com/@speedpromotionsracing" target="_blank" rel="noopener">See the channel</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="tag">Street Outlaws · Discovery</div>
+    <h2>The franchise, start to spin-off.</h2>
+    <p class="lede">Lead editor 2017 to 2024, cutting pilots and sizzles, supervising editorial teams and managing network delivery as the franchise grew to 200+ hours a year.</p>
+    <div class="grid three">
+      <article class="card">
+        <video class="vid" controls playsinline preload="metadata" src="https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/SO%20501%20Top/SO%20501%20Top.mp4#t=1"></video>
+        <div class="body"><div class="meta">Discovery</div><h3>Street Outlaws Open</h3></div>
+      </article>
+      <article class="card">
+        <button class="yt" data-id="vozilM0VlSk" aria-label="Play: He Jumped the Light"></button>
+        <div class="body"><div class="meta">No Prep Kings · Discovery</div><h3>"He Jumped the Light!"</h3></div>
+      </article>
+      <article class="card">
+        <button class="yt" data-id="YnXjDZ79uK8" aria-label="Play: Chuck vs Justin Swanstrom"></button>
+        <div class="body"><div class="meta">No Prep Kings · Discovery</div><h3>Chuck vs Justin Swanstrom</h3></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="tag">Marquee credits</div>
+    <h2>Big shows, big franchises.</h2>
+    <div class="grid three">
+      <article class="card">
+        <button class="yt" data-id="qa1WXiXnHek" aria-label="Play: American Chopper"></button>
+        <div class="body"><div class="meta">Discovery</div><h3>American Chopper</h3><p>Lead, Reunion Series · Editor, Season 9</p></div>
+      </article>
+      <article class="card">
+        <button class="yt" data-id="ixSQm053XaY" aria-label="Play: The Ultimate Fighter"></button>
+        <div class="body"><div class="meta">UFC</div><h3>The Ultimate Fighter</h3><p>Assistant Editor · Additional Editing</p></div>
+      </article>
+      <article class="card">
+        <button class="yt" data-id="5dSj2B-Ahtg" aria-label="Play: Dirty Jobs"></button>
+        <div class="body"><div class="meta">Discovery</div><h3>Dirty Jobs</h3><p>Assistant Editor · Additional Editing</p></div>
+      </article>
+    </div>
+    <p class="lede" style="margin-top:16px;font-size:15px">Network series clips are official network uploads.</p>
+  </section>
+
+  <section>
+    <div class="tag">More credits</div>
+    <h2>Two decades, filtered.</h2>
+    <ul class="credits">
+      <li><b>Street Outlaws</b><span>Lead Editor · Discovery</span></li>
+      <li><b>American Chopper</b><span>Reunion Lead · S9 Editor · Discovery</span></li>
+      <li><b>The Great Food Truck Race S4</b><span>Lead Editor · Food Network</span></li>
+      <li><b>Patricia Heaton Parties S1-2</b><span>Editor · Food Network · <span class="em">Daytime Emmy winner</span></span></li>
+      <li><b>Go Fund Yourself</b><span>Supervising Editor · Cheddar</span></li>
+      <li><b>NxCogni</b><span>Brand video · Nextida</span></li>
+      <li><b>Car Matchmaker S3</b><span>Editor · Esquire</span></li>
+      <li><b>Guy's Grocery Games S2</b><span>Editor · Food Network</span></li>
+      <li><b>Home Free S1</b><span>Editor · FOX</span></li>
+      <li><b>The North Korea Crisis</b><span>Lead Editor · History</span></li>
+      <li><b>Amazing America S1-2</b><span>Lead Editor · Sportsman Channel</span></li>
+      <li><b>Saving Private K-9 S1-2</b><span>Lead Editor · Sportsman Channel</span></li>
+      <li><b>The Ultimate Fighter</b><span>Assistant Editor · UFC</span></li>
+      <li><b>Dirty Jobs</b><span>Assistant Editor · Discovery</span></li>
+      <li><b>Tia Mowry at Home S2-3</b><span>Editor · Cooking Channel</span></li>
+      <li><b>My Big Fat Fabulous Life</b><span>Reunion Editor · TLC</span></li>
+      <li><b>My Fair Wedding S4-5</b><span>Editor · WE tv</span></li>
+      <li><b>Shinesty S1</b><span>Editor · MTV</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="tag">Craft and tools</div>
+    <h2>Story and technical, same hands.</h2>
+    <div class="tools">
+      <span>Adobe Creative Suite</span><span>Avid Media Composer</span><span>DaVinci Resolve</span>
+      <span>Blender</span><span>Higgsfield</span><span>fal.ai</span><span>Remotion</span>
+      <span>AI-assisted workflows</span><span>Frame.io</span><span>Network notes &amp; delivery</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Dark Park Media LLC</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.yt').forEach(function(el){
+    var id = el.getAttribute('data-id');
+    el.style.backgroundImage = 'url(/assets/img/yt/' + id + '.jpg)';
+    el.addEventListener('click', function(){
+      if (el.classList.contains('playing')) return;
+      el.classList.add('playing');
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture';
+      f.allowFullscreen = true;
+      f.title = el.getAttribute('aria-label');
+      el.appendChild(f);
+    });
+  });
+  // pause other videos when one plays
+  var vids = document.querySelectorAll('video.vid');
+  vids.forEach(function(v){ v.addEventListener('play', function(){ vids.forEach(function(o){ if(o!==v) o.pause(); }); }); });
+</script>
+</body>
+</html>
