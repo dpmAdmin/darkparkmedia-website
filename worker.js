@@ -8,6 +8,33 @@ const FOFV_PAGES = new Set([
   "mill-valley", "ross", "tiburon", "san-rafael", "san-anselmo", "fairfax", "greenbrae",
   "kentfield", "sausalito", "san-francisco",
 ]);
+// Dark Park pages: on the 415 host these forward home to darkpark.media so no
+// second indexable copy exists. Anything else not listed below is a 404 there.
+const DARKPARK_PAGES = new Set(["index", "bay-aerials", "motion-marketing", "resume", "reel"]);
+// Static files the 415 pages are allowed to load from the shared asset tree.
+const FOFV_STATIC = /^\/(assets|css|js)\//;
+
+const NOT_FOUND = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found · Four One Five Visuals</title><meta name="robots" content="noindex"><link rel="icon" href="/assets/icons/icon-32.png" type="image/png"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4efe7;color:#14110e;font:400 17px/1.6 system-ui,sans-serif;text-align:center;padding:24px}h1{font:300 italic 40px/1.1 "Iowan Old Style",Georgia,serif;margin:0 0 12px}a{color:#a5603a}</style></head><body><div><h1>That page isn't here.</h1><p>Try the <a href="/">homepage</a>, <a href="/real-estate-photography">photography</a>, <a href="/listing-films">listing films</a> or <a href="https://order.fouronefivevisuals.com">book a shoot</a>.</p></div></body></html>`;
+
+const LLMS_TXT = `# Four One Five Visuals
+
+> Real estate photography, listing films, drone aerials, twilight and property websites for agents in Marin County and San Francisco, California. A brand of Dark Park Media LLC.
+
+- Photos are delivered within 24 hours of the shoot, at MLS and print sizes.
+- Listing films (60 to 120 seconds) are delivered within 5 days, branded and unbranded, with vertical cuts for social.
+- Drone photos up to 100 megapixels and 6K aerial video, flown under FAA Part 107.
+- Real and virtual twilight, floor plans, property websites, social reels, brochures, listing copy, agent intros and virtual staging are available on the same visit.
+- Booking, pricing (set by the home's square footage), scheduling and delivery happen in the online portal: https://order.fouronefivevisuals.com
+- Contact: text 415.425.2955 or email contact@fouronefivevisuals.com
+
+## Pages
+- Home: https://fouronefivevisuals.com/
+- Real estate photography: https://fouronefivevisuals.com/real-estate-photography
+- Listing films: https://fouronefivevisuals.com/listing-films
+- Drone and aerial photography: https://fouronefivevisuals.com/drone-aerial-photography
+- Property websites: https://fouronefivevisuals.com/property-websites
+- Towns served: Mill Valley, Ross, Tiburon, San Rafael, San Anselmo, Fairfax, Greenbrae, Kentfield, Sausalito, San Francisco (each at https://fouronefivevisuals.com/<town-slug>)
+`;
 
 export default {
   async fetch(request, env) {
@@ -38,6 +65,39 @@ async function route(request, env, preview) {
   if (media) return serveMedia(env, media[1], request);
 
   if (preview || FOFV_HOSTS.has(url.hostname)) {
+    const res = await routeFofv(url, request, env);
+    return withHeaders(res, url);
+  }
+
+  if (url.hostname === "www.darkpark.media") {
+    url.hostname = "darkpark.media";
+    return Response.redirect(url.toString(), 301);
+  }
+
+  // The 415 page lives on its own domain; send old darkpark.media paths there.
+  if (url.pathname === FOFV_PAGE || url.pathname === FOFV_PAGE + ".html") {
+    return Response.redirect("https://fouronefivevisuals.com/", 301);
+  }
+  if (url.pathname.startsWith("/415/")) {
+    return Response.redirect("https://fouronefivevisuals.com" + url.pathname.slice(4).replace(/\.html$/, ""), 301);
+  }
+
+  return withHeaders(await env.ASSETS.fetch(request), url);
+}
+
+// HSTS on every page; a day of browser cache on static files (they are
+// sometimes replaced in place, so not immutable).
+function withHeaders(res, url) {
+  const out = new Response(res.body, res);
+  out.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  if (res.ok && FOFV_STATIC.test(url.pathname)) {
+    out.headers.set("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+  }
+  return out;
+}
+
+async function routeFofv(url, request, env) {
+  {
     if (url.hostname.startsWith("www.")) {
       url.hostname = "fouronefivevisuals.com";
       return Response.redirect(url.toString(), 301);
@@ -78,22 +138,24 @@ async function route(request, env, preview) {
       url.pathname = "/fofv-previous";
       return env.ASSETS.fetch(new Request(url, request));
     }
+    if (url.pathname === "/llms.txt") {
+      return new Response(LLMS_TXT, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
+    }
+    if (url.pathname === "/favicon.ico") {
+      url.pathname = "/assets/icons/icon-32.png";
+      return env.ASSETS.fetch(new Request(url, request));
+    }
+    if (url.pathname === "/site.webmanifest" || FOFV_STATIC.test(url.pathname)) {
+      return env.ASSETS.fetch(request);
+    }
+    // A Dark Park page asked for on the 415 host: send it home rather than
+    // serve a second copy. Everything else on this host does not exist.
+    const base = slug.replace(/\.html$/, "") || "index";
+    if (DARKPARK_PAGES.has(base)) {
+      return Response.redirect("https://darkpark.media" + (base === "index" ? "/" : "/" + base), 301);
+    }
+    return new Response(NOT_FOUND, { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
   }
-
-  if (url.hostname === "www.darkpark.media") {
-    url.hostname = "darkpark.media";
-    return Response.redirect(url.toString(), 301);
-  }
-
-  // The 415 page lives on its own domain; send old darkpark.media paths there.
-  if (url.pathname === FOFV_PAGE || url.pathname === FOFV_PAGE + ".html") {
-    return Response.redirect("https://fouronefivevisuals.com/", 301);
-  }
-  if (url.pathname.startsWith("/415/")) {
-    return Response.redirect("https://fouronefivevisuals.com" + url.pathname.slice(4).replace(/\.html$/, ""), 301);
-  }
-
-  return env.ASSETS.fetch(request);
 }
 
 // A film from R2, with Range support so browsers can seek and start playing at once.

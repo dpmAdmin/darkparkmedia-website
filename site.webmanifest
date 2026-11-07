@@ -1,0 +1,20 @@
+{
+ "name": "Four One Five Visuals",
+ "short_name": "415 Visuals",
+ "icons": [
+  {
+   "src": "/assets/icons/icon-180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "/assets/icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ],
+ "theme_color": "#14110e",
+ "background_color": "#f4efe7",
+ "display": "browser",
+ "start_url": "/"
+}
