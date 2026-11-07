@@ -8,8 +8,9 @@ set -euo pipefail
 cd "$(dirname "$0")/../assets/img/work"
 WIDTHS="600 900 1200 1800 2400"
 made=0; skipped=0
-for src in *-2400.jpg film-shell.jpg film-tiburon.jpg film-loop-poster.jpg; do
+for src in *-2400.jpg film-*.jpg lp-*.jpg fv-*.jpg; do
   [ -f "$src" ] || continue
+  case "$src" in *-[0-9][0-9][0-9].jpg|*-[0-9][0-9][0-9][0-9].jpg) [ "${src%-2400.jpg}" = "$src" ] && continue;; esac  # skip our own resized outputs
   base="${src%-2400.jpg}"; base="${base%.jpg}"
   native=$(sips -g pixelWidth "$src" | awk '/pixelWidth/{print $2}')
   for w in $WIDTHS; do

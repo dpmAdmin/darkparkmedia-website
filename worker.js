@@ -7,6 +7,8 @@ const FOFV_PAGES = new Set([
   "real-estate-photography", "listing-films", "drone-aerial-photography", "property-websites",
   "mill-valley", "ross", "tiburon", "san-rafael", "san-anselmo", "fairfax", "greenbrae",
   "kentfield", "sausalito", "san-francisco",
+  // Listing pages (files in /415/work/).
+  "work", "work/33-shell-road", "work/126-winding-way", "work/88-lucas-park-drive", "work/7-francisco-vista-court",
 ]);
 // Dark Park pages: on the 415 host these forward home to darkpark.media so no
 // second indexable copy exists. Anything else not listed below is a 404 there.

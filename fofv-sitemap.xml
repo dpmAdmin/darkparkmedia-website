@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://fouronefivevisuals.com/</loc><lastmod>2026-11-02</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url><loc>https://fouronefivevisuals.com/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://fouronefivevisuals.com/real-estate-photography</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://fouronefivevisuals.com/listing-films</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://fouronefivevisuals.com/drone-aerial-photography</loc><lastmod>2026-11-02</lastmod></url>
@@ -15,4 +15,17 @@
   <url><loc>https://fouronefivevisuals.com/kentfield</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://fouronefivevisuals.com/sausalito</loc><lastmod>2026-11-02</lastmod></url>
   <url><loc>https://fouronefivevisuals.com/san-francisco</loc><lastmod>2026-11-02</lastmod></url>
+  <url><loc>https://fouronefivevisuals.com/work</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://fouronefivevisuals.com/work/33-shell-road</loc><lastmod>2026-11-07</lastmod>
+    <video:video><video:thumbnail_loc>https://fouronefivevisuals.com/assets/img/work/film-shell.jpg</video:thumbnail_loc><video:title>33 Shell Road, Mill Valley: listing film</video:title><video:description>Listing photography and film for 33 Shell Road in Mill Valley: day and twilight photos, the listing film and the property website, by Four One Five Visuals.</video:description><video:content_loc>https://fouronefivevisuals.com/media/33-shell-road/film-v1.mp4</video:content_loc><video:duration>103</video:duration><video:publication_date>2026-10-21</video:publication_date><video:family_friendly>yes</video:family_friendly></video:video>
+  </url>
+  <url><loc>https://fouronefivevisuals.com/work/126-winding-way</loc><lastmod>2026-11-07</lastmod>
+    <video:video><video:thumbnail_loc>https://fouronefivevisuals.com/assets/img/work/film-loop-poster.jpg</video:thumbnail_loc><video:title>126 Winding Way, Ross: listing film</video:title><video:description>Listing photography, drone aerials and film for 126 Winding Way in Ross: a hillside estate with terraced gardens and a pool, by Four One Five Visuals.</video:description><video:content_loc>https://fouronefivevisuals.com/media/126-winding-way/film-v04.mp4</video:content_loc><video:duration>105</video:duration><video:publication_date>2026-10-21</video:publication_date><video:family_friendly>yes</video:family_friendly></video:video>
+  </url>
+  <url><loc>https://fouronefivevisuals.com/work/88-lucas-park-drive</loc><lastmod>2026-11-07</lastmod>
+    <video:video><video:thumbnail_loc>https://fouronefivevisuals.com/assets/img/work/film-lucas.jpg</video:thumbnail_loc><video:title>88 Lucas Park Drive, San Rafael: listing film</video:title><video:description>The listing film for 88 Lucas Park Drive in San Rafael, by Four One Five Visuals: an aerial opening and a room-by-room walkthrough of a remodeled Lucas Valley home.</video:description><video:content_loc>https://pub-a1c054ea180f4328ac52f0e81a880d84.r2.dev/Examples%20of%20Work/RE%2088%20Lucas%20Park%20Dr%20-%20Final/RE%2088%20Lucas%20Park%20Dr%20-%20Final.mp4</video:content_loc><video:duration>117</video:duration><video:publication_date>2026-10-21</video:publication_date><video:family_friendly>yes</video:family_friendly></video:video>
+  </url>
+  <url><loc>https://fouronefivevisuals.com/work/7-francisco-vista-court</loc><lastmod>2026-11-07</lastmod>
+    <video:video><video:thumbnail_loc>https://fouronefivevisuals.com/assets/img/work/film-tiburon.jpg</video:thumbnail_loc><video:title>7 Francisco Vista Court, Tiburon: listing film</video:title><video:description>The listing film for 7 Francisco Vista Court in Tiburon, by Four One Five Visuals: a hillside home with bay views, arched windows and a two-level living room.</video:description><video:content_loc>https://fouronefivevisuals.com/media/7-francisco-vista-court/film-v5.mp4</video:content_loc><video:duration>159</video:duration><video:publication_date>2026-10-21</video:publication_date><video:family_friendly>yes</video:family_friendly></video:video>
+  </url>
 </urlset>
